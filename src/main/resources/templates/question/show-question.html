@@ -18,6 +18,10 @@
                 </a>
             </td>
             <td>
+                <div th:if="${param.error}">
+                    <div class="alert alert-info">Try Delete again
+                    </div>
+                </div>
                 <a class="btn btn-danger btn-sm-3"
                    onclick="if (!(confirm('Are you sure you want to delete this post?'))) return false"
                    th:href="@{/question/deleteQuestion(questionId=${question.id})}">

@@ -9,10 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/answer")
+@RequestMapping("/answers")
 public class AnswerController {
 
-    private AnswerService answerService;
+    private final AnswerService answerService;
 
     @Autowired
     public AnswerController(AnswerService answerService) {
@@ -26,8 +26,7 @@ public class AnswerController {
         return "answer/show-answer";
     }
 
-
-    @GetMapping("/showFormForAdd")
+    @GetMapping("/showAnswerForm")
         String answerData(Model model){
         Answer answer=new Answer();
         model.addAttribute("answer", answer);
@@ -47,7 +46,7 @@ public class AnswerController {
         return "answer/answer-form";
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("/deleteAnswer")
     public String deleteAnswer(@RequestParam("answerId") int answerId , BindingResult bindingResult){
        if(bindingResult.hasErrors()){
             return "redirect:/answer/showAnswer?error";

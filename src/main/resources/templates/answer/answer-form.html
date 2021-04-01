@@ -13,7 +13,7 @@
     <hr>
     <p class="h4 mb-4">Save Question</p>
     <form action="#" method="POST"
-          th:action="@{/answer/save}" th:object="${answer}">
+          th:action="@{/answers/save}" th:object="${answer}">
 
         <input th:field="*{id}" type="hidden"/>
         <input th:field="*{createdAt}" type="hidden"/>

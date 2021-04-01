@@ -21,8 +21,6 @@ public class Answer {
 
     private String userName;
 
-    private String tag;
-
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "question_id", nullable = true)
@@ -31,21 +29,19 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(int id, String content, LocalDateTime createdAt, String userName, Question question,String tag) {
+    public Answer(int id, String content, LocalDateTime createdAt, String userName, Question question) {
         this.id = id;
         this.content = content;
         this.createdAt = createdAt;
         this.userName = userName;
         this.question = question;
-        this.tag=tag;
     }
 
-    public Answer(String content, LocalDateTime createdAt, String userName, Question question,String tag) {
+    public Answer(String content, LocalDateTime createdAt, String userName, Question question) {
         this.content = content;
         this.createdAt = createdAt;
         this.userName = userName;
         this.question = question;
-        this.tag=tag;
     }
 
     public int getId() {
@@ -86,13 +82,5 @@ public class Answer {
 
     public void setQuestion(Question question) {
         this.question = question;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
     }
 }

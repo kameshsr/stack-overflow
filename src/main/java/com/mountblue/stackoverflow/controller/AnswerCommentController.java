@@ -19,7 +19,7 @@ public class AnswerCommentController {
 
     @Autowired
      private AnswerService answerService;
-    private AnswerCommentService answerCommentService;
+    private final AnswerCommentService answerCommentService;
 
     @Autowired
     public AnswerCommentController(AnswerCommentService answerCommentService) {

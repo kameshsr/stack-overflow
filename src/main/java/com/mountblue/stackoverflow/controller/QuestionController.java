@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -34,57 +35,35 @@ public class QuestionController {
         if (bindingResult.hasErrors()) {
             return "redirect:/question/showQuestionForm?error";
         } else {
-            QuestionService.saveQuestion(question);
-            return "redirect:/question/showQuestion?success";
+            int questionId = question.hashCode();
+            question.setId(questionId);
+            questionService.saveQuestion(question);
+            return "redirect:/question/showQuestion?questionId="+questionId;
         }
     }
 
-
-    /*@GetMapping("/listUnPublishedPosts")
-    public String listUnPublishedPosts(Model model) {
-        model.addAttribute("listPosts", postsService.getAllUnPublishedPosts());
-        return "UnPublishedPosts";
+    @RequestMapping("/showQuestion")
+    public String showQuestion(Model model, @RequestParam("questionId") int questionId) {
+        Question question = questionService.getQuestion(questionId);
+        model.addAttribute("question", question);
+        return "question/show-question";
     }
 
-    @GetMapping("/posts/showNewPostsForm")
-    public String showNewPostsForm(Model model) {
-        Post posts = new Post();
-        model.addAttribute("posts", posts);
-        return "NewPosts";
-    }
-
-    @GetMapping("/posts/{id}")
-    public String viewPost(@PathVariable("id") int postId, Model model) {
-        model.addAttribute("posts", postsService.getPostsById(postId));
-        model.addAttribute("comments", commentRepository.findByPostId(postId));
-        return "ViewPost";
-    }
-
-    @PostMapping("/posts/savePosts")
-    public String savePosts(@ModelAttribute("posts") Post posts) {
-
-        postsService.savePosts(posts);
-        String tag = posts.getTag();
-        String[] listTag = tag.split(",");
-        for (String tags : listTag) {
-            Tag tag1 = new Tag(tags);
-            tagRepository.save(tag1);
-            posts.getTags().add(tag1);
+    @RequestMapping("/deleteQuestion")
+    public String deleteQuestion(@RequestParam("questionId") int questionId,
+                                 BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/question/show-question?error";
+        } else {
+            questionService.deleteQuestionById(questionId);
+            return "redirect:/user/home";
         }
-        postsService.savePosts(posts);
-        return "redirect:/posts/list";
     }
 
-    @GetMapping("/posts/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") int id, Model model) {
-        Post posts = postsService.getPostsById(id);
-        model.addAttribute("posts", posts);
-        return "UpdatePosts";
+    @RequestMapping("/updateQuestion")
+    public String updateQuestion(@RequestParam("questionId") int questionId, Model model) {
+        Question question = questionService.getQuestion(questionId);
+        model.addAttribute("question", question);
+        return "question/question-form";
     }
-
-    @GetMapping("/posts/deletePosts/{id}")
-    public String deletePosts(@PathVariable(value = "id") int id) {
-        this.postsService.deletePostsById(id);
-        return "redirect:/posts/list";
-    }*/
 }

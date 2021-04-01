@@ -2,13 +2,13 @@ package com.mountblue.stackoverflow.service;
 
 import com.mountblue.stackoverflow.model.User;
 import com.mountblue.stackoverflow.repository.UserRepository;
-
-import java.util.ArrayList;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class UserServiceImplementation implements UserService{
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserServiceImplementation(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -24,7 +24,7 @@ public class UserServiceImplementation implements UserService{
         List<User> users = userRepository.findAll();
 
         for(User user: users) {
-            if (user.getName().equals(userName)
+            if (user.getEmail().equals(userName)
             && user.getPassword().equals(password)) {
                 return true;
             }

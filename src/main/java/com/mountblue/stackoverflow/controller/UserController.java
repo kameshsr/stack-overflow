@@ -2,7 +2,6 @@ package com.mountblue.stackoverflow.controller;
 
 import com.mountblue.stackoverflow.model.User;
 import com.mountblue.stackoverflow.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,17 +10,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.ManyToMany;
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @RequestMapping("/showHomePage")
+    public String showHomePage() {
+        return "user/home";
     }
 
     @RequestMapping("/showSignupForm")
@@ -35,11 +38,10 @@ public class UserController {
     public String saveUser(@ModelAttribute("user") @Valid User user,
                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/login/signup?error";
+            return "redirect:/user/showSignupForm?error";
         } else {
-            user.setPassword(user.getPassword().split(",")[0]);
             userService.saveUser(user);
-            return "redirect:/login/signup?success";
+            return "redirect:/user/showSignupForm?success";
         }
     }
 
@@ -52,9 +54,9 @@ public class UserController {
     public String validateUser(@RequestParam("userName") String userName,
                                @RequestParam("password") String password) {
         if (userService.isValidUser(userName, password)) {
-            return "user/home";
+            return "redirect:/user/showHomePage?success";
         } else {
-            return "redirect:/login/showLoginForm";
+            return "redirect:/user/showLoginForm?error";
         }
     }
 }

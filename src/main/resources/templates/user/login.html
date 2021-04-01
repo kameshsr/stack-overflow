@@ -11,12 +11,17 @@
 </head>
 <body>
 
+<div th:if="${param.error}">
+    <div class="alert alert-info">Try Login again
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
 
             <h1> Login Page </h1>
-            <form th:action="@{/templates/user}" method="post">
+            <form th:action="@{/user/validateUser}" method="post">
 
 
                 <div class="form-group">
@@ -42,7 +47,7 @@
 
             </form>
             <div class="form-group">
-						<span>New user? <a href="/" th:href="@{/registration}">Register
+						<span>New user? <a href="/" th:href="@{/user/showSignupForm}">Register
 								here</a></span>
             </div>
         </div>

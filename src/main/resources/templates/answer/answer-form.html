@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+    <p class="h4 mb-4">Save Post</p>
+    <form action="#" th:action="@{/answer/save}"
+          th:object="${answer}" method="POST">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="text" th:field="*{content}"
+               class="form-control mb-4 col-4" placeholder="Content">
+        <input type="text" th:field="*{userName}"
+               class="form-control mb-4 col-4" placeholder="email">
+        <input type="text" th:field="*{tag}"
+               class="form-control mb-4 col-4" placeholder="Enter Tag">
+        <button type="submit" class="btn btn-info col-2">Save</button>
+    </form>
+    <br>
+</div>
+
+
+</body>
+</html>

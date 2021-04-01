@@ -13,14 +13,14 @@
     <hr>
     <p class="h4 mb-4">Save Question</p>
     <form action="#" method="POST"
-          th:action="@{/posts/save}" th:object="${question}">
+          th:action="@{/question/saveQuestionData}" th:object="${question}">
 
         <input th:field="*{id}" type="hidden"/>
         <input th:field="*{createdAt}" type="hidden"/>
         <input th:field="*{userName}" type="hidden"/>
 
         <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Author name..." th:field="*{title}"
+            <input class="form-control mb-4 col-4" placeholder="Title" th:field="*{title}"
                    th:required="mendatory" type="text">
             <span class="badge badge-danger ml-2 mb-4"
                   th:errors="*{title}"
@@ -29,7 +29,7 @@
 
 
         <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Title of the post" th:field="*{content}"
+            <input class="form-control mb-4 col-4" placeholder="Write Your Question" th:field="*{content}"
                    th:required="mendatory" type="text">
             <span class="badge badge-danger ml-2 mb-4"
                   th:errors="*{content}"
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Excerpt for post" th:field="*{tags}"
+            <input class="form-control mb-4 col-4" placeholder="Add tag" th:field="*{tags}"
                    th:required="mendatory" type="text">
             <span class="badge badge-danger ml-2 mb-4"
                   th:errors="*{tags}"
@@ -47,7 +47,7 @@
         <button class="btn btn-info col-2" type="submit">Publish</button>
     </form>
     <hr>
-    <a th:href="@{/questions/showQuestion}">Back to Posts List</a>
+    <a th:href="@{/user/showHomePage}">Back to Home Page</a>
 </div>
 </body>
 </html>

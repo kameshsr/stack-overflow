@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/questions")
+@RequestMapping("/question")
 public class QuestionController {
 
     private final QuestionService questionService;

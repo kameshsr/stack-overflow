@@ -19,6 +19,10 @@ public class Question {
 
     private String userName;
 
+    private String title;
+
+    private String tags;
+
     @OneToMany(mappedBy = "question",
             cascade = {CascadeType.REMOVE})
 
@@ -28,7 +32,6 @@ public class Question {
             cascade = {CascadeType.REMOVE})
 
     List<Answer> answers = new ArrayList<>();
-
 
     public Question() {
     }
@@ -44,6 +47,22 @@ public class Question {
         this.content = content;
         this.createdAt = createdAt;
         this.userName = userName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public int getId() {

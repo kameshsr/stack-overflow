@@ -13,20 +13,11 @@
     <hr>
     <p class="h4 mb-4">Save Question</p>
     <form action="#" method="POST"
-          th:action="@{/posts/save}" th:object="${question}">
+          th:action="@{/answer/save}" th:object="${answer}">
 
         <input th:field="*{id}" type="hidden"/>
         <input th:field="*{createdAt}" type="hidden"/>
         <input th:field="*{userName}" type="hidden"/>
-
-        <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Author name..." th:field="*{title}"
-                   th:required="mendatory" type="text">
-            <span class="badge badge-danger ml-2 mb-4"
-                  th:errors="*{title}"
-                  th:if="${#fields.hasErrors('title')}"></span>
-        </div>
-
 
         <div class="form-inline">
             <input class="form-control mb-4 col-4" placeholder="Title of the post" th:field="*{content}"
@@ -36,18 +27,10 @@
                   th:if="${#fields.hasErrors('content')}"></span>
         </div>
 
-        <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Excerpt for post" th:field="*{tags}"
-                   th:required="mendatory" type="text">
-            <span class="badge badge-danger ml-2 mb-4"
-                  th:errors="*{tags}"
-                  th:if="${#fields.hasErrors('tags')}"></span>
-        </div>
-
         <button class="btn btn-info col-2" type="submit">Publish</button>
     </form>
     <hr>
-    <a th:href="@{/questions/showQuestion}">Back to Posts List</a>
+    <a th:href="@{/user/showHomePage}">Back to Home Page</a>
 </div>
 </body>
 </html>

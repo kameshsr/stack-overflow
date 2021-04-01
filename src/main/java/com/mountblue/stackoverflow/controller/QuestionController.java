@@ -49,14 +49,9 @@ public class QuestionController {
     }
 
     @RequestMapping("/deleteQuestion")
-    public String deleteQuestion(@RequestParam("questionId") int questionId,
-                                 BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "redirect:/question/show-question?error";
-        } else {
-            questionService.deleteQuestionById(questionId);
-            return "redirect:/user/home";
-        }
+    public String deleteQuestion(@RequestParam("questionId") int questionId) {
+        questionService.deleteQuestionById(questionId);
+        return "redirect:/user/showHomePage";
     }
 
     @RequestMapping("/updateQuestion")

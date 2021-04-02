@@ -10,8 +10,9 @@
 <body>
 <div class="container">
     <h3>Update Comment</h3>
-    <form action="#" th:action="@{/questionComment/updateQuestionComment(questionId=${question.id})}"
-          th:object="${questionComments}" method="POST">
+    <form action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${questionId},
+    questionCommentId=${questionComment.id})}"
+          th:object="${questionComment}" method="POST">
         <textarea type="text" th:field="*{content}"
                   class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
         </textarea>

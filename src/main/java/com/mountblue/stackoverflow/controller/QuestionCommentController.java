@@ -1,7 +1,4 @@
 package com.mountblue.stackoverflow.controller;
-
-import com.mountblue.stackoverflow.model.Answer;
-import com.mountblue.stackoverflow.model.AnswerComment;
 import com.mountblue.stackoverflow.model.Question;
 import com.mountblue.stackoverflow.model.QuestionComment;
 import com.mountblue.stackoverflow.service.QuestionCommentService;

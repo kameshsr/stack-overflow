@@ -44,6 +44,11 @@
        th:href="@{/user/showHomePage}">
         Back to Home Page
     </a><br>
+
+    <br> <br>
+    <a th:href="@{/comments/showFormForCommentAdd/{postId}(postId=${post.id})}" class="btn btn-primary btn-sm mb-3">
+        Add Comment
+    </a>
 </div>
 </body>
 </html>

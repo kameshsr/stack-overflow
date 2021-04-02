@@ -9,9 +9,8 @@
 </head>
 <body>
 <div class="container">
-    <h3>Blog Posts</h3>
     <hr>
-    <p class="h4 mb-4">Save Question</p>
+    <p class="h4 mb-4">Save Answer</p>
     <form action="#" method="POST"
           th:action="@{/answers/save}" th:object="${answer}">
 
@@ -20,7 +19,7 @@
         <input th:field="*{userName}" type="hidden"/>
 
         <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Title of the post" th:field="*{content}"
+            <input class="form-control mb-4 col-4" placeholder="Write your answer..." th:field="*{content}"
                    th:required="mendatory" type="text">
             <span class="badge badge-danger ml-2 mb-4"
                   th:errors="*{content}"

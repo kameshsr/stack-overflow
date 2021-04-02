@@ -48,4 +48,11 @@ public class AnswerCommentServiceImpl implements  AnswerCommentService{
     public void save(AnswerComment answerComment) {
         answerCommentRepository.save(answerComment);
     }
+
+    @Override
+    public List<AnswerComment> findByAnswerId(int id) {
+        return answerCommentRepository.findByAnswerId(id);
+    }
+
+
 }

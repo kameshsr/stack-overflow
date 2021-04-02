@@ -10,4 +10,5 @@ public interface AnswerCommentService {
     AnswerComment findById(int id);
     void deleteById(int id);
     void save(AnswerComment answerComment);
+    List<AnswerComment> findByAnswerId(int id);
 }

@@ -1,27 +1,36 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" rel="stylesheet">
+    <title>Save post</title>
 </head>
 <body>
-
 <div class="container">
-    <p class="h4 mb-4">Save Post</p>
-    <form action="#" th:action="@{/answer/save}"
-          th:object="${answer}" method="POST">
-        <input type="hidden" th:field="*{id}"/>
-        <input type="text" th:field="*{content}"
-               class="form-control mb-4 col-4" placeholder="Content">
-        <input type="text" th:field="*{userName}"
-               class="form-control mb-4 col-4" placeholder="email">
-        <input type="text" th:field="*{tag}"
-               class="form-control mb-4 col-4" placeholder="Enter Tag">
-        <button type="submit" class="btn btn-info col-2">Save</button>
+    <h3>Blog Posts</h3>
+    <hr>
+    <p class="h4 mb-4">Save Question</p>
+    <form action="#" method="POST"
+          th:action="@{/answers/save}" th:object="${answer}">
+
+        <input th:field="*{id}" type="hidden"/>
+        <input th:field="*{createdAt}" type="hidden"/>
+        <input th:field="*{userName}" type="hidden"/>
+
+        <div class="form-inline">
+            <input class="form-control mb-4 col-4" placeholder="Title of the post" th:field="*{content}"
+                   th:required="mendatory" type="text">
+            <span class="badge badge-danger ml-2 mb-4"
+                  th:errors="*{content}"
+                  th:if="${#fields.hasErrors('content')}"></span>
+        </div>
+
+        <button class="btn btn-info col-2" type="submit">Publish</button>
     </form>
-    <br>
+    <hr>
+    <a th:href="@{/user/showHomePage}">Back to Home Page</a>
 </div>
-
-
 </body>
 </html>

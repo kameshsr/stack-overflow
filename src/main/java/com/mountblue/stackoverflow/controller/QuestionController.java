@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/questions")
+@RequestMapping("/question")
 public class QuestionController {
 
     private final QuestionService questionService;
@@ -50,14 +49,9 @@ public class QuestionController {
     }
 
     @RequestMapping("/deleteQuestion")
-    public String deleteQuestion(@RequestParam("questionId") int questionId,
-                                 BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "redirect:/question/show-question?error";
-        } else {
-            questionService.deleteQuestionById(questionId);
-            return "redirect:/user/home";
-        }
+    public String deleteQuestion(@RequestParam("questionId") int questionId) {
+        questionService.deleteQuestionById(questionId);
+        return "redirect:/user/showHomePage";
     }
 
     @RequestMapping("/updateQuestion")

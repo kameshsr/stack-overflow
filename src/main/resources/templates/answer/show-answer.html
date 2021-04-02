@@ -46,9 +46,25 @@
     </a><br>
 
     <br> <br>
-    <a th:href="@{/comments/showFormForCommentAdd/{postId}(postId=${post.id})}" class="btn btn-primary btn-sm mb-3">
+    <a th:href="@{/answerComments/showFormForCommentAdd(answerId=${answer.id})}" class="btn btn-primary btn-sm mb-3">
         Add Comment
     </a>
+    <br>
+    <span th:each="newComments :${comments}">
+ <br>
+<span th:text="${newComments.userName}"/> <br>
+<span th:text="${newComments.content}"/>   <br>
+
+
+<ul class="list-inline m-0">
+    <li class="list-inline item">
+        <a th:href="@{/answerComments/deleteComments(answerId=${answer.id}, answerCommentId=${newComments.id})}"
+           class="btn btn-primary btn-sm mb-3">Delete Comment
+        </a>
+    </li>
+</ul>
+    </span>
+
 </div>
 </body>
 </html>

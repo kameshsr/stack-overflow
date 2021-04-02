@@ -24,8 +24,8 @@ public class QuestionCommentController {
        return "question/comment-list";
     }
 
-    @GetMapping("showQuestionCommentForm/{questionId}")
-    public String showFormForQuestionComment(@PathVariable("questionId") int questionId,Model model){
+    @GetMapping("showQuestionCommentForm")
+    public String showFormForQuestionComment(@RequestParam("questionId") int questionId,Model model){
         model.addAttribute("comments",questionCommentService.findAll());
         QuestionComment questionComment=new QuestionComment();
         model.addAttribute("questionComment",questionComment);
@@ -33,8 +33,8 @@ public class QuestionCommentController {
         return "question/comment-form";
     }
 
-    @PostMapping("/saveQuestionComment/{questionId}")
-    public String saveQuestionComment(@PathVariable("questionId") int questionId, @ModelAttribute("comments") QuestionComment questionComment) {
+    @PostMapping("/saveQuestionComment")
+    public String saveQuestionComment(@RequestParam("questionId") int questionId, @ModelAttribute("comments") QuestionComment questionComment) {
         Question question = questionService.getQuestion(questionId);
         questionComment.setQuestion(question);
         questionCommentService.save(questionComment);
@@ -42,8 +42,8 @@ public class QuestionCommentController {
         return "redirect:/user/showHomePage";
     }
 
-     @RequestMapping("/deleteQuestionComment/{questionId}/{questionCommentId}")
-    public String deleteQuestionComment(@PathVariable("questionId") int questionId, @PathVariable("questionCommentId") int questionCommentId, BindingResult bindingResult){
+     @RequestMapping("/deleteQuestionComment")
+    public String deleteQuestionComment(@RequestParam("questionId") int questionId, @RequestParam("questionCommentId") int questionCommentId, BindingResult bindingResult){
        if(bindingResult.hasErrors()){
            return "redirect:/questionComments/questionCommentList?error";
        }

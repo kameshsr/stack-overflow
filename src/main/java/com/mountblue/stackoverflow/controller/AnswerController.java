@@ -1,6 +1,7 @@
 package com.mountblue.stackoverflow.controller;
 
 import com.mountblue.stackoverflow.model.Answer;
+import com.mountblue.stackoverflow.repository.AnswerCommentRepository;
 import com.mountblue.stackoverflow.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class AnswerController {
 
     private final AnswerService answerService;
+    @Autowired
+    private AnswerCommentRepository answerCommentRepository;
 
     @Autowired
     public AnswerController(AnswerService answerService) {
@@ -22,6 +25,7 @@ public class AnswerController {
     @RequestMapping("/showAnswer")
     public String showAnswer(Model model, @RequestParam("answerId") int answerId) {
         Answer answer = answerService.findById(answerId);
+        model.addAttribute("comments",answerCommentRepository.findByAnswerId(answerId));
         model.addAttribute("answer", answer);
         return "answer/show-answer";
     }

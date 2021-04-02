@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Save Comment</title>
 </head>
 <body>
+<div class="container">
+    <h3>Comment</h3>
+    <form action="#" th:action="@{/answerComments/saveAnswerComment(answerId=${answer.id})}"
+          th:object="${comments}" method="POST">
 
+        <input type="hidden" th:field="*{id}" />
+
+        <input type="text" th:field="*{userName}"
+               class="form-control mb-4 col-4" placeholder="Name">
+
+        <input type="text" th:field="*{content}"
+               class="form-control mb-4 col-4" placeholder="Add Comment">
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+    <br> <br>
+    <a href="/" th:href="@{/user/showHomePage}">Back to Home Page</a>
+</div>
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+
+

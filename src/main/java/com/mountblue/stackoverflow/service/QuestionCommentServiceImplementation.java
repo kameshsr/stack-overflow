@@ -27,4 +27,9 @@ public class QuestionCommentServiceImplementation implements QuestionCommentServ
     public void deleteById(int id) {
        questionCommentRepository.deleteById(id);
     }
+
+    @Override
+    public List<QuestionComment> findByQuestionId(int questionId) {
+        return null;
+    }
 }

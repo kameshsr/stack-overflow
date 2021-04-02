@@ -6,6 +6,7 @@
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" rel="stylesheet">
     <title>Save post</title>
+
 </head>
 <body>
 <div class="container">
@@ -26,8 +27,7 @@
                   th:errors="*{title}"
                   th:if="${#fields.hasErrors('title')}"></span>
         </div>
-
-
+        <div id="content" th:field="*{content}"></div>
         <div class="form-inline">
             <input class="form-control mb-4 col-4" placeholder="Write Your Question" th:field="*{content}"
                    th:required="mendatory" type="text">

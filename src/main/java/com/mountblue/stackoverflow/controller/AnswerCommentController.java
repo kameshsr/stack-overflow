@@ -34,8 +34,8 @@ public class AnswerCommentController {
         return "answer/list-comment";
     }
 
-    @GetMapping("/showFormForCommentAdd/{answerId}")
-    String showFormForAnswerComment(@PathVariable("answerId") int answerId,Model model){
+    @GetMapping("/showFormForCommentAdd")
+    String showFormForAnswerComment(@RequestParam("answerId") int answerId,Model model){
         model.addAttribute("answerComment", answerCommentService.findAll());
         AnswerComment comments = new AnswerComment();
         model.addAttribute("comments", comments);
@@ -44,8 +44,8 @@ public class AnswerCommentController {
 
     }
 
-    @PostMapping("/saveAnswerComments/{answerId}")
-    public String saveAnswerComment(@PathVariable("answerId") int answerId, @ModelAttribute("comments") AnswerComment answerComment) {
+    @PostMapping("/saveAnswerComment")
+    public String saveAnswerComment(@RequestParam("answerId") int answerId, @ModelAttribute("comments") AnswerComment answerComment) {
         Answer answer = answerService.findById(answerId);
         answerComment.setAnswer(answer);
         answerCommentService.save(answerComment);
@@ -53,8 +53,8 @@ public class AnswerCommentController {
         return "redirect:/user/showHomePage";
     }
 
-    @GetMapping("/{answerId}/deleteComments/{answerCommentId}")
-    public String delete(@PathVariable("answerId") int theId, @PathVariable("answerCommentId") int answerCommentId, BindingResult bindingResult) {
+    @GetMapping("/deleteComments")
+    public String deleteAnswerComment(@RequestParam("answerId") int theId, @RequestParam("answerCommentId") int answerCommentId, BindingResult bindingResult) {
        if(bindingResult.hasErrors()){
            return "redirect:/answerComments/commentsList?error";
        }else{

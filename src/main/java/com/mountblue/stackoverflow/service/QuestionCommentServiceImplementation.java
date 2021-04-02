@@ -1,11 +1,14 @@
 package com.mountblue.stackoverflow.service;
 
+import com.mountblue.stackoverflow.model.Question;
 import com.mountblue.stackoverflow.model.QuestionComment;
 import com.mountblue.stackoverflow.repository.QuestionCommentRepository;
 import org.springframework.stereotype.Service;
 
 import javax.websocket.server.ServerEndpoint;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class QuestionCommentServiceImplementation implements QuestionCommentService{
 
@@ -26,5 +29,10 @@ public class QuestionCommentServiceImplementation implements QuestionCommentServ
     @Override
     public void deleteById(int id) {
        questionCommentRepository.deleteById(id);
+    }
+
+    @Override
+    public QuestionComment findQuestionCommentById(int questionCommentId) {
+       return questionCommentRepository.findQuestionCommentById(questionCommentId);
     }
 }

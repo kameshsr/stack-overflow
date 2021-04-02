@@ -4,6 +4,7 @@ import com.mountblue.stackoverflow.model.Question;
 import com.mountblue.stackoverflow.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,5 +41,10 @@ public class QuestionServiceImplementation implements QuestionService{
     @Override
     public void save(Question question) {
         questionRepository.save(question);
+    }
+
+    @Override
+    public List<Question> getAllQuestions() {
+        return questionRepository.findAll();
     }
 }

@@ -13,7 +13,7 @@
         <tr>
             <td>
                 <a class="btn btn-info btn-sm-3"
-                   th:href="@{/question/updateQuestion(questionId=${question.id})}">
+                   th:href="@{/question/showFormForQuestionUpdate(questionId=${question.id})}">
                     Update
                 </a>
             </td>
@@ -37,13 +37,41 @@
         <article th:text="${question.content}"></article>
         <b style="font-style: italic" th:text="${question.tags}"></b>
     </th:block>
-</div>
+    <br>
+    <hr>
+    <br>
 
-<div align="right" class="all-classes-container">
-    <a class="btn btn-success btn-sm mb-3"
-       th:href="@{/comment/showComments(questionId=${question.id})}">
-        Show Comments
-    </a><br>
+    <div class="row" th:each="questionComment : ${questionComments}">
+        <div class="col">
+            <div class="row">
+                <i th:text="${questionComment.content}"></i>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <small th:text="questionComment.userName"></small>
+                </div>
+                <div class="col">
+                    <a th:href="@{/questionComment/updateQuestionComment(questionCommentId=${questionComment.id},
+                    questionId=${question.id})}">update comment</a>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h3>Comment</h3>
+    <form action="#" th:action="@{/questionComment/saveQuestionComment/{myQuestionId}(myQuestionId=${question.id})}"
+          th:object="${questionComment}" method="POST">
+        <textarea type="text" th:field="*{content}"
+               class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
+        </textarea>
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+    <br> <br>
+    <a href="/" th:href="@{/user/showHomePage}">Back to Home Page</a>
 </div>
 </body>
 </html>

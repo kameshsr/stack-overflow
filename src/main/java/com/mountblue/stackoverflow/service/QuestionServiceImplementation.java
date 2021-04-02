@@ -36,4 +36,9 @@ public class QuestionServiceImplementation implements QuestionService{
     public void deleteQuestionById(int questionId) {
         questionRepository.deleteById(questionId);
     }
+
+    @Override
+    public void save(Question question) {
+        questionRepository.save(question);
+    }
 }

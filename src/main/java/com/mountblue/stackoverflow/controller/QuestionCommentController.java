@@ -1,46 +1,59 @@
 package com.mountblue.stackoverflow.controller;
 
+import com.mountblue.stackoverflow.model.Answer;
+import com.mountblue.stackoverflow.model.AnswerComment;
+import com.mountblue.stackoverflow.model.Question;
+import com.mountblue.stackoverflow.model.QuestionComment;
+import com.mountblue.stackoverflow.service.QuestionCommentService;
+import com.mountblue.stackoverflow.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+@Controller
+@RequestMapping("/questionComment")
 public class QuestionCommentController {
-
-    /*@Autowired
-    private PostService postsService;
-
     @Autowired
-    private CommentRepository commentRepository;
+    private QuestionCommentService questionCommentService;
+    @Autowired
+    private QuestionService questionService;
 
-    @RequestMapping("/posts/addComment/{postsId}/comment")
-    public String addComments(@PathVariable("postsId") int postId, @ModelAttribute("newComment") Comment newComment) {
-        Post currentPosts = postsService.getPostsById(postId);
-        newComment.setPost(currentPosts);
-        commentRepository.save(newComment);
-        currentPosts.getComments().add(newComment);
-        postsService.savePosts(currentPosts);
-        return "redirect:/posts/{postsId}";
+    @GetMapping("/questionCommentList")
+    public String listAllComments(Model model){
+       List<QuestionComment> comments=questionCommentService.findAll();
+       return "question/comment-list";
     }
 
-    @RequestMapping(value = "posts/addComment/{id}", method = RequestMethod.GET)
-    public String addComment(@PathVariable("id") int postsId, Model model) {
-        model.addAttribute("comment", commentRepository.findAll());
-        Comment newComment = new Comment();
-        model.addAttribute("newComment", newComment);
-        model.addAttribute("posts", postsService.getPostsById(postsId));
-        return "AddComment";
+    @GetMapping("showQuestionCommentForm/{questionId}")
+    public String showFormForQuestionComment(@PathVariable("questionId") int questionId,Model model){
+        model.addAttribute("comments",questionCommentService.findAll());
+        QuestionComment questionComment=new QuestionComment();
+        model.addAttribute("questionComment",questionComment);
+        model.addAttribute("question", questionService.getQuestion(questionId));
+        return "question/comment-form";
     }
 
-    @RequestMapping(value = "/posts/{postsId}/updateComments/{commentId}", method = RequestMethod.GET)
-    public String updateComment(@PathVariable("postsId") int postsId,
-                                @PathVariable("commentId") int commentId, Model model) {
-        model.addAttribute("posts", postsService.getPostsById(postsId));
-        model.addAttribute("newComment", commentRepository.findById(commentId));
-        return "AddComment";
+    @PostMapping("/saveQuestionComment/{questionId}")
+    public String saveQuestionComment(@PathVariable("questionId") int questionId, @ModelAttribute("comments") QuestionComment questionComment) {
+        Question question = questionService.getQuestion(questionId);
+        questionComment.setQuestion(question);
+        questionCommentService.save(questionComment);
+        questionService.save(question);
+        return "redirect:/user/showHomePage";
     }
 
-    @RequestMapping(value = "/posts/{postsId}/deleteComments/{commentId}", method = RequestMethod.GET)
-    public String deleteComment(@PathVariable("postsId") int postsId,
-                                @PathVariable("commentId") int commentId, Model model) {
-        Optional<Comment> comment = commentRepository.findById(commentId);
-        this.commentRepository.deleteById(commentId);
-        return "redirect:/posts/{postsId}";
+     @RequestMapping("/deleteQuestionComment/{questionId}/{questionCommentId}")
+    public String deleteQuestionComment(@PathVariable("questionId") int questionId, @PathVariable("questionCommentId") int questionCommentId, BindingResult bindingResult){
+       if(bindingResult.hasErrors()){
+           return "redirect:/questionComments/questionCommentList?error";
+       }
+       else{
+           questionCommentService.deleteById(questionCommentId);
+           return "redirect:/user/showHomePage";
+       }
     }
-*/
+
 }

@@ -54,7 +54,13 @@
                     <a th:href="@{/questionComment/updateQuestionComment(questionCommentId=${questionComment.id},
                     questionId=${question.id})}">update comment</a>
                 </div>
-                <div class="col"></div>
+
+                <div class="col">
+                    <a th:href="@{/questionComment/deleteQuestionComment/{questionCommentId}(questionCommentId=${questionComment.id},
+                questionId=${question.id})}" class="btn btn-primary">
+                        Delete Comment</a>
+
+                </div>
             </div>
         </div>
     </div>

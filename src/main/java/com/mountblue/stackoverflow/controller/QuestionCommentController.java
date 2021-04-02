@@ -64,8 +64,7 @@ public class QuestionCommentController {
        }
        else{
            questionCommentService.deleteById(questionCommentId);
-           return "redirect:/user/showHomePage";
+           return "redirect:/question/showQuestion?questionId="+questionId;
        }
     }
-
 }

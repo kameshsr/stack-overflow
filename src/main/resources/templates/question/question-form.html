@@ -1,11 +1,24 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">-->
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" rel="stylesheet">
-    <title>Save post</title>
+
+
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+    </script>
+    <script>
+$(function(){
+  $("#content").load("src/main/resources/templates/editor/editor.html");
+});
+</script>
+
+    <title>Ask Question</title>
 </head>
 <body>
 <div class="container">
@@ -20,6 +33,7 @@
         <input th:field="*{userName}" type="hidden"/>
 
         <div class="form-inline">
+            <LABEL>Title</LABEL>
             <input class="form-control mb-4 col-4" placeholder="Title" th:field="*{title}"
                    th:required="mendatory" type="text">
             <span class="badge badge-danger ml-2 mb-4"
@@ -27,13 +41,8 @@
                   th:if="${#fields.hasErrors('title')}"></span>
         </div>
 
+        <div class="form-inline" id="content" th:field="*{content}">
 
-        <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Write Your Question" th:field="*{content}"
-                   th:required="mendatory" type="text">
-            <span class="badge badge-danger ml-2 mb-4"
-                  th:errors="*{content}"
-                  th:if="${#fields.hasErrors('content')}"></span>
         </div>
 
         <div class="form-inline">

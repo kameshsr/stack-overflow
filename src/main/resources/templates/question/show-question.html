@@ -37,16 +37,23 @@
         <article th:text="${question.content}"></article>
         <b style="font-style: italic" th:text="${question.tags}"></b>
     </th:block>
-</div>
 
 
+    <h3>Comment</h3>
+    <form action="#" th:action="@{/questionComment/saveQuestionComment/{questionId}(questionId=${question.id})}"
+          th:object="${questionComments}" method="POST">
 
+        <input type="hidden" th:field="*{id}" />
 
-<div class="all-classes-container">
-    <a class="btn btn-success btn-sm mb-3"
-       th:href="@{/comment/showComments(questionId=${question.id})}">
-        Show Comments
-    </a><br>
+        <textarea type="text" th:field="*{content}"
+               class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
+        </textarea>
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+    <br> <br>
+    <a href="/" th:href="@{/user/showHomePage}">Back to Home Page</a>
 </div>
 </body>
 </html>

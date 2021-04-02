@@ -1,6 +1,7 @@
 package com.mountblue.stackoverflow.controller;
 
 import com.mountblue.stackoverflow.model.Question;
+import com.mountblue.stackoverflow.model.QuestionComment;
 import com.mountblue.stackoverflow.service.QuestionCommentService;
 import com.mountblue.stackoverflow.service.QuestionService;
 import org.springframework.stereotype.Controller;
@@ -65,8 +66,9 @@ public class QuestionController {
     @RequestMapping("/showQuestion")
     public String showQuestion(Model model, @RequestParam("questionId") int questionId) {
         Question question = questionService.getQuestion(questionId);
-        model.addAttribute("comments", questionCommentService.findByQuestionId(questionId));
+        model.addAttribute("questionComments", questionCommentService.findByQuestionId(questionId));
         model.addAttribute("question", question);
+
         return "question/show-question";
     }
 

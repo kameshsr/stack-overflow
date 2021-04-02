@@ -34,7 +34,8 @@ public class QuestionCommentController {
     }
 
     @PostMapping("/saveQuestionComment/{questionId}")
-    public String saveQuestionComment(@PathVariable("questionId") int questionId, @ModelAttribute("comments") QuestionComment questionComment) {
+    public String saveQuestionComment(@PathVariable("questionId") int questionId,
+                                      @ModelAttribute("questionComments") QuestionComment questionComment) {
         Question question = questionService.getQuestion(questionId);
         questionComment.setQuestion(question);
         questionCommentService.save(questionComment);

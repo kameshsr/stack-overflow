@@ -20,6 +20,8 @@ public class QuestionComment {
 
     private LocalDateTime createdAt;
 
+
+
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "question_id", nullable = true)

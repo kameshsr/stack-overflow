@@ -2,8 +2,10 @@ package com.mountblue.stackoverflow.controller;
 
 import com.mountblue.stackoverflow.model.Question;
 import com.mountblue.stackoverflow.model.QuestionComment;
+import com.mountblue.stackoverflow.repository.QuestionCommentRepository;
 import com.mountblue.stackoverflow.service.QuestionCommentService;
 import com.mountblue.stackoverflow.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,9 @@ public class QuestionController {
     private final QuestionService questionService;
 
     private final QuestionCommentService questionCommentService;
+
+    @Autowired
+    private QuestionCommentRepository questionCommentRepository;
 
     public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService) {
         this.questionService = questionService;
@@ -66,7 +71,10 @@ public class QuestionController {
     @RequestMapping("/showQuestion")
     public String showQuestion(Model model, @RequestParam("questionId") int questionId) {
         Question question = questionService.getQuestion(questionId);
-        model.addAttribute("questionComments", questionCommentService.findByQuestionId(questionId));
+        List<QuestionComment> questionComments= questionCommentRepository.findByQuestionId(questionId);
+        QuestionComment questionComment = new QuestionComment();
+        model.addAttribute("questionComment", questionComment);
+        model.addAttribute("questionComments", questionComments);
         model.addAttribute("question", question);
 
         return "question/show-question";

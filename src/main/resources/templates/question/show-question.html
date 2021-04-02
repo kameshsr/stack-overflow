@@ -37,14 +37,32 @@
         <article th:text="${question.content}"></article>
         <b style="font-style: italic" th:text="${question.tags}"></b>
     </th:block>
+    <br>
+    <hr>
+    <br>
 
-
+    <div class="row" th:each="questionComment : ${questionComments}">
+        <div class="col">
+            <div class="row">
+                <i th:text="${questionComment.content}"></i>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <small th:text="questionComment.userName"></small>
+                </div>
+                <div class="col">
+                    <a th:href="@{/questionComment/updateQuestionComment(questionCommentId=${questionComment.id},
+                    questionId=${question.id})}">update comment</a>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
     <h3>Comment</h3>
-    <form action="#" th:action="@{/questionComment/saveQuestionComment/{questionId}(questionId=${question.id})}"
-          th:object="${questionComments}" method="POST">
-
-        <input type="hidden" th:field="*{id}" />
-
+    <form action="#" th:action="@{/questionComment/saveQuestionComment/{myQuestionId}(myQuestionId=${question.id})}"
+          th:object="${questionComment}" method="POST">
         <textarea type="text" th:field="*{content}"
                class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
         </textarea>

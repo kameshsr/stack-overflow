@@ -49,25 +49,25 @@
             <div class="row">
                 <div class="col">
                     <small th:text="questionComment.userName"></small>
+                    <small>
+                        <a th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
+                    questionId=${question.id})}">Update</a>
+                    </small>
+                    <small>
+                        <a th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${questionComment.id},
+                    questionId=${question.id})}">Delete</a>
+                    </small>
                 </div>
-                <div class="col">
-                    <a th:href="@{/questionComment/updateQuestionComment(questionCommentId=${questionComment.id},
-                    questionId=${question.id})}">update comment</a>
-                </div>
-
-                <div class="col">
-                    <a th:href="@{/questionComment/deleteQuestionComment/{questionCommentId}(questionCommentId=${questionComment.id},
-                questionId=${question.id})}" class="btn btn-primary">
-                        Delete Comment</a>
-
-                </div>
+                <div class="col"></div>
+                <div class="col"></div>
             </div>
         </div>
     </div>
 </div>
 <div class="container">
     <h3>Comment</h3>
-    <form action="#" th:action="@{/questionComment/saveQuestionComment/{myQuestionId}(myQuestionId=${question.id})}"
+    <form action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${question.id},
+    questionCommentId=0)}"
           th:object="${questionComment}" method="POST">
         <textarea type="text" th:field="*{content}"
                class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">

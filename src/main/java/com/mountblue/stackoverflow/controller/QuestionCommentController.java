@@ -4,7 +4,6 @@ import com.mountblue.stackoverflow.model.QuestionComment;
 import com.mountblue.stackoverflow.repository.QuestionCommentRepository;
 import com.mountblue.stackoverflow.service.QuestionCommentService;
 import com.mountblue.stackoverflow.service.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,13 +13,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/questionComment")
 public class QuestionCommentController {
-    @Autowired
-    private QuestionCommentService questionCommentService;
-    @Autowired
-    private QuestionService questionService;
+    private final QuestionCommentService questionCommentService;
+    private final QuestionService questionService;
 
-    @Autowired
-    private QuestionCommentRepository questionCommentRepository;
+    public QuestionCommentController(QuestionCommentService questionCommentService, QuestionService questionService, QuestionCommentRepository questionCommentRepository) {
+        this.questionCommentService = questionCommentService;
+        this.questionService = questionService;
+    }
 
     @GetMapping("/questionCommentList")
     public String listAllComments(Model model){
@@ -37,34 +36,31 @@ public class QuestionCommentController {
         return "question/comment-form";
     }
 
-    @PostMapping("/saveQuestionComment/{myQuestionId}")
-    public String saveQuestionComment(@PathVariable("myQuestionId") int myQuestionId, Model model,
-                                      @ModelAttribute("questionComments") QuestionComment questionComment) {
-        Question question = questionService.getQuestion(myQuestionId);
+    @PostMapping("/saveQuestionComment")
+    public String saveQuestionComment(@RequestParam("questionId") int questionId, @RequestParam("questionCommentId") int questionCommentId,
+                                      Model model, @ModelAttribute("questionComments") QuestionComment questionComment) {
+        Question question = questionService.getQuestion(questionId);
         questionComment.setQuestion(question);
+        if (questionCommentId != 0)
+            questionComment.setId(questionCommentId);
         questionCommentService.save(questionComment);
         question.getComments().add(questionComment);
         questionService.save(question);
-        return "redirect:/question/showQuestion?questionId="+myQuestionId;
+        return "redirect:/question/showQuestion?questionId="+questionId;
     }
 
-    @RequestMapping("/updateQuestionComment")
+    @RequestMapping("/showFormForUpdateQuestionComment")
     public String updateQuestionComment(@RequestParam("questionCommentId") int questionCommentId,
                                         @RequestParam("questionId") int questionId, Model model) {
         QuestionComment questionComment = questionCommentService.findQuestionCommentById(questionCommentId);
-        model.addAttribute("questionComments",questionComment);
+        model.addAttribute("questionComment",questionComment);
         model.addAttribute("questionId", questionId);
         return "question/update-comment-form";
     }
 
-     @RequestMapping("/deleteQuestionComment/{questionId}/{questionCommentId}")
-    public String deleteQuestionComment(@PathVariable("questionId") int questionId, @PathVariable("questionCommentId") int questionCommentId, BindingResult bindingResult){
-       if(bindingResult.hasErrors()){
-           return "redirect:/questionComments/questionCommentList?error";
-       }
-       else{
+     @RequestMapping("/deleteQuestionComment")
+    public String deleteQuestionComment(@RequestParam("questionId") int questionId, @RequestParam("questionCommentId") int questionCommentId){
            questionCommentService.deleteById(questionCommentId);
            return "redirect:/question/showQuestion?questionId="+questionId;
        }
-    }
 }

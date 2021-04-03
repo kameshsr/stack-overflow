@@ -54,5 +54,8 @@ public class AnswerCommentServiceImpl implements  AnswerCommentService{
         return answerCommentRepository.findByAnswerId(id);
     }
 
-
+    @Override
+    public AnswerComment findAnswerCommentById(int answerCommentId) {
+        return answerCommentRepository.findAnswerCommentById(answerCommentId);
+    }
 }

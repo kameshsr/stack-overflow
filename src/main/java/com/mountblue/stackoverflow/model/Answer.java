@@ -5,6 +5,8 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "answer")
@@ -21,6 +23,11 @@ public class Answer {
 
     private String userName;
 
+    @OneToMany(mappedBy = "answer",
+            cascade = {CascadeType.REMOVE})
+
+    List<AnswerComment> answerComments = new ArrayList<>();
+
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "question_id", nullable = true)
@@ -29,18 +36,20 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(int id, String content, LocalDateTime createdAt, String userName, Question question) {
+    public Answer(int id, String content, LocalDateTime createdAt, String userName, List<AnswerComment> answerComments, Question question) {
         this.id = id;
         this.content = content;
         this.createdAt = createdAt;
         this.userName = userName;
+        this.answerComments = answerComments;
         this.question = question;
     }
 
-    public Answer(String content, LocalDateTime createdAt, String userName, Question question) {
+    public Answer(String content, LocalDateTime createdAt, String userName, List<AnswerComment> answerComments, Question question) {
         this.content = content;
         this.createdAt = createdAt;
         this.userName = userName;
+        this.answerComments = answerComments;
         this.question = question;
     }
 
@@ -82,5 +91,13 @@ public class Answer {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public List<AnswerComment> getAnswerComments() {
+        return answerComments;
+    }
+
+    public void setAnswerComments(List<AnswerComment> answerComments) {
+        this.answerComments = answerComments;
     }
 }

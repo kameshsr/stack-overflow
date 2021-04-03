@@ -12,7 +12,8 @@
     <hr>
     <p class="h4 mb-4">Save Answer</p>
     <form action="#" method="POST"
-          th:action="@{/answers/save}" th:object="${answer}">
+          th:action="@{/answers/saveAnswer(questionId=${questionId}, answerId=${answer.id})}"
+          th:object="${answer}">
 
         <input th:field="*{id}" type="hidden"/>
         <input th:field="*{createdAt}" type="hidden"/>
@@ -20,7 +21,7 @@
 
         <div class="form-inline">
             <input class="form-control mb-4 col-4" placeholder="Write your answer..." th:field="*{content}"
-                   th:required="mendatory" type="text">
+                   th:required="mandatory" type="text">
             <span class="badge badge-danger ml-2 mb-4"
                   th:errors="*{content}"
                   th:if="${#fields.hasErrors('content')}"></span>

@@ -2,6 +2,7 @@ package com.mountblue.stackoverflow.controller;
 
 import com.mountblue.stackoverflow.model.Answer;
 import com.mountblue.stackoverflow.model.AnswerComment;
+import com.mountblue.stackoverflow.model.QuestionComment;
 import com.mountblue.stackoverflow.service.AnswerCommentService;
 import com.mountblue.stackoverflow.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/answerComments")
+@RequestMapping("/answerComment")
 public class AnswerCommentController {
 
     @Autowired
@@ -35,22 +36,35 @@ public class AnswerCommentController {
     }
 
     @GetMapping("/showFormForCommentAdd")
-    String showFormForAnswerComment(@RequestParam("answerId") int answerId,Model model){
-        model.addAttribute("answerComment", answerCommentService.findAll());
-        AnswerComment comments = new AnswerComment();
-        model.addAttribute("comments", comments);
-        model.addAttribute("answer", answerService.findById(answerId));
-        return "answer/comment-form";
+    String showFormForAnswerComment(@RequestParam("answerId") int answerId,
+                                    @RequestParam("questionId") int questionId ,Model model){
+        AnswerComment answerComment = new AnswerComment();
+        model.addAttribute("answerComment", answerComment);
+        model.addAttribute("questionId", questionId);
+        model.addAttribute("answerId", answerId);
+        return "answer/answer-comment-form";
+    }
 
+    @RequestMapping("/showFormForUpdateAnswerComment")
+    public String updateQuestionComment(@RequestParam("answerCommentId") int answerCommentId,
+                                        @RequestParam("answerId") int answerId,
+                                        @RequestParam("questionId") int questionId, Model model) {
+        AnswerComment answerComment = answerCommentService.findAnswerCommentById(answerCommentId);
+        model.addAttribute("answerComment",answerComment);
+        model.addAttribute("questionId", questionId);
+        model.addAttribute("answerId", answerId);
+        return "answer/answer-comment-form";
     }
 
     @PostMapping("/saveAnswerComment")
-    public String saveAnswerComment(@RequestParam("answerId") int answerId, @ModelAttribute("comments") AnswerComment answerComment) {
+    public String saveAnswerComment(@RequestParam("answerId") int answerId,
+                                    @RequestParam("questionId") int questionId
+                                    ,@ModelAttribute("answerComment") AnswerComment answerComment) {
         Answer answer = answerService.findById(answerId);
         answerComment.setAnswer(answer);
         answerCommentService.save(answerComment);
         answerService.save(answer);
-        return "redirect:/user/showHomePage";
+        return "redirect:/question/showQuestion?questionId="+questionId;
     }
 
     @GetMapping("/deleteComments")

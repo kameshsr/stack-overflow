@@ -1,8 +1,12 @@
 package com.mountblue.stackoverflow.controller;
 
+import com.mountblue.stackoverflow.model.Answer;
 import com.mountblue.stackoverflow.model.Question;
 import com.mountblue.stackoverflow.model.QuestionComment;
+import com.mountblue.stackoverflow.repository.AnswerRepository;
 import com.mountblue.stackoverflow.repository.QuestionCommentRepository;
+import com.mountblue.stackoverflow.repository.QuestionRepository;
+import com.mountblue.stackoverflow.service.AnswerService;
 import com.mountblue.stackoverflow.service.QuestionCommentService;
 import com.mountblue.stackoverflow.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +27,20 @@ public class QuestionController {
     private final QuestionCommentService questionCommentService;
 
     @Autowired
+    private final QuestionRepository questionRepository;
+
+    @Autowired
     private QuestionCommentRepository questionCommentRepository;
 
-    public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService) {
+    @Autowired
+    private AnswerService answerService;
+
+    public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService, QuestionRepository questionRepository, QuestionCommentRepository questionCommentRepository, AnswerService answerService) {
         this.questionService = questionService;
         this.questionCommentService = questionCommentService;
+        this.questionRepository = questionRepository;
+        this.questionCommentRepository = questionCommentRepository;
+        this.answerService = answerService;
     }
 
     @RequestMapping("/showQuestionForm")
@@ -73,10 +86,13 @@ public class QuestionController {
         Question question = questionService.getQuestion(questionId);
         List<QuestionComment> questionComments= questionCommentRepository.findByQuestionId(questionId);
         QuestionComment questionComment = new QuestionComment();
+        Answer answer = new Answer();
+        List<Answer> answers = answerService.findByQuestionId(questionId);
         model.addAttribute("questionComment", questionComment);
         model.addAttribute("questionComments", questionComments);
         model.addAttribute("question", question);
-
+        model.addAttribute("answer", answer);
+        model.addAttribute("answers", answers);
         return "question/show-question";
     }
 

@@ -10,12 +10,13 @@
 <body>
 <div class="container">
     <h3>Comment</h3>
-    <form action="#" th:action="@{/answerComments/saveAnswerComment(answerId=${answer.id})}"
-          th:object="${comments}" method="POST">
+    <form action="#" th:action="@{/answerComment/saveAnswerComment(answerId=${answerId},
+    questionId=${questionId})}"
+          th:object="${answerComment}" method="POST">
 
         <input type="hidden" th:field="*{id}" />
 
-        <input type="text" th:field="*{userName}"
+        <input type="hidden" th:field="*{userName}"
                class="form-control mb-4 col-4" placeholder="Name">
 
         <input type="text" th:field="*{content}"
@@ -25,7 +26,7 @@
 
     </form>
     <br> <br>
-    <a href="/" th:href="@{/user/showHomePage}">Back to Home Page</a>
+    <a href="/" th:href="@{/question/showQuestion(questionId=${questionId})}">Back to Answer</a>
 </div>
 </body>
 

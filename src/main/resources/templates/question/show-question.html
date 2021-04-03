@@ -53,6 +53,7 @@
                         <a th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
                     questionId=${question.id})}">Update</a>
                     </small>
+                    &nbsp;
                     <small>
                         <a th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${questionComment.id},
                     questionId=${question.id})}">Delete</a>
@@ -91,35 +92,34 @@
                             <a th:href="@{/answers/showFormForAnswerUpdate(answerId=${answer.id},
                     questionId=${question.id})}">Update</a>
                         </small>
+                        &nbsp;
                         <small>
                             <a th:href="@{/answers/deleteAnswer(answerId=${answer.id},
                     questionId=${question.id})}">Delete</a>
                         </small>
-
+                        &nbsp;
                         <small>
                             <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id},
-                    questionId=${question.id})}">Comment</a>
+                            answerCommentId=0, questionId=${question.id})}">Comment</a>
                         </small>
-                        <div class="row">
-                            <div class="col" th:each="answerComment:${answer.answerComments}">
+                        <div class="row" th:each="answerComment:${answer.answerComments}">
+                            <div class="col">
                                 <div class="row">
-                                   <div class="col">
-                                       <i th:text="${answerComment.content}"></i>
-                                   </div>
+                                    <i th:text="${answerComment.content}"></i>
                                 </div>
                                 <div class="row">
                                     <small>
-                                        <a th:href="@{/answers/showFormForUpdateAnswerComment(answerId=${answer.id}, questionId=${question.id})}">Update</a>
+                                        <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id},
+                                         answerCommentId=${answerComment.id}, questionId=${question.id})}">Update</a>
                                     </small>
+                                    &nbsp;&nbsp;
                                     <small>
-                                        <a th:href="@{/answers/deleteAnswer(answerId=${answer.id}, questionId=${question.id})}">Delete</a>
+                                        <a th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${answerComment.id}, questionId=${question.id})}">Delete</a>
                                     </small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col"></div>
-                    <div class="col"></div>
                 </div>
             </div>
         </div>

@@ -35,23 +35,27 @@ public class AnswerCommentController {
         return "answer/list-comment";
     }
 
-    @GetMapping("/showFormForAnswerCommentAdd")
-    String showFormForAnswerComment(@RequestParam("answerId") int answerId,
-                                    @RequestParam("questionId") int questionId ,Model model){
-        AnswerComment answerComment = new AnswerComment();
-        model.addAttribute("answerComment", answerComment);
-        model.addAttribute("questionId", questionId);
-        model.addAttribute("answerId", answerId);
-        return "answer/answer-comment-form";
-    }
+//    @GetMapping("/showFormForAnswerCommentAdd")
+//    String showFormForAnswerComment(@RequestParam("answerId") int answerId,
+//                                    @RequestParam("questionId") int questionId ,Model model){
+//        AnswerComment answerComment = new AnswerComment();
+//        model.addAttribute("answerComment", answerComment);
+//        model.addAttribute("questionId", questionId);
+//        model.addAttribute("answerId", answerId);
+//        return "answer/answer-comment-form";
+//    }
 
     @RequestMapping("/showFormForUpdateAnswerComment")
     public String updateQuestionComment(@RequestParam("answerCommentId") int answerCommentId,
                                         @RequestParam("answerId") int answerId,
                                         @RequestParam("questionId") int questionId, Model model) {
-
-        AnswerComment answerComment = answerCommentService.findAnswerCommentById(answerCommentId);
+        AnswerComment answerComment = null;
+        if (answerCommentId != 0)
+            answerComment = answerCommentService.findAnswerCommentById(answerCommentId);
+        else
+            answerComment = new AnswerComment();
         model.addAttribute("answerComment",answerComment);
+        model.addAttribute("answerCommentId",answerCommentId);
         model.addAttribute("questionId", questionId);
         model.addAttribute("answerId", answerId);
         return "answer/answer-comment-form";
@@ -60,7 +64,10 @@ public class AnswerCommentController {
     @PostMapping("/saveAnswerComment")
     public String saveAnswerComment(@RequestParam("answerId") int answerId,
                                     @RequestParam("questionId") int questionId,
+                                    @RequestParam("answerCommentId") int answerCommentId,
                                     @ModelAttribute("answerComment") AnswerComment answerComment) {
+        if (answerCommentId != 0)
+            answerComment.setId(answerCommentId);
         Answer answer = answerService.findById(answerId);
         answerComment.setAnswer(answer);
         answerCommentService.save(answerComment);
@@ -68,17 +75,10 @@ public class AnswerCommentController {
         return "redirect:/question/showQuestion?questionId="+questionId;
     }
 
-    @GetMapping("/deleteComments")
-    public String deleteAnswerComment(@RequestParam("answerId") int theId, @RequestParam("answerCommentId") int answerCommentId, BindingResult bindingResult) {
-       if(bindingResult.hasErrors()){
-           return "redirect:/answerComments/commentsList?error";
-       }else{
+    @GetMapping("/deleteAnswerComment")
+    public String deleteAnswerComment(@RequestParam("answerCommentId") int answerCommentId,
+                                      @RequestParam("questionId") int questionId) {
            this.answerCommentService.deleteById(answerCommentId);
-           return "redirect:/user/showHomePage";
-           //"redirect:/answer/showAnswer";
-       }
-
+           return "redirect:/question/showQuestion?questionId="+questionId;
     }
-
-
 }

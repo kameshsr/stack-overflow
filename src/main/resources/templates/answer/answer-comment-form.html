@@ -11,7 +11,7 @@
 <div class="container">
     <h3>Comment</h3>
     <form action="#" th:action="@{/answerComment/saveAnswerComment(answerId=${answerId},
-    questionId=${questionId})}"
+    answerCommentId=${answerCommentId}, questionId=${questionId})}"
           th:object="${answerComment}" method="POST">
 
         <input type="hidden" th:field="*{id}" />
@@ -31,13 +31,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-

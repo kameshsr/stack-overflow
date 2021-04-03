@@ -35,7 +35,7 @@ public class AnswerCommentController {
         return "answer/list-comment";
     }
 
-    @GetMapping("/showFormForCommentAdd")
+    @GetMapping("/showFormForAnswerCommentAdd")
     String showFormForAnswerComment(@RequestParam("answerId") int answerId,
                                     @RequestParam("questionId") int questionId ,Model model){
         AnswerComment answerComment = new AnswerComment();
@@ -49,6 +49,7 @@ public class AnswerCommentController {
     public String updateQuestionComment(@RequestParam("answerCommentId") int answerCommentId,
                                         @RequestParam("answerId") int answerId,
                                         @RequestParam("questionId") int questionId, Model model) {
+
         AnswerComment answerComment = answerCommentService.findAnswerCommentById(answerCommentId);
         model.addAttribute("answerComment",answerComment);
         model.addAttribute("questionId", questionId);
@@ -58,8 +59,8 @@ public class AnswerCommentController {
 
     @PostMapping("/saveAnswerComment")
     public String saveAnswerComment(@RequestParam("answerId") int answerId,
-                                    @RequestParam("questionId") int questionId
-                                    ,@ModelAttribute("answerComment") AnswerComment answerComment) {
+                                    @RequestParam("questionId") int questionId,
+                                    @ModelAttribute("answerComment") AnswerComment answerComment) {
         Answer answer = answerService.findById(answerId);
         answerComment.setAnswer(answer);
         answerCommentService.save(answerComment);

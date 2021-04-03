@@ -97,7 +97,7 @@
                         </small>
 
                         <small>
-                            <a th:href="@{/answerComment/showFormForCommentAdd(answerId=${answer.id},
+                            <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id},
                     questionId=${question.id})}">Comment</a>
                         </small>
                         <div class="row">
@@ -109,8 +109,7 @@
                                 </div>
                                 <div class="row">
                                     <small>
-                                        <a th:href="@{/answers/showFormForAnswerUpdate(
-                                        answerId=${answer.id}, questionId=${question.id})}">Update</a>
+                                        <a th:href="@{/answers/showFormForUpdateAnswerComment(answerId=${answer.id}, questionId=${question.id})}">Update</a>
                                     </small>
                                     <small>
                                         <a th:href="@{/answers/deleteAnswer(answerId=${answer.id}, questionId=${question.id})}">Delete</a>

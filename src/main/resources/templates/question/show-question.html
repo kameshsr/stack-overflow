@@ -37,10 +37,27 @@
         <article th:text="${question.content}"></article>
         <b style="font-style: italic" th:text="${question.tags}"></b>
     </th:block>
+
+    <div class="row">
+        <div class="col">
+            <small>
+                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1)}">Upvote</a>
+            </small>
+            <small>
+                <i th:text="${question.vote}"></i>
+            </small>
+            <small>
+                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=-1)}">DownVote</a>
+            </small>
+        </div>
+        <div class="col">
+            <i th:text="${question.userName}"></i>
+            <i th:text="${question.reputation}"></i>
+        </div>
+    </div>
     <br>
     <hr>
     <br>
-
     <div class="row" th:each="questionComment : ${questionComments}">
         <div class="col">
             <div class="row">
@@ -85,6 +102,27 @@
                 <div class="row">
                     <i th:text="${answer.content}"></i>
                 </div>
+
+                <div class="row">
+                    <div class="col">
+                        <small>
+                            <a th:href="@{/votes/voteAnswer(questionId=${question.id},
+                            answerId=${answer.id} ,vote=1)}">Upvote</a>
+                        </small>
+                        <small>
+                            <i th:text="${answer.vote}"></i>
+                        </small>
+                        <small>
+                            <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id},
+                            vote=-1)}">DownVote</a>
+                        </small>
+                    </div>
+                    <div class="col">
+                        <i th:text="${answer.userName}"></i>
+                        <i th:text="${answer.reputation}"></i>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col">
                         <small th:text="answer.userName"></small>

@@ -21,7 +21,7 @@ public class User {
 
     private String password;
 
-    private int reputation=1;
+    private int reputation = 1;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
@@ -40,24 +40,21 @@ public class User {
     }
 
 
-    public User(String name, String email, String password, Collection<Role> roles) {
+    public User(String name, String email, String password, Collection<Role> roles, int reputation) {
         super();
         this.name = name;
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.reputation = reputation;
     }
 
-    public User(int id, String name, String email, String password, int reputation, Collection<Role> roles) {
+    public User(int id, String name, String email, String password, Collection<Role> roles, int reputation) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.reputation = reputation;
         this.roles = roles;
-    }
-
-    public User(int reputation) {
         this.reputation = reputation;
     }
 
@@ -116,7 +113,6 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", reputation=" + reputation +
                 ", roles=" + roles +
                 '}';
     }

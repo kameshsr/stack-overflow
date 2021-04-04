@@ -23,6 +23,12 @@ public class Answer {
 
     private String userName;
 
+    private int vote=0;
+
+    private String email;
+
+    private int reputation = 1;
+
     @OneToMany(mappedBy = "answer",
             cascade = {CascadeType.REMOVE})
 
@@ -36,19 +42,25 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(int id, String content, LocalDateTime createdAt, String userName, List<AnswerComment> answerComments, Question question) {
+    public Answer(int id, String content, LocalDateTime createdAt, String userName, int vote, String email, int reputation, List<AnswerComment> answerComments, Question question) {
         this.id = id;
         this.content = content;
         this.createdAt = createdAt;
         this.userName = userName;
+        this.vote = vote;
+        this.email = email;
+        this.reputation = reputation;
         this.answerComments = answerComments;
         this.question = question;
     }
 
-    public Answer(String content, LocalDateTime createdAt, String userName, List<AnswerComment> answerComments, Question question) {
+    public Answer(String content, LocalDateTime createdAt, String userName, int vote, String email, int reputation, List<AnswerComment> answerComments, Question question) {
         this.content = content;
         this.createdAt = createdAt;
         this.userName = userName;
+        this.vote = vote;
+        this.email = email;
+        this.reputation = reputation;
         this.answerComments = answerComments;
         this.question = question;
     }
@@ -99,5 +111,29 @@ public class Answer {
 
     public void setAnswerComments(List<AnswerComment> answerComments) {
         this.answerComments = answerComments;
+    }
+
+    public int getVote() {
+        return vote;
+    }
+
+    public void setVote(int vote) {
+        this.vote = vote;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(int reputation) {
+        this.reputation = reputation;
     }
 }

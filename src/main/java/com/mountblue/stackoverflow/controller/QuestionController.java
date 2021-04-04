@@ -3,12 +3,14 @@ package com.mountblue.stackoverflow.controller;
 import com.mountblue.stackoverflow.model.Answer;
 import com.mountblue.stackoverflow.model.Question;
 import com.mountblue.stackoverflow.model.QuestionComment;
+import com.mountblue.stackoverflow.model.User;
 import com.mountblue.stackoverflow.repository.AnswerRepository;
 import com.mountblue.stackoverflow.repository.QuestionCommentRepository;
 import com.mountblue.stackoverflow.repository.QuestionRepository;
 import com.mountblue.stackoverflow.service.AnswerService;
 import com.mountblue.stackoverflow.service.QuestionCommentService;
 import com.mountblue.stackoverflow.service.QuestionService;
+import com.mountblue.stackoverflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,12 +37,16 @@ public class QuestionController {
     @Autowired
     private AnswerService answerService;
 
-    public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService, QuestionRepository questionRepository, QuestionCommentRepository questionCommentRepository, AnswerService answerService) {
+    @Autowired
+    private UserService userService;
+
+    public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService, QuestionRepository questionRepository, QuestionCommentRepository questionCommentRepository, AnswerService answerService, UserService userService) {
         this.questionService = questionService;
         this.questionCommentService = questionCommentService;
         this.questionRepository = questionRepository;
         this.questionCommentRepository = questionCommentRepository;
         this.answerService = answerService;
+        this.userService = userService;
     }
 
     @RequestMapping("/showQuestionForm")
@@ -82,7 +88,9 @@ public class QuestionController {
     }
 
     @RequestMapping("/showQuestion")
-    public String showQuestion(Model model, @RequestParam("questionId") int questionId) {
+    public String showQuestion(Model model, @RequestParam("questionId") int questionId
+    , @RequestParam("userEmail") String userEmail) {
+        User user = userService.getUserByEmail(userEmail);
         Question question = questionService.getQuestion(questionId);
         List<QuestionComment> questionComments= questionCommentRepository.findByQuestionId(questionId);
         QuestionComment questionComment = new QuestionComment();
@@ -93,6 +101,7 @@ public class QuestionController {
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
         model.addAttribute("answers", answers);
+        model.addAttribute("user", user);
         return "question/show-question";
     }
 
@@ -103,6 +112,14 @@ public class QuestionController {
     }
 
     @GetMapping("/showAllQuestion")
+    public String viewQuestionList(Model model, @RequestParam("userEmail") String userEmail) {
+        User user = userService.getUserByEmail(userEmail);
+        List<Question> listQuestion = questionService.getAllQuestions();
+        model.addAttribute(("listQuestion"), listQuestion);
+        return "question/question-list";
+    }
+
+    @GetMapping("/showAllQuestionForNonLoggedInUser")
     public String viewPostsList(Model model) {
         List<Question> listQuestion = questionService.getAllQuestions();
         model.addAttribute(("listQuestion"), listQuestion);

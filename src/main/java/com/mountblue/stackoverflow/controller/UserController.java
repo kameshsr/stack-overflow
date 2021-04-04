@@ -23,9 +23,7 @@ public class UserController {
     }
 
     @RequestMapping("/showHomePage")
-    public String showHomePage(@ModelAttribute("user") User user, Model model) {
-        System.out.println(user);
-        model.addAttribute("user", user);
+    public String showHomePage() {
         return "user/home";
     }
 
@@ -53,12 +51,11 @@ public class UserController {
     }
 
     @RequestMapping("/validateUser")
-    public String validateUser(@RequestParam("userName") String email,
+    public String validateUser(@RequestParam("userName") String userEmail,
                                @RequestParam("password") String password, Model model) {
-        if (userService.isValidUser(email, password)) {
-            User user = userService.getUserByEmail(email);
-            model.addAttribute("user", user);
-            return "redirect:/user/showHomePage?success";
+        if (userService.isValidUser(userEmail, password)) {
+
+            return "redirect:/question/showAllQuestion?success&userEmail="+userEmail;
         } else {
             return "redirect:/user/showLoginForm?error";
         }

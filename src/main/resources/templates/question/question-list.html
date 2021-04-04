@@ -7,7 +7,7 @@
 <body>
 <h1>List of Questions</h1>
     <div th:each="question : ${listQuestion}">
-        <a th:href="@{/question/showQuestion(questionId=${question.id})}"
+        <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${userEmail})}"
                class="btn btn-primary"> <b style="color:blue" th:text="${question.title}"></b></a>
         <br><br>
     </div>

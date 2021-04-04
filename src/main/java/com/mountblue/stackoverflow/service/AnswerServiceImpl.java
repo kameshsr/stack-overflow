@@ -47,4 +47,9 @@ public class AnswerServiceImpl  implements AnswerService{
     public List<Answer> findSortedAnswerByTimeStamp(int questionId) {
         return answerRepository.findSortedAnswerByTimeStamp(questionId);
     }
+
+    @Override
+    public List<Answer> findSortedAnswerByVotes(int questionId) {
+        return answerRepository.findSortedAnswerByVotes(questionId);
+    }
 }

@@ -100,16 +100,22 @@
     </form>
     <br> <br>
     <div class="container">
-
+        <div class="row">
+            <div class="col">
+                <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
+                    oldest=1)}"
+                >Oldest</a>
+                <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
+                    oldest=0)}"
+                >Votes</a>
+                <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
+                    oldest=3)}"
+                >Active</a>
+            </div>
+        </div>
         <div class="row" th:each="answer : ${answers}">
             <div class="col">
                 <div class="row">
-                    <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
-                    oldest=1)}"
-                    >Oldest</a>
-                    <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
-                    oldest=0)}"
-                    >Active</a>
                     <i th:text="${answer.content}"></i>
                 </div>
 
@@ -117,14 +123,16 @@
                     <div class="col">
                         <small>
                             <a th:href="@{/votes/voteAnswer(questionId=${question.id},
-                            answerId=${answer.id} ,vote=1)}">Upvote</a>
+                            answerId=${answer.id} ,vote=1,
+                userEmail=${user.email}, oldest=0)}">Upvote</a>
                         </small>
                         <small>
                             <i th:text="${answer.vote}"></i>
                         </small>
                         <small>
                             <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id},
-                            vote=-1)}">DownVote</a>
+                            vote=-1,
+                userEmail=${user.email}, oldest=0)}">DownVote</a>
                         </small>
                     </div>
                     <div class="col">

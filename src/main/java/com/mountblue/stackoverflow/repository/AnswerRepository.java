@@ -13,4 +13,7 @@ public interface AnswerRepository extends JpaRepository<Answer,Integer> {
 
     @Query(value = "select * from answer where question_id=:questionId order by created_at", nativeQuery = true)
     List<Answer> findSortedAnswerByTimeStamp(@Param("questionId") int questionId);
+
+    @Query(value = "select * from answer where question_id=:questionId order by vote desc", nativeQuery = true)
+    List<Answer> findSortedAnswerByVotes(@Param("questionId") int questionId);
 }

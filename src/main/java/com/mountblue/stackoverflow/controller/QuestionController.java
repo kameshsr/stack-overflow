@@ -102,7 +102,10 @@ public class QuestionController {
         List<Answer> answers;
         if (oldest == 1) {
             answers = answerService.findSortedAnswerByTimeStamp(questionId);
-            oldest = 0;
+        } else if(oldest == 0) {
+            answers = answerService.findSortedAnswerByVotes(questionId);
+        } else if(oldest == 3) {
+            answers = answerService.findByQuestionId(questionId);
         } else {
             answers = answerService.findByQuestionId(questionId);
         }

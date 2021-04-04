@@ -12,4 +12,6 @@ public interface AnswerService {
     List<Answer> findByQuestionId(int questionId);
 
     List<Answer> findSortedAnswerByTimeStamp(int questionId);
+
+    List<Answer> findSortedAnswerByVotes(int questionId);
 }

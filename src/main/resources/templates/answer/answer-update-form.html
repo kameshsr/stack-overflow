@@ -12,7 +12,7 @@
     <hr>
     <p class="h4 mb-4">Save Answer</p>
     <form action="#" method="POST"
-          th:action="@{/answers/saveAnswer(questionId=${questionId}, answerId=${answer.id})}"
+          th:action="@{/answers/saveAnswer(questionId=${questionId}, answerId=${answer.id}, userEmail=${userEmail})}"
           th:object="${answer}">
 
         <input th:field="*{id}" type="hidden"/>
@@ -30,7 +30,7 @@
         <button class="btn btn-info col-2" type="submit">Publish</button>
     </form>
     <hr>
-    <a th:href="@{/user/showHomePage}">Back to Home Page</a>
+    <a th:href="@{/question/showQuestion(questionId=${questionId}, userEmail=${userEmail})}">Back Question Answer</a>
 </div>
 </body>
 </html>

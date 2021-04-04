@@ -42,4 +42,9 @@ public class AnswerServiceImpl  implements AnswerService{
     public List<Answer> findByQuestionId(int questionId) {
         return answerRepository.findByQuestionId(questionId);
     }
+
+    @Override
+    public List<Answer> findSortedAnswerByTimeStamp(int questionId) {
+        return answerRepository.findSortedAnswerByTimeStamp(questionId);
+    }
 }

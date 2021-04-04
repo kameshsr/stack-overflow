@@ -1,5 +1,6 @@
 package com.mountblue.stackoverflow.model;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -17,6 +18,7 @@ public class AnswerComment {
 
     private String userName;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

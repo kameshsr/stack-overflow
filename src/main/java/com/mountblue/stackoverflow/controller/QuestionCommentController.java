@@ -15,6 +15,7 @@ import java.util.List;
 public class QuestionCommentController {
     private final QuestionCommentService questionCommentService;
     private final QuestionService questionService;
+    int oldest = 0;
 
     public QuestionCommentController(QuestionCommentService questionCommentService, QuestionService questionService, QuestionCommentRepository questionCommentRepository) {
         this.questionCommentService = questionCommentService;
@@ -46,7 +47,7 @@ public class QuestionCommentController {
         questionCommentService.save(questionComment);
         question.getComments().add(questionComment);
         questionService.save(question);
-        return "redirect:/question/showQuestion?questionId="+questionId;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
     }
 
     @RequestMapping("/showFormForUpdateQuestionComment")
@@ -61,6 +62,6 @@ public class QuestionCommentController {
      @RequestMapping("/deleteQuestionComment")
     public String deleteQuestionComment(@RequestParam("questionId") int questionId, @RequestParam("questionCommentId") int questionCommentId){
            questionCommentService.deleteById(questionCommentId);
-           return "redirect:/question/showQuestion?questionId="+questionId;
+         return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
        }
 }

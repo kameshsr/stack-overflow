@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/answers")
 public class AnswerController {
@@ -26,6 +28,8 @@ public class AnswerController {
 
     @Autowired
     private QuestionService questionService;
+
+    int oldest = 0;
 
     public AnswerController(AnswerService answerService, AnswerCommentRepository answerCommentRepository, AnswerRepository answerRepository, QuestionService questionService) {
         this.answerService = answerService;
@@ -62,7 +66,7 @@ public class AnswerController {
         answerService.save(answer);
         question.getAnswers().add(answer);
         questionService.save(question);
-        return "redirect:/question/showQuestion?questionId="+questionId;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
     }
 
     @GetMapping("/showFormForAnswerUpdate")
@@ -78,6 +82,15 @@ public class AnswerController {
     public String deleteAnswer(@RequestParam("answerId") int answerId ,
                                @RequestParam("questionId") int questionId){
         answerService.deleteById(answerId);
-        return "redirect:/question/showQuestion?questionId="+questionId;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
+    }
+
+    @RequestMapping("/sortAnswer")
+    public String sortAnswer(@RequestParam("questionId") int questionId,
+                            @RequestParam("userEmail") String userEmail ,Model model) {
+        List<Answer> answers= answerService.findSortedAnswerByTimeStamp(questionId);
+
+        model.addAttribute("answers", answers);
+        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
     }
 }

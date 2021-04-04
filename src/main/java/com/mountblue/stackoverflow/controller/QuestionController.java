@@ -12,6 +12,7 @@ import com.mountblue.stackoverflow.service.QuestionCommentService;
 import com.mountblue.stackoverflow.service.QuestionService;
 import com.mountblue.stackoverflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +41,8 @@ public class QuestionController {
     @Autowired
     private UserService userService;
 
+    int oldest = 0;
+
     public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService, QuestionRepository questionRepository, QuestionCommentRepository questionCommentRepository, AnswerService answerService, UserService userService) {
         this.questionService = questionService;
         this.questionCommentService = questionCommentService;
@@ -65,7 +68,7 @@ public class QuestionController {
             int questionId = question.hashCode();
             question.setId(questionId);
             questionService.saveQuestion(question);
-            return "redirect:/question/showQuestion?questionId="+questionId;
+            return "redirect:/question/showQuestion?questionId="+questionId + "&oldest=" + oldest;
         }
     }
 
@@ -76,7 +79,7 @@ public class QuestionController {
             return "redirect:/question/showFormForQuestionUpdate?error";
         } else {
             questionService.saveQuestion(question);
-            return "redirect:/question/showQuestion?questionId="+question.getId();
+            return "redirect:/question/showQuestion?questionId="+question.getId() + "&oldest=" + oldest;
         }
     }
 
@@ -89,13 +92,20 @@ public class QuestionController {
 
     @RequestMapping("/showQuestion")
     public String showQuestion(Model model, @RequestParam("questionId") int questionId
-    , @RequestParam("userEmail") String userEmail) {
+    , @RequestParam("userEmail") String userEmail, @RequestParam("oldest") int oldest) {
+
         User user = userService.getUserByEmail(userEmail);
         Question question = questionService.getQuestion(questionId);
         List<QuestionComment> questionComments= questionCommentRepository.findByQuestionId(questionId);
         QuestionComment questionComment = new QuestionComment();
         Answer answer = new Answer();
-        List<Answer> answers = answerService.findByQuestionId(questionId);
+        List<Answer> answers;
+        if (oldest == 1) {
+            answers = answerService.findSortedAnswerByTimeStamp(questionId);
+            oldest = 0;
+        } else {
+            answers = answerService.findByQuestionId(questionId);
+        }
         model.addAttribute("questionComment", questionComment);
         model.addAttribute("questionComments", questionComments);
         model.addAttribute("question", question);

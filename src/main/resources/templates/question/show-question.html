@@ -54,6 +54,7 @@
         </div>
         <div class="col">
             <i th:text="${question.userName}"></i>
+            <small th:text="asked+' '+${question.createdAt}"></small>
             <i th:text="${question.reputation}"></i>
         </div>
     </div>
@@ -67,6 +68,7 @@
             </div>
             <div class="row">
                 <div class="col">
+                    <small th:text="${questionComment.createdAt}"></small>
                     <small th:text="questionComment.userName"></small>
                     <small>
                         <a th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
@@ -102,6 +104,12 @@
         <div class="row" th:each="answer : ${answers}">
             <div class="col">
                 <div class="row">
+                    <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
+                    oldest=1)}"
+                    >Oldest</a>
+                    <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
+                    oldest=0)}"
+                    >Active</a>
                     <i th:text="${answer.content}"></i>
                 </div>
 
@@ -120,6 +128,7 @@
                         </small>
                     </div>
                     <div class="col">
+                        <small th:text="answered+' '+${answer.createdAt}"></small>
                         <i th:text="${answer.userName}"></i>
                         <i th:text="${answer.reputation}"></i>
                     </div>
@@ -146,6 +155,7 @@
                             <div class="col">
                                 <div class="row">
                                     <i th:text="${answerComment.content}"></i>
+                                    <small th:text="${answerComment.createdAt}"></small>
                                 </div>
                                 <div class="row">
                                     <small>
@@ -163,7 +173,6 @@
                 </div>
             </div>
         </div>
-
 
         <h4>Add answer</h4>
         <form action="#" th:action="@{/answers/saveAnswer(questionId=${question.id},

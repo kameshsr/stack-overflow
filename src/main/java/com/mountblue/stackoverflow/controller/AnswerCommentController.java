@@ -21,6 +21,8 @@ public class AnswerCommentController {
      private AnswerService answerService;
     private final AnswerCommentService answerCommentService;
 
+    int oldest =0;
+
     @Autowired
     public AnswerCommentController(AnswerCommentService answerCommentService) {
         this.answerCommentService = answerCommentService;
@@ -72,13 +74,13 @@ public class AnswerCommentController {
         answerComment.setAnswer(answer);
         answerCommentService.save(answerComment);
         answerService.save(answer);
-        return "redirect:/question/showQuestion?questionId="+questionId;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
     }
 
     @GetMapping("/deleteAnswerComment")
     public String deleteAnswerComment(@RequestParam("answerCommentId") int answerCommentId,
                                       @RequestParam("questionId") int questionId) {
-           this.answerCommentService.deleteById(answerCommentId);
-           return "redirect:/question/showQuestion?questionId="+questionId;
+        this.answerCommentService.deleteById(answerCommentId);
+        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
     }
 }

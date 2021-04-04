@@ -41,13 +41,15 @@
     <div class="row">
         <div class="col">
             <small>
-                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1)}">Upvote</a>
+                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1,
+                userEmail=${user.email})}">Upvote</a>
             </small>
             <small>
                 <i th:text="${question.vote}"></i>
             </small>
             <small>
-                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=-1)}">DownVote</a>
+                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=-1,
+                userEmail=${user.email})}">DownVote</a>
             </small>
         </div>
         <div class="col">

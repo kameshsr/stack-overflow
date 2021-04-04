@@ -2,6 +2,7 @@ package com.mountblue.stackoverflow.controller;
 
 import com.mountblue.stackoverflow.model.Answer;
 import com.mountblue.stackoverflow.model.Question;
+import com.mountblue.stackoverflow.model.User;
 import com.mountblue.stackoverflow.service.AnswerService;
 import com.mountblue.stackoverflow.service.QuestionService;
 import com.mountblue.stackoverflow.service.UserService;
@@ -24,14 +25,16 @@ public class votesController {
 
     @RequestMapping("/voteQuestion")
     public String voteQuestion(@RequestParam("questionId") int questionId,
-                               @RequestParam("vote") int vote) {
+                               @RequestParam("vote") int vote, @RequestParam("userEmail") String userEmail) {
         Question question = questionService.getQuestion(questionId);
+        User user = userService.getUserByEmail(userEmail);
         if (vote > 0) {
             question.setVote(question.getVote() + 1);
             question.setReputation(question.getReputation() + 10);
         } else {
             question.setVote(question.getVote() - 1);
             question.setReputation(question.getReputation() - 2);
+            user.setReputation(user.getReputation()-1);
         }
         questionService.saveQuestion(question);
         return "redirect:/question/showQuestion?questionId="+questionId;
@@ -40,7 +43,7 @@ public class votesController {
     @RequestMapping("/voteAnswer")
     public String voteAnswer(@RequestParam("questionId") int questionId,
                              @RequestParam("answerId") int answerId,
-                             @RequestParam("vote") int vote) {
+                             @RequestParam("vote") int vote, @RequestParam("userEmail") String userEmail) {
         Answer answer = answerService.findById(answerId);
         if (vote > 0) {
             answer.setVote(answer.getVote() + 1);

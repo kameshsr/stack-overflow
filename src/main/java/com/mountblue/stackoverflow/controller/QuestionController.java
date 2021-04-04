@@ -113,7 +113,8 @@ public class QuestionController {
 
     @GetMapping("/showAllQuestion")
     public String viewQuestionList(Model model, @RequestParam("userEmail") String userEmail) {
-        User user = userService.getUserByEmail(userEmail);
+        //User user = userService.getUserByEmail(userEmail);
+        model.addAttribute("userEmail", userEmail);
         List<Question> listQuestion = questionService.getAllQuestions();
         model.addAttribute(("listQuestion"), listQuestion);
         return "question/question-list";

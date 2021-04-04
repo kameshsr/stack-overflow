@@ -7,4 +7,6 @@ public interface UserService {
     void saveUser(User user);
 
     boolean isValidUser(String userName, String password);
+
+    User getUserByEmail(String email);
 }

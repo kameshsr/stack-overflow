@@ -64,7 +64,7 @@
     <div class="row" th:each="questionComment : ${questionComments}">
         <div class="col">
             <div class="row">
-                <i th:text="${questionComment.content}"></i>
+                <div th:utext="${questionComment.content}"></div>
             </div>
             <div class="row">
                 <div class="col">

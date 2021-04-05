@@ -54,13 +54,10 @@ public class QuestionServiceImplementation implements QuestionService{
     public List<Question> getFilteredQuestions(String searchQuestion) {
         List<Question> allQuestions = questionRepository.findAll();
         List<Question> filteredQuestions = new ArrayList<>();
-
-        for (int i=0; i<allQuestions.size(); i++)
-        {
+        for (int i=0; i<allQuestions.size(); i++) {
             if(allQuestions.get(i).getTitle().toLowerCase(Locale.ROOT).contains(searchQuestion.toLowerCase(Locale.ROOT)))
                 filteredQuestions.add(allQuestions.get(i));
         }
-
         return  filteredQuestions;
     }
 }

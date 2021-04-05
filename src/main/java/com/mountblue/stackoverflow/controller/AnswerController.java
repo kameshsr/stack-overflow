@@ -27,7 +27,10 @@ public class AnswerController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
     private UserService userService;
+
+    int oldest =0;
 
     public AnswerController(AnswerService answerService, AnswerCommentRepository answerCommentRepository, AnswerRepository answerRepository, QuestionService questionService, UserService userService) {
         this.answerService = answerService;
@@ -70,7 +73,7 @@ public class AnswerController {
         answerService.save(answer);
         question.getAnswers().add(answer);
         questionService.save(question);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
     }
 
     @GetMapping("/showFormForAnswerUpdate")
@@ -89,6 +92,6 @@ public class AnswerController {
                                @RequestParam("questionId") int questionId,
                                @RequestParam("userEmail") String userEmail){
         answerService.deleteById(answerId);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
     }
 }

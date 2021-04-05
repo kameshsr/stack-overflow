@@ -36,6 +36,8 @@ public class QuestionController {
 
     private final UserService userService;
 
+    int oldest = 0;
+
     public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService, QuestionRepository questionRepository, QuestionCommentRepository questionCommentRepository, AnswerService answerService, UserService userService) {
         this.questionService = questionService;
         this.questionCommentService = questionCommentService;
@@ -66,7 +68,7 @@ public class QuestionController {
             question.setEmail(user.getEmail());
             question.setUserName(user.getName());
             questionService.saveQuestion(question);
-            return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
+            return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
         }
     }
 
@@ -77,7 +79,7 @@ public class QuestionController {
             return "redirect:/question/showFormForQuestionUpdate?error";
         } else {
             questionService.saveQuestion(question);
-            return "redirect:/question/showQuestion?questionId="+question.getId()+"&userEmail="+userEmail;
+            return "redirect:/question/showQuestion?questionId="+question.getId()+"&userEmail="+userEmail+"&oldest="+oldest;
         }
     }
 
@@ -92,13 +94,22 @@ public class QuestionController {
 
     @RequestMapping("/showQuestion")
     public String showQuestion(Model model, @RequestParam("questionId") int questionId
-    , @RequestParam("userEmail") String userEmail) {
+    , @RequestParam("userEmail") String userEmail, @RequestParam("oldest") int oldest) {
         User user = userService.getUserByEmail(userEmail);
         Question question = questionService.getQuestion(questionId);
         List<QuestionComment> questionComments= questionCommentRepository.findByQuestionId(questionId);
         QuestionComment questionComment = new QuestionComment();
         Answer answer = new Answer();
-        List<Answer> answers = answerService.findByQuestionId(questionId);
+        List<Answer> answers;
+        if (oldest == 1) {
+            answers = answerService.findSortedAnswerByTimeStamp(questionId);
+        } else if(oldest == 0) {
+            answers = answerService.findSortedAnswerByVotes(questionId);
+        } else if(oldest == 3) {
+            answers = answerService.findByQuestionId(questionId);
+        } else {
+            answers = answerService.findByQuestionId(questionId);
+        }
         model.addAttribute("questionComment", questionComment);
         model.addAttribute("questionComments", questionComments);
         model.addAttribute("question", question);
@@ -111,7 +122,7 @@ public class QuestionController {
     @RequestMapping("/deleteQuestion")
     public String deleteQuestion(@RequestParam("questionId") int questionId, @RequestParam("userEmail") String userEmail) {
         questionService.deleteQuestionById(questionId);
-        return "redirect:/question/showAllQuestion?userEmail="+userEmail;
+        return "redirect:/question/showAllQuestion?userEmail="+userEmail+"&oldest="+oldest;
     }
 
     @GetMapping("/showAllQuestion")

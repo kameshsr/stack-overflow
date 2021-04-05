@@ -16,6 +16,7 @@ public class votesController {
     private final UserService userService;
     private final QuestionService questionService;
     private final AnswerService answerService;
+    int oldest =0;
 
     public votesController(UserService userService, QuestionService questionService, AnswerService answerService) {
         this.userService = userService;
@@ -37,7 +38,7 @@ public class votesController {
             user.setReputation(user.getReputation()-1);
         }
         questionService.saveQuestion(question);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
     }
 
     @RequestMapping("/voteAnswer")
@@ -56,6 +57,6 @@ public class votesController {
             user.setReputation(user.getReputation()-1);
         }
         answerService.save(answer);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
     }
 }

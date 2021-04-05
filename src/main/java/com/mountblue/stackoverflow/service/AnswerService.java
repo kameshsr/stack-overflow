@@ -10,4 +10,8 @@ public interface AnswerService {
     void deleteById(int id);
 
     List<Answer> findByQuestionId(int questionId);
+
+    List<Answer> findSortedAnswerByTimeStamp(int questionId);
+
+    List<Answer> findSortedAnswerByVotes(int questionId);
 }

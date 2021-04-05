@@ -1,5 +1,7 @@
 package com.mountblue.stackoverflow.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public class Question {
     @Column(length=10485760)
     private String content;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     private String userName;

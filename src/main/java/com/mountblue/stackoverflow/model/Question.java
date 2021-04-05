@@ -44,6 +44,12 @@ public class Question {
 
     List<Answer> answers = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "question_tags",
+            joinColumns = { @JoinColumn(name = "question_id")},
+            inverseJoinColumns = { @JoinColumn (name = "tag_id")})
+    private Set<Tag> tagList = new HashSet<>();
+
     public Question() {
     }
 
@@ -160,6 +166,14 @@ public class Question {
 
     public void setReputation(int reputation) {
         this.reputation = reputation;
+    }
+
+    public Set<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(Set<Tag> tagList) {
+        this.tagList = tagList;
     }
 
     @Override

@@ -36,7 +36,9 @@
     <h3 align="center" th:text="${question.title}"></h3>
     <th:block>
         <article th:utext="${question.content}"></article>
-        <b style="font-style: italic" th:text="${question.tags}"></b>
+        <span th:each="tag : ${tagList}">
+            <i th:text="${tag}"></i>
+        </span>
     </th:block>
 
     <div class="row">
@@ -119,7 +121,7 @@
         <div class="row" th:each="answer : ${answers}">
             <div class="col">
                 <div class="row">
-                    <i th:text="${answer.content}"></i>
+                    <i th:utext="${answer.content}"></i>
                 </div>
 
                 <div class="row">

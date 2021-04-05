@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,16 +67,16 @@ public class QuestionController {
 
             List<String> listTag = Arrays.asList(question.getTags().split(","));
             List<Tag> allTag = tagService.findAll();
-            System.out.println("all tag");
+            List<String> allTagList = new ArrayList<>();
             for(Tag currentTag:allTag) {
-                System.out.println(currentTag.getName());
+                allTagList.add(currentTag.getName());
             }
-            System.out.println("current tag");
             for(String currentTag:listTag) {
-                if (!allTag.contains(currentTag)) {
+                if (!allTagList.contains(currentTag)) {
                     System.out.println(currentTag);
                     Tag tag = new Tag(currentTag);
                     tagService.save(tag);
+                    question.getTagList().add(tag);
                 }
             }
             questionService.saveQuestion(question);
@@ -121,6 +122,10 @@ public class QuestionController {
         } else {
             answers = answerService.findByQuestionId(questionId);
         }
+
+        List<String> tagList = Arrays.asList(question.getTags().split(","));
+        model.addAttribute("tagList", tagList);
+
         model.addAttribute("questionComment", questionComment);
         model.addAttribute("questionComments", questionComments);
         model.addAttribute("question", question);

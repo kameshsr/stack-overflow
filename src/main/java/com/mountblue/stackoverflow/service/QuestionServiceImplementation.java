@@ -4,7 +4,9 @@ import com.mountblue.stackoverflow.model.Question;
 import com.mountblue.stackoverflow.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -46,5 +48,19 @@ public class QuestionServiceImplementation implements QuestionService{
     @Override
     public List<Question> getAllQuestions() {
         return questionRepository.findAll();
+    }
+
+    @Override
+    public List<Question> getFilteredQuestions(String searchQuestion) {
+        List<Question> allQuestions = questionRepository.findAll();
+        List<Question> filteredQuestions = new ArrayList<>();
+
+        for (int i=0; i<allQuestions.size(); i++)
+        {
+            if(allQuestions.get(i).getTitle().toLowerCase(Locale.ROOT).contains(searchQuestion.toLowerCase(Locale.ROOT)))
+                filteredQuestions.add(allQuestions.get(i));
+        }
+
+        return  filteredQuestions;
     }
 }

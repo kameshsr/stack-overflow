@@ -18,8 +18,7 @@
         <input th:field="*{userName}" type="hidden"/>
 
         <div class="form-inline">
-            <LABEL>Title</LABEL>
-            <input class="form-control mb-4 col-4" placeholder="Title" th:field="*{title}"
+            <input class="form-control mb-4 col-4" placeholder="Title of  the Question.." th:field="*{title}"
                    th:required="mandatory" type="text">
             <span class="badge badge-danger ml-2 mb-4"
                   th:errors="*{title}"
@@ -43,7 +42,7 @@
         <button class="btn btn-info col-2" type="submit">Publish</button>
     </form>
     <hr>
-    <a th:href="@{/user/showHomePage}">Back to Home Page</a>
+    <a th:href="@{/question/showAllQuestionForNonLoggedInUser}">Back to Question List</a>
 </div>
 </body>
 </html>

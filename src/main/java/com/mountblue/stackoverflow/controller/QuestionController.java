@@ -126,7 +126,7 @@ public class QuestionController {
     @GetMapping("/showAllQuestionForNonLoggedInUser")
     public String viewPostsList(Model model) {
         List<Question> listQuestion = questionService.getAllQuestions();
-        String userEmail = "krishnabankar62@gmail.com";
+        String userEmail = "guest@mail.com";
         model.addAttribute(("listQuestion"), listQuestion);
         model.addAttribute("userEmail", userEmail);
         return "question/question-list";

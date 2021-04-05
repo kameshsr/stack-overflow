@@ -152,8 +152,6 @@ public class QuestionController {
     @GetMapping("/filterQuestions")
     public String filterQuestions(@RequestParam("userEmail") String userEmail,
                                   @RequestParam("searchQuestion") String searchQuestion, Model model) {
-        System.out.println("email : "+userEmail);
-        System.out.println("searchQuestion : "+searchQuestion);
         List<Question> Questions = questionService.getFilteredQuestions(searchQuestion);
         model.addAttribute(("listQuestion"), Questions);
         model.addAttribute("userEmail", userEmail);

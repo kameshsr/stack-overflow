@@ -1,23 +1,16 @@
 package com.mountblue.stackoverflow.controller;
 
-import com.mountblue.stackoverflow.model.Answer;
-import com.mountblue.stackoverflow.model.Question;
-import com.mountblue.stackoverflow.model.QuestionComment;
-import com.mountblue.stackoverflow.model.User;
-import com.mountblue.stackoverflow.repository.AnswerRepository;
+import com.mountblue.stackoverflow.model.*;
 import com.mountblue.stackoverflow.repository.QuestionCommentRepository;
 import com.mountblue.stackoverflow.repository.QuestionRepository;
-import com.mountblue.stackoverflow.service.AnswerService;
-import com.mountblue.stackoverflow.service.QuestionCommentService;
-import com.mountblue.stackoverflow.service.QuestionService;
-import com.mountblue.stackoverflow.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mountblue.stackoverflow.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -36,15 +29,18 @@ public class QuestionController {
 
     private final UserService userService;
 
+    private final TagService tagService;
+
     int oldest = 0;
 
-    public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService, QuestionRepository questionRepository, QuestionCommentRepository questionCommentRepository, AnswerService answerService, UserService userService) {
+    public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService, QuestionRepository questionRepository, QuestionCommentRepository questionCommentRepository, AnswerService answerService, UserService userService, TagService tagService) {
         this.questionService = questionService;
         this.questionCommentService = questionCommentService;
         this.questionRepository = questionRepository;
         this.questionCommentRepository = questionCommentRepository;
         this.answerService = answerService;
         this.userService = userService;
+        this.tagService = tagService;
     }
 
     @RequestMapping("/showQuestionForm")
@@ -67,6 +63,17 @@ public class QuestionController {
             question.setReputation(question.getReputation()+user.getReputation());
             question.setEmail(user.getEmail());
             question.setUserName(user.getName());
+
+            List<String> listTag = Arrays.asList(question.getTags().split(","));
+            List<Tag> allTag = tagService.findAll();
+            for(String currentTag:listTag) {
+                if (!allTag.contains(currentTag)) {
+                    Tag tag = new Tag(currentTag);
+                    tagService.save(tag);
+                    //question.getTagList().add(tag);
+                }
+            }
+
             questionService.saveQuestion(question);
             return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
         }

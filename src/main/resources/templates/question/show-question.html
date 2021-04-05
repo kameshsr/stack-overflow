@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/1j0y6hhk9djzi0t59m67c0kbxpnp9hxcecuhbxc62g8z1sbp/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <title>Save post</title>
 </head>
 <body>
@@ -34,7 +35,7 @@
 <div class="container">
     <h3 align="center" th:text="${question.title}"></h3>
     <th:block>
-        <article th:text="${question.content}"></article>
+        <article th:utext="${question.content}"></article>
         <b style="font-style: italic" th:text="${question.tags}"></b>
     </th:block>
 
@@ -95,10 +96,8 @@
     <form action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${question.id},
     userEmail=${user.email}, questionCommentId=0)}"
           th:object="${questionComment}" method="POST">
-        <textarea type="text" th:field="*{content}"
+        <input type="text" th:field="*{content}"
                class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
-        </textarea>
-
         <button type="submit" class="btn btn-info col-2">Save</button>
 
     </form>
@@ -187,23 +186,27 @@
             </div>
         </div>
 
-
         <h4>Add answer</h4>
         <form action="#" th:action="@{/answers/saveAnswer(questionId=${question.id},userEmail=${user.email},
         answerId=0)}"
               th:object="${answer}" method="POST">
-        <textarea type="text" th:field="*{content}"
-                  class="form-control mb-4 col-4" placeholder="Add Answer" width="100" height="50">
-        </textarea>
-
+            <textarea th:field="*{content}" style="width:50%; height:60px"></textarea>
             <button type="submit" class="btn btn-info col-2">Save</button>
-
         </form>
         <br> <br>
     </div>
 
     <a href="/" th:href="@{/question/showAllQuestion(userEmail=${user.email})}">Back Question List</a>
 </div>
-
+<script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+   });
+  </script>
 </body>
 </html>

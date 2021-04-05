@@ -138,18 +138,26 @@ public class QuestionController {
 
     @GetMapping("/showAllQuestion")
     public String viewQuestionList(@RequestParam("userEmail") String userEmail, Model model) {
-        //User user = userService.getUserByEmail(userEmail);
         model.addAttribute("userEmail", userEmail);
-        List<Question> listQuestion = questionService.getAllQuestions();
-        model.addAttribute(("listQuestion"), listQuestion);
+        List<Question> Questions = questionService.getAllQuestions();
+        model.addAttribute(("listQuestion"), Questions);
         return "question/question-list";
     }
 
     @GetMapping("/showAllQuestionForNonLoggedInUser")
     public String viewPostsList(Model model) {
-        List<Question> listQuestion = questionService.getAllQuestions();
-        String userEmail = "krishnabankar62@gmail.com";
-        model.addAttribute(("listQuestion"), listQuestion);
+        List<Question> Questions = questionService.getAllQuestions();
+        String userEmail = "guest@mail.com";
+        model.addAttribute(("listQuestion"), Questions);
+        model.addAttribute("userEmail", userEmail);
+        return "question/question-list";
+    }
+
+    @GetMapping("/filterQuestions")
+    public String filterQuestions(@RequestParam("userEmail") String userEmail,
+                                  @RequestParam("searchQuestion") String searchQuestion, Model model) {
+        List<Question> Questions = questionService.getFilteredQuestions(searchQuestion);
+        model.addAttribute(("listQuestion"), Questions);
         model.addAttribute("userEmail", userEmail);
         return "question/question-list";
     }

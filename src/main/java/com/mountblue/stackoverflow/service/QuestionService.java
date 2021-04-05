@@ -14,4 +14,6 @@ public interface QuestionService {
     void save(Question question);
 
     List<Question> getAllQuestions();
+
+    List<Question> getFilteredQuestions(String searchQuestion);
 }

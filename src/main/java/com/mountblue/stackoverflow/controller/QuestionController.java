@@ -66,14 +66,18 @@ public class QuestionController {
 
             List<String> listTag = Arrays.asList(question.getTags().split(","));
             List<Tag> allTag = tagService.findAll();
+            System.out.println("all tag");
+            for(Tag currentTag:allTag) {
+                System.out.println(currentTag.getName());
+            }
+            System.out.println("current tag");
             for(String currentTag:listTag) {
                 if (!allTag.contains(currentTag)) {
+                    System.out.println(currentTag);
                     Tag tag = new Tag(currentTag);
                     tagService.save(tag);
-                    //question.getTagList().add(tag);
                 }
             }
-
             questionService.saveQuestion(question);
             return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
         }

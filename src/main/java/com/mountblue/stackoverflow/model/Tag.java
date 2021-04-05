@@ -13,9 +13,6 @@ public class Tag {
     private int id;
     private String name;
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tags")
-//    private Set<Question> questions = new HashSet<>();
-
     public Tag() {
 
     }
@@ -40,12 +37,4 @@ public class Tag {
     public void setName(String name) {
         this.name = name;
     }
-
-//    public Set<Question> getQuestions() {
-//        return questions;
-//    }
-//
-//    public void setQuestions(Set<Question> questions) {
-//        this.questions = questions;
-//    }
 }

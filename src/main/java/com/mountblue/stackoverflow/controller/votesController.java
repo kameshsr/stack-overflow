@@ -16,7 +16,6 @@ public class votesController {
     private final UserService userService;
     private final QuestionService questionService;
     private final AnswerService answerService;
-    int oldest =0;
 
     public votesController(UserService userService, QuestionService questionService, AnswerService answerService) {
         this.userService = userService;
@@ -38,23 +37,25 @@ public class votesController {
             user.setReputation(user.getReputation()-1);
         }
         questionService.saveQuestion(question);
-
-        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
     }
 
     @RequestMapping("/voteAnswer")
     public String voteAnswer(@RequestParam("questionId") int questionId,
                              @RequestParam("answerId") int answerId,
-                             @RequestParam("vote") int vote, @RequestParam("userEmail") String userEmail) {
+                             @RequestParam("vote") int vote,
+                             @RequestParam("userEmail") String userEmail) {
         Answer answer = answerService.findById(answerId);
+        User user = userService.getUserByEmail(userEmail);
         if (vote > 0) {
             answer.setVote(answer.getVote() + 1);
             answer.setReputation(answer.getReputation() + 10);
         } else {
             answer.setVote(answer.getVote() - 1);
             answer.setReputation(answer.getReputation() - 2);
+            user.setReputation(user.getReputation()-1);
         }
         answerService.save(answer);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
     }
 }

@@ -12,7 +12,7 @@
 <div class="container">
     <p class="h4 mb-4">Save Question</p>
     <form action="#" method="POST"
-          th:action="@{/question/saveQuestionData}" th:object="${question}">
+          th:action="@{/question/saveQuestionData(userEmail=${userEmail})}" th:object="${question}">
 
         <input th:field="*{id}" type="hidden"/>
         <input th:field="*{createdAt}" type="hidden"/>

@@ -2,13 +2,13 @@ package com.mountblue.stackoverflow.controller;
 
 import com.mountblue.stackoverflow.model.Answer;
 import com.mountblue.stackoverflow.model.AnswerComment;
-import com.mountblue.stackoverflow.model.QuestionComment;
+import com.mountblue.stackoverflow.model.User;
 import com.mountblue.stackoverflow.service.AnswerCommentService;
 import com.mountblue.stackoverflow.service.AnswerService;
+import com.mountblue.stackoverflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +18,14 @@ import java.util.List;
 public class AnswerCommentController {
 
     @Autowired
-     private AnswerService answerService;
+    private AnswerService answerService;
     private final AnswerCommentService answerCommentService;
-
-    int oldest =0;
+    private UserService userService;
 
     @Autowired
-    public AnswerCommentController(AnswerCommentService answerCommentService) {
+    public AnswerCommentController(AnswerCommentService answerCommentService, UserService userService) {
         this.answerCommentService = answerCommentService;
+        this.userService = userService;
     }
 
 
@@ -50,7 +50,8 @@ public class AnswerCommentController {
     @RequestMapping("/showFormForUpdateAnswerComment")
     public String updateQuestionComment(@RequestParam("answerCommentId") int answerCommentId,
                                         @RequestParam("answerId") int answerId,
-                                        @RequestParam("questionId") int questionId, Model model) {
+                                        @RequestParam("questionId") int questionId,
+                                        @RequestParam("userEmail") String userEmail, Model model) {
         AnswerComment answerComment = null;
         if (answerCommentId != 0)
             answerComment = answerCommentService.findAnswerCommentById(answerCommentId);
@@ -60,27 +61,32 @@ public class AnswerCommentController {
         model.addAttribute("answerCommentId",answerCommentId);
         model.addAttribute("questionId", questionId);
         model.addAttribute("answerId", answerId);
+        model.addAttribute("userEmail", userEmail);
         return "answer/answer-comment-form";
     }
 
     @PostMapping("/saveAnswerComment")
     public String saveAnswerComment(@RequestParam("answerId") int answerId,
                                     @RequestParam("questionId") int questionId,
+                                    @RequestParam("userEmail") String userEmail,
                                     @RequestParam("answerCommentId") int answerCommentId,
                                     @ModelAttribute("answerComment") AnswerComment answerComment) {
+        User user = userService.getUserByEmail(userEmail);
         if (answerCommentId != 0)
             answerComment.setId(answerCommentId);
         Answer answer = answerService.findById(answerId);
         answerComment.setAnswer(answer);
+        answerComment.setUserName(user.getName());
         answerCommentService.save(answerComment);
         answerService.save(answer);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
     }
 
     @GetMapping("/deleteAnswerComment")
     public String deleteAnswerComment(@RequestParam("answerCommentId") int answerCommentId,
-                                      @RequestParam("questionId") int questionId) {
-        this.answerCommentService.deleteById(answerCommentId);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&oldest="+oldest;
+                                      @RequestParam("questionId") int questionId,
+                                      @RequestParam("userEmail") String userEmail) {
+           this.answerCommentService.deleteById(answerCommentId);
+           return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
     }
 }

@@ -12,7 +12,6 @@ import com.mountblue.stackoverflow.service.QuestionCommentService;
 import com.mountblue.stackoverflow.service.QuestionService;
 import com.mountblue.stackoverflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,21 +26,15 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    private final QuestionCommentService questionCommentService;
+    private QuestionCommentService questionCommentService;
 
-    @Autowired
-    private final QuestionRepository questionRepository;
+    private QuestionRepository questionRepository;
 
-    @Autowired
-    private QuestionCommentRepository questionCommentRepository;
+    private final QuestionCommentRepository questionCommentRepository;
 
-    @Autowired
-    private AnswerService answerService;
+    private final AnswerService answerService;
 
-    @Autowired
-    private UserService userService;
-
-    int oldest = 0;
+    private final UserService userService;
 
     public QuestionController(QuestionService questionService, QuestionCommentService questionCommentService, QuestionRepository questionRepository, QuestionCommentRepository questionCommentRepository, AnswerService answerService, UserService userService) {
         this.questionService = questionService;
@@ -53,62 +46,59 @@ public class QuestionController {
     }
 
     @RequestMapping("/showQuestionForm")
-    public String showQuestionForm(Model model) {
+    public String showQuestionForm(Model model, @RequestParam("userEmail") String userEmail) {
         Question question = new Question();
         model.addAttribute("question", question);
+        model.addAttribute("userEmail", userEmail);
         return "/question/question-form";
     }
 
     @PostMapping("/saveQuestionData")
     public String saveQuestionData(@ModelAttribute("question") @Valid Question question,
-                           BindingResult bindingResult) {
+                           @RequestParam("userEmail") String userEmail, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/question/showQuestionForm?error";
         } else {
             int questionId = question.hashCode();
             question.setId(questionId);
+            User user = userService.getUserByEmail(userEmail);
+            question.setReputation(question.getReputation()+user.getReputation());
+            question.setEmail(user.getEmail());
+            question.setUserName(user.getName());
             questionService.saveQuestion(question);
-            return "redirect:/question/showQuestion?questionId="+questionId + "&oldest=" + oldest;
+            return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
         }
     }
 
     @PostMapping("/updateQuestionData")
     public String updateQuestionData(@ModelAttribute("question") @Valid Question question,
-                                     BindingResult bindingResult) {
+                                     @RequestParam("userEmail") String userEmail, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/question/showFormForQuestionUpdate?error";
         } else {
             questionService.saveQuestion(question);
-            return "redirect:/question/showQuestion?questionId="+question.getId() + "&oldest=" + oldest;
+            return "redirect:/question/showQuestion?questionId="+question.getId()+"&userEmail="+userEmail;
         }
     }
 
     @GetMapping("/showFormForQuestionUpdate")
-    String showFormForQuestionUpdate(@RequestParam("questionId") int questionId,Model model){
+    String showFormForQuestionUpdate(@RequestParam("questionId") int questionId,
+                                     @RequestParam("userEmail") String userEmail, Model model){
         Question question=questionService.getQuestion(questionId);
         model.addAttribute("question",question);
+        model.addAttribute("userEmail",userEmail);
         return "question/update-question-form";
     }
 
     @RequestMapping("/showQuestion")
     public String showQuestion(Model model, @RequestParam("questionId") int questionId
-    , @RequestParam("userEmail") String userEmail, @RequestParam("oldest") int oldest) {
-
+    , @RequestParam("userEmail") String userEmail) {
         User user = userService.getUserByEmail(userEmail);
         Question question = questionService.getQuestion(questionId);
         List<QuestionComment> questionComments= questionCommentRepository.findByQuestionId(questionId);
         QuestionComment questionComment = new QuestionComment();
         Answer answer = new Answer();
-        List<Answer> answers;
-        if (oldest == 1) {
-            answers = answerService.findSortedAnswerByTimeStamp(questionId);
-        } else if(oldest == 0) {
-            answers = answerService.findSortedAnswerByVotes(questionId);
-        } else if(oldest == 3) {
-            answers = answerService.findByQuestionId(questionId);
-        } else {
-            answers = answerService.findByQuestionId(questionId);
-        }
+        List<Answer> answers = answerService.findByQuestionId(questionId);
         model.addAttribute("questionComment", questionComment);
         model.addAttribute("questionComments", questionComments);
         model.addAttribute("question", question);
@@ -119,13 +109,13 @@ public class QuestionController {
     }
 
     @RequestMapping("/deleteQuestion")
-    public String deleteQuestion(@RequestParam("questionId") int questionId) {
+    public String deleteQuestion(@RequestParam("questionId") int questionId, @RequestParam("userEmail") String userEmail) {
         questionService.deleteQuestionById(questionId);
-        return "redirect:/user/showHomePage";
+        return "redirect:/question/showAllQuestion?userEmail="+userEmail;
     }
 
     @GetMapping("/showAllQuestion")
-    public String viewQuestionList(Model model, @RequestParam("userEmail") String userEmail) {
+    public String viewQuestionList(@RequestParam("userEmail") String userEmail, Model model) {
         //User user = userService.getUserByEmail(userEmail);
         model.addAttribute("userEmail", userEmail);
         List<Question> listQuestion = questionService.getAllQuestions();
@@ -136,7 +126,9 @@ public class QuestionController {
     @GetMapping("/showAllQuestionForNonLoggedInUser")
     public String viewPostsList(Model model) {
         List<Question> listQuestion = questionService.getAllQuestions();
+        String userEmail = "krishnabankar62@gmail.com";
         model.addAttribute(("listQuestion"), listQuestion);
+        model.addAttribute("userEmail", userEmail);
         return "question/question-list";
     }
 }

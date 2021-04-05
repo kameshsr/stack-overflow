@@ -13,7 +13,7 @@
         <tr>
             <td>
                 <a class="btn btn-info btn-sm-3"
-                   th:href="@{/question/showFormForQuestionUpdate(questionId=${question.id})}">
+                   th:href="@{/question/showFormForQuestionUpdate(questionId=${question.id}, userEmail=${user.email})}">
                     Update
                 </a>
             </td>
@@ -24,7 +24,7 @@
                 </div>
                 <a class="btn btn-danger btn-sm-3"
                    onclick="if (!(confirm('Are you sure you want to delete this post?'))) return false"
-                   th:href="@{/question/deleteQuestion(questionId=${question.id})}">
+                   th:href="@{/question/deleteQuestion(questionId=${question.id}, userEmail=${user.email})}">
                     Delete
                 </a>
             </td>
@@ -40,22 +40,25 @@
 
     <div class="row">
         <div class="col">
-            <small>
-                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1,
+            <div class="row">
+                <small>
+                    <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1,
                 userEmail=${user.email})}">Upvote</a>
-            </small>
-            <small>
-                <i th:text="${question.vote}"></i>
-            </small>
-            <small>
-                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=-1,
+                </small>
+                &nbsp;
+                <small>
+                    <i th:text="${question.vote}"></i>
+                </small>
+                &nbsp;
+                <small>
+                    <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=-1,
                 userEmail=${user.email})}">DownVote</a>
-            </small>
-        </div>
-        <div class="col">
-            <i th:text="${question.userName}"></i>
-            <small th:text="asked+' '+${question.createdAt}"></small>
-            <i th:text="${question.reputation}"></i>
+                </small>
+            </div>
+            <div class="row">
+                <small th:text="${question.userName}"></small>:
+                <small th:text="${question.reputation}"></small>
+            </div>
         </div>
     </div>
     <br>
@@ -64,20 +67,19 @@
     <div class="row" th:each="questionComment : ${questionComments}">
         <div class="col">
             <div class="row">
-                <div th:utext="${questionComment.content}"></div>
+                <i th:text="${questionComment.content}"></i>
             </div>
             <div class="row">
                 <div class="col">
-                    <small th:text="${questionComment.createdAt}"></small>
-                    <small th:text="questionComment.userName"></small>
+                    <small th:text="${questionComment.userName}"></small>
                     <small>
                         <a th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
-                    questionId=${question.id})}">Update</a>
+                    userEmail=${user.email}, questionId=${question.id})}">Update</a>
                     </small>
-                    &nbsp;
+                    &nbsp
                     <small>
                         <a th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${questionComment.id},
-                    questionId=${question.id})}">Delete</a>
+                    userEmail=${user.email}, questionId=${question.id})}">Delete</a>
                     </small>
                 </div>
                 <div class="col"></div>
@@ -89,7 +91,7 @@
 <div class="container">
     <h3>Comment</h3>
     <form action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${question.id},
-    questionCommentId=0)}"
+    userEmail=${user.email}, questionCommentId=0)}"
           th:object="${questionComment}" method="POST">
         <textarea type="text" th:field="*{content}"
                class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
@@ -100,19 +102,7 @@
     </form>
     <br> <br>
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
-                    oldest=1)}"
-                >Oldest</a>
-                <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
-                    oldest=0)}"
-                >Votes</a>
-                <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email},
-                    oldest=3)}"
-                >Active</a>
-            </div>
-        </div>
+
         <div class="row" th:each="answer : ${answers}">
             <div class="col">
                 <div class="row">
@@ -123,56 +113,55 @@
                     <div class="col">
                         <small>
                             <a th:href="@{/votes/voteAnswer(questionId=${question.id},
-                            answerId=${answer.id} ,vote=1,
-                userEmail=${user.email}, oldest=0)}">Upvote</a>
+                            answerId=${answer.id} ,vote=1, userEmail=${user.email})}">Upvote</a>
                         </small>
+                        &nbsp;
                         <small>
                             <i th:text="${answer.vote}"></i>
                         </small>
+                        &nbsp;
                         <small>
                             <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id},
-                            vote=-1,
-                userEmail=${user.email}, oldest=0)}">DownVote</a>
+                            vote=-1, userEmail=${user.email})}">DownVote</a>
                         </small>
-                    </div>
-                    <div class="col">
-                        <small th:text="answered+' '+${answer.createdAt}"></small>
-                        <i th:text="${answer.userName}"></i>
-                        <i th:text="${answer.reputation}"></i>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col">
-                        <small th:text="answer.userName"></small>
+                        <small th:text="${answer.userName}"></small>:
+                        <small th:text="${answer.reputation}"></small>
+                        &nbsp;
                         <small>
-                            <a th:href="@{/answers/showFormForAnswerUpdate(answerId=${answer.id},
+                            <a th:href="@{/answers/showFormForAnswerUpdate(answerId=${answer.id}, userEmail=${user.email},
                     questionId=${question.id})}">Update</a>
                         </small>
-                        &nbsp;
+                        &nbsp;&nbsp;
                         <small>
-                            <a th:href="@{/answers/deleteAnswer(answerId=${answer.id},
+                            <a th:href="@{/answers/deleteAnswer(answerId=${answer.id}, userEmail=${user.email},
                     questionId=${question.id})}">Delete</a>
                         </small>
-                        &nbsp;
+                        &nbsp;&nbsp;
                         <small>
-                            <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id},
+                            <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
                             answerCommentId=0, questionId=${question.id})}">Comment</a>
                         </small>
                         <div class="row" th:each="answerComment:${answer.answerComments}">
                             <div class="col">
                                 <div class="row">
                                     <i th:text="${answerComment.content}"></i>
-                                    <small th:text="${answerComment.createdAt}"></small>
                                 </div>
                                 <div class="row">
+                                    <small th:text="${answerComment.userName}"></small>
+                                    &nbsp;
                                     <small>
-                                        <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id},
+                                        <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
                                          answerCommentId=${answerComment.id}, questionId=${question.id})}">Update</a>
                                     </small>
                                     &nbsp;&nbsp;
                                     <small>
-                                        <a th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${answerComment.id}, questionId=${question.id})}">Delete</a>
+                                        <a th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${answerComment.id}, userEmail=${user.email},
+                                         questionId=${question.id})}">Delete</a>
                                     </small>
                                 </div>
                             </div>
@@ -182,8 +171,9 @@
             </div>
         </div>
 
+
         <h4>Add answer</h4>
-        <form action="#" th:action="@{/answers/saveAnswer(questionId=${question.id},
+        <form action="#" th:action="@{/answers/saveAnswer(questionId=${question.id},userEmail=${user.email},
         answerId=0)}"
               th:object="${answer}" method="POST">
         <textarea type="text" th:field="*{content}"
@@ -196,10 +186,8 @@
         <br> <br>
     </div>
 
-    <a href="/" th:href="@{/user/showHomePage}">Back to Home Page</a>
+    <a href="/" th:href="@{/question/showAllQuestion(userEmail=${user.email})}">Back Question List</a>
 </div>
-
-
 
 </body>
 </html>

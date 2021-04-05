@@ -21,6 +21,7 @@ public class AnswerCommentController {
     private AnswerService answerService;
     private final AnswerCommentService answerCommentService;
     private UserService userService;
+    private int oldest = 0;
 
     @Autowired
     public AnswerCommentController(AnswerCommentService answerCommentService, UserService userService) {
@@ -79,7 +80,7 @@ public class AnswerCommentController {
         answerComment.setUserName(user.getName());
         answerCommentService.save(answerComment);
         answerService.save(answer);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
     }
 
     @GetMapping("/deleteAnswerComment")
@@ -87,6 +88,6 @@ public class AnswerCommentController {
                                       @RequestParam("questionId") int questionId,
                                       @RequestParam("userEmail") String userEmail) {
            this.answerCommentService.deleteById(answerCommentId);
-           return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail;
+           return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
     }
 }

@@ -5,7 +5,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "question")
@@ -31,6 +33,28 @@ public class Question {
     private String email;
 
     private int reputation = 1;
+
+    /*
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "students_courses",
+            joinColumns = {
+                    @JoinColumn(name = "student_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "course_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private Set<Course> courses = new HashSet<>();
+    ;*/
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "question_tags",
+//            joinColumns = {
+//                    @JoinColumn(name = "question_id", referencedColumnName = "id",
+//                            nullable = false, updatable = false)},
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "tag_id", referencedColumnName = "id",
+//                            nullable = false, updatable = false)})
+//    private Set<Tag> tagList = new HashSet<>();
 
     @OneToMany(mappedBy = "question",
             cascade = {CascadeType.REMOVE})
@@ -159,6 +183,14 @@ public class Question {
     public void setReputation(int reputation) {
         this.reputation = reputation;
     }
+
+//    public Set<Tag> getTagList() {
+//        return tagList;
+//    }
+//
+//    public void setTagList(Set<Tag> tagList) {
+//        this.tagList = tagList;
+//    }
 
     @Override
     public String toString() {

@@ -34,7 +34,7 @@
 <div class="container">
     <h3 align="center" th:text="${question.title}"></h3>
     <th:block>
-        <article th:text="${question.content}"></article>
+        <article th:utext="${question.content}"></article>
         <b style="font-style: italic" th:text="${question.tags}"></b>
     </th:block>
 

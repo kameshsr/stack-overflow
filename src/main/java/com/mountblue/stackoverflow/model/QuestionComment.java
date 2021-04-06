@@ -19,6 +19,8 @@ public class QuestionComment {
 
     private String userName;
 
+    private String email;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -32,19 +34,29 @@ public class QuestionComment {
     public QuestionComment() {
     }
 
-    public QuestionComment(int id, String content, String userName, LocalDateTime createdAt, Question question) {
+    public QuestionComment(int id, String content, String userName, String email, LocalDateTime createdAt, Question question) {
         this.id = id;
         this.content = content;
         this.userName = userName;
+        this.email = email;
         this.createdAt = createdAt;
         this.question = question;
     }
 
-    public QuestionComment(String content, String userName, LocalDateTime createdAt, Question question) {
+    public QuestionComment(String content, String userName, String email, LocalDateTime createdAt, Question question) {
         this.content = content;
         this.userName = userName;
+        this.email = email;
         this.createdAt = createdAt;
         this.question = question;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getId() {

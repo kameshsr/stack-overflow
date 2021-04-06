@@ -78,6 +78,7 @@ public class AnswerCommentController {
         Answer answer = answerService.findById(answerId);
         answerComment.setAnswer(answer);
         answerComment.setUserName(user.getName());
+        answerComment.setEmail(user.getEmail());
         answerCommentService.save(answerComment);
         answerService.save(answer);
         return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;

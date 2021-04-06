@@ -143,7 +143,8 @@ public class QuestionController {
 
     @GetMapping("/showAllQuestion")
     public String viewQuestionList(@RequestParam("userEmail") String userEmail, Model model) {
-        model.addAttribute("userEmail", userEmail);
+        User user = userService.getUserByEmail(userEmail);
+        model.addAttribute("user", user);
         List<Question> Questions = questionService.getAllQuestions();
         model.addAttribute(("listQuestion"), Questions);
         return "question/question-list";
@@ -153,8 +154,9 @@ public class QuestionController {
     public String viewPostsList(Model model) {
         List<Question> Questions = questionService.getAllQuestions();
         String userEmail = "guest@mail.com";
+        User user = userService.getUserByEmail(userEmail);
+        model.addAttribute("user", user);
         model.addAttribute(("listQuestion"), Questions);
-        model.addAttribute("userEmail", userEmail);
         return "question/question-list";
     }
 

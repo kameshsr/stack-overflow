@@ -18,6 +18,8 @@ public class AnswerComment {
 
     private String userName;
 
+    private String email;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -29,18 +31,29 @@ public class AnswerComment {
     public AnswerComment() {
     }
 
-    public AnswerComment(int id, String content, String userName, LocalDateTime createdAt, Answer answer) {
+    public AnswerComment(int id, String content, String userName, String email, LocalDateTime createdAt, Answer answer) {
         this.id = id;
         this.content = content;
         this.userName = userName;
+        this.email = email;
         this.createdAt = createdAt;
         this.answer = answer;
     }
 
-    public AnswerComment(String content, String userName, LocalDateTime createdAt, Answer answer) {
+    public AnswerComment(String content, String userName, String email, LocalDateTime createdAt, Answer answer) {
         this.content = content;
         this.userName = userName;
+        this.email = email;
         this.createdAt = createdAt;
+        this.answer = answer;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getId() {

@@ -49,6 +49,7 @@ public class QuestionCommentController {
         if (questionCommentId != 0)
             questionComment.setId(questionCommentId);
         questionComment.setUserName(user.getName());
+        questionComment.setEmail(user.getEmail());
         questionCommentService.save(questionComment);
         question.getComments().add(questionComment);
         questionService.save(question);

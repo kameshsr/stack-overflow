@@ -11,23 +11,32 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-4">
-            <a href="/" th:href="@{/user/showLoginForm}">Login</a>
+        <div class="col-1 float-left">
+            <div class="btn btn-primary float-left">
+                <a style="color: white" th:if="${user.name} == 'guest'" href="/" th:href="@{/user/showLoginForm}">Login</a>
+                <a style="color: white" th:if="${user.name} != 'guest'" th:align="right" th:href="@{/question/showAllQuestionForNonLoggedInUser}">Logout</a>
+            </div>
         </div>
         <div class="col-4">
-            <a class="btn btn-info btn-sm-3" href="/" th:href="@{/question/showQuestionForm(userEmail=${userEmail})}">Ask Question</a>
+            <div class="row">
+                <div class="col-3"><b>User : </b></div>
+                <div class="col-9"><h5 th:text="${user.name}"></h5></div>
+            </div>
         </div>
-        <div class="col-4">
-            <a href="/" th:href="@{/user/showSignupForm}">Register</a>
+        <div class="col-4 float-left">
+            <a class="btn btn-info btn-sm-3" href="/" th:href="@{/question/showQuestionForm(userEmail=${user.email})}">Ask Question</a>
+        </div>
+        <div class="col-1">
+            <a class="btn btn-primary" th:if="${user.name} == 'guest'" style="color: white" href="/" th:href="@{/user/showSignupForm}">Register</a>
         </div>
     </div>
-
+    <br>
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
             <form method="get"
                   th:action="@{/question/filterQuestions}" class="form-inline my-2 my-lg-0">
-                <input type="hidden" name="userEmail" th:value="${userEmail}">
+                <input type="hidden" name="userEmail" th:value="${user.email}">
                 <input name="searchQuestion" size="50" class="form-control mr-md-2" th:type="text" placeholder="Search Question that already Answered.." aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
@@ -35,17 +44,10 @@
         <div class="col-2"></div>
     </div>
 </div>
-<div>
-    <ul>
-        <li><a th:href="@{/logout}">Logout</a></li>
-    </ul>
-</div>
-<div th:unless="${#authentication.Principal} eq 'anonymousUser'">
-    <p>log in user</p>
-</div>
+
 <h1>List of Questions</h1>
     <div th:each="question : ${listQuestion}">
-        <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${userEmail}, oldest=0)}">
+        <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email}, oldest=0)}">
             <b style="color:blue" th:text="${question.title}"></b>
         </a>
         <br><br>

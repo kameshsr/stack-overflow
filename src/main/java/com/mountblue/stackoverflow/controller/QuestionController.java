@@ -166,8 +166,9 @@ public class QuestionController {
     public String filterQuestions(@RequestParam("userEmail") String userEmail,
                                   @RequestParam("searchQuestion") String searchQuestion, Model model) {
         List<Question> Questions = questionService.getFilteredQuestions(searchQuestion);
+        User user = userService.getUserByEmail(userEmail);
         model.addAttribute(("listQuestion"), Questions);
-        model.addAttribute("userEmail", userEmail);
+        model.addAttribute("user", user);
         return "question/question-list";
     }
 }

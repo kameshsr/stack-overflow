@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
@@ -20,6 +21,7 @@
             <a href="/" th:href="@{/user/showSignupForm}">Register</a>
         </div>
     </div>
+
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
@@ -33,7 +35,14 @@
         <div class="col-2"></div>
     </div>
 </div>
-
+<div>
+    <ul>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</div>
+<div th:unless="${#authentication.Principal} eq 'anonymousUser'">
+    <p>log in user</p>
+</div>
 <h1>List of Questions</h1>
     <div th:each="question : ${listQuestion}">
         <a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${userEmail}, oldest=0)}">

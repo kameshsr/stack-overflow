@@ -94,12 +94,12 @@
                     <small th:text="${questionComment.createdAt}"></small>
                     <small th:text="${questionComment.userName}"></small>
                     <small>
-                        <a th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
+                        <a th:if="${user.email} == ${questionComment.email}" th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
                     userEmail=${user.email}, questionId=${question.id})}">Update</a>
                     </small>
                     &nbsp
                     <small>
-                        <a th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${questionComment.id},
+                        <a th:if="${user.email} == ${questionComment.email}" th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${questionComment.id},
                     userEmail=${user.email}, questionId=${question.id})}">Delete</a>
                     </small>
                 </div>
@@ -111,12 +111,14 @@
 </div>
 <div class="container">
     <h3>Comment</h3>
-    <form action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${question.id},
+    <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to comment'))) return false"
+       href="#" class="btn btn-info col-2">Add Comment</a>
+    <form th:if="${user.email} != 'guest@mail.com'" action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${question.id},
     userEmail=${user.email}, questionCommentId=0)}"
           th:object="${questionComment}" method="POST">
         <input type="text" th:field="*{content}"
                class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
-        <button type="submit" class="btn btn-info col-2">Save</button>
+        <button type="submit" class="btn btn-info col-2">Add Comment</button>
 
     </form>
     <br> <br>
@@ -143,17 +145,20 @@
                 <div class="row">
                     <div class="col">
                         <small>
-                            <a th:href="@{/votes/voteAnswer(questionId=${question.id},
+                            <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to upvote'))) return false"
+                               th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=1, userEmail=${user.email})}">Upvote</a>
+                            <a th:if="${user.email} != 'guest@mail.com'" th:href="@{/votes/voteAnswer(questionId=${question.id},
                             answerId=${answer.id} ,vote=1, userEmail=${user.email})}">Upvote</a>
                         </small>
                         &nbsp;
                         <small>
                             <i th:text="${answer.vote}"></i>
                         </small>
-                        &nbsp;
                         <small>
-                            <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id},
-                            vote=-1, userEmail=${user.email})}">DownVote</a>
+                            <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to DownVote'))) return false"
+                               th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=-1, userEmail=${user.email})}">DownVote</a>
+                            <a th:if="${user.email} != 'guest@mail.com'" th:href="@{/votes/voteAnswer(questionId=${question.id},
+                            answerId=${answer.id} ,vote=-1, userEmail=${user.email})}">DownVote</a>
                         </small>
                     </div>
                 </div>
@@ -165,18 +170,20 @@
                         <small th:text="${answer.reputation}"></small>
                         &nbsp;
                         <small>
-                            <a th:href="@{/answers/showFormForAnswerUpdate(answerId=${answer.id}, userEmail=${user.email},
-                    questionId=${question.id})}">Update</a>
+                            <a th:if="${user.email} == ${answer.email}"
+                               th:href="@{/answers/showFormForAnswerUpdate(answerId=${answer.id}, userEmail=${user.email}, questionId=${question.id})}">Update</a>
                         </small>
                         &nbsp;&nbsp;
                         <small>
-                            <a th:href="@{/answers/deleteAnswer(answerId=${answer.id}, userEmail=${user.email},
+                            <a th:if="${user.email} == ${answer.email}" th:href="@{/answers/deleteAnswer(answerId=${answer.id}, userEmail=${user.email},
                     questionId=${question.id})}">Delete</a>
                         </small>
                         &nbsp;&nbsp;
                         <small>
-                            <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
-                            answerCommentId=0, questionId=${question.id})}">Comment</a>
+                            <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to comment'))) return false"
+                               href="#" class="btn btn-info col-2">Add Comment</a>
+                            <a th:if="${user.email} != 'guest@mail.com'" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
+                            answerCommentId=0, questionId=${question.id})}">Add Comment</a>
                         </small>
                         <div class="row" th:each="answerComment:${answer.answerComments}">
                             <div class="col">
@@ -188,17 +195,18 @@
                                     <small th:text="${answerComment.userName}"></small>
                                     &nbsp;
                                     <small>
-                                        <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
+                                        <a th:if="${user.email} == ${answerComment.email}" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
                                          answerCommentId=${answerComment.id}, questionId=${question.id})}">Update</a>
                                     </small>
                                     &nbsp;&nbsp;
                                     <small>
-                                        <a th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${answerComment.id}, userEmail=${user.email},
+                                        <a th:if="${user.email} == ${answerComment.email}" th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${answerComment.id}, userEmail=${user.email},
                                          questionId=${question.id})}">Delete</a>
                                     </small>
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
                 </div>
             </div>

@@ -116,7 +116,7 @@
 <div class="container">
     <h3>Comment</h3>
     <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to comment'))) return false"
-       href="#" class="btn btn-info col-2">Add Comment</a>
+       href="#">Add Comment</a>
     <form th:if="${user.email} != 'guest@mail.com'" action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${question.id},
     userEmail=${user.email}, questionCommentId=0)}"
           th:object="${questionComment}" method="POST">
@@ -185,7 +185,7 @@
                         &nbsp;&nbsp;
                         <small>
                             <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to comment'))) return false"
-                               href="#" class="btn btn-info col-2">Comment</a>
+                               href="#">Comment</a>
                             <a th:if="${user.email} != 'guest@mail.com'" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
                             answerCommentId=0, questionId=${question.id})}">Comment</a>
                         </small>

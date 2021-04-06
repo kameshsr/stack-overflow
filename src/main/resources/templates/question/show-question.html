@@ -181,9 +181,9 @@
                         &nbsp;&nbsp;
                         <small>
                             <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to comment'))) return false"
-                               href="#" class="btn btn-info col-2">Add Comment</a>
+                               href="#" class="btn btn-info col-2">Comment</a>
                             <a th:if="${user.email} != 'guest@mail.com'" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
-                            answerCommentId=0, questionId=${question.id})}">Add Comment</a>
+                            answerCommentId=0, questionId=${question.id})}">Comment</a>
                         </small>
                         <div class="row" th:each="answerComment:${answer.answerComments}">
                             <div class="col">
@@ -213,11 +213,19 @@
         </div>
 
         <h4>Add answer</h4>
-        <form action="#" th:action="@{/answers/saveAnswer(questionId=${question.id},userEmail=${user.email},
-        answerId=0)}"
+        <form th:if="${user.email} != 'guest@mail.com'"
+              action="#" th:action="@{/answers/saveAnswer(questionId=${question.id},userEmail=${user.email}, answerId=0)}"
               th:object="${answer}" method="POST">
             <textarea th:field="*{content}" style="width:50%; height:60px"></textarea>
             <button type="submit" class="btn btn-info col-2">Add Answer</button>
+        </form>
+        <form th:if="${user.email} == 'guest@mail.com'"
+              action="#" th:action="@{/answers/saveAnswerForGuest(questionId=${question.id},userEmail=${user.email})}"
+              th:object="${guestAnswer}" method="POST">
+            <textarea th:field="*{content}" style="width:50%; height:60px"></textarea>
+            <input th:field="*{userName}" type="text" placeholder="Name"/>
+            <input th:field="*{email}" type="text" placeholder="email"/>
+            <button type="submit" class="btn btn-info col-2">Post as guest</button>
         </form>
         <br> <br>
     </div>

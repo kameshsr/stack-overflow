@@ -55,6 +55,18 @@ public class AnswerController {
         return "answer/answer-form";
     }
 
+    @PostMapping("/saveAnswerForGuest")
+    public String saveAnswerForGuest(@RequestParam("questionId") int questionId,
+                                     @ModelAttribute("guestAnswer") Answer guestAnswer,
+                                     @RequestParam("userEmail") String userEmail) {
+        Question question = questionService.getQuestion(questionId);
+        guestAnswer.setQuestion(question);
+        answerService.save(guestAnswer);
+        question.getAnswers().add(guestAnswer);
+        questionService.save(question);
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
+    }
+
     @PostMapping("/saveAnswer")
     public String saveAnswer(@RequestParam("questionId") int questionId,
                              @RequestParam("answerId") int answerId,

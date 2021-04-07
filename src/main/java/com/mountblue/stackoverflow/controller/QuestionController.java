@@ -49,9 +49,9 @@ public class QuestionController {
         Question question = new Question();
         model.addAttribute("question", question);
         model.addAttribute("userEmail", userEmail);
-        return "questionForm";
+        return "/question/question-form";
     }
-
+//comment
     @PostMapping("/saveQuestionData")
     public String saveQuestionData(@ModelAttribute("question") @Valid Question question,
                            @RequestParam("userEmail") String userEmail, BindingResult bindingResult) {
@@ -86,12 +86,10 @@ public class QuestionController {
 
     @PostMapping("/updateQuestionData")
     public String updateQuestionData(@ModelAttribute("question") @Valid Question question,
-                                     @RequestParam("userEmail") String userEmail, BindingResult bindingResult,
-                                     @RequestParam("questionEmail") String questionEmail) {
+                                     @RequestParam("userEmail") String userEmail, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/question/showFormForQuestionUpdate?error";
         } else {
-            question.setEmail(questionEmail);
             questionService.saveQuestion(question);
             return "redirect:/question/showQuestion?questionId="+question.getId()+"&userEmail="+userEmail+"&oldest="+oldest;
         }

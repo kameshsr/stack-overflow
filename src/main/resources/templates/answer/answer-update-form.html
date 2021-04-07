@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" rel="stylesheet">
-    <title>Save post</title>
+    <title>Update Answer</title>
 </head>
 <body>
 <div class="container">
@@ -20,7 +20,7 @@
         <input th:field="*{userName}" type="hidden"/>
 
         <div class="form-inline">
-            <textarea th:field="*{content}" style="width:50%; height:60px"></textarea>
+            <textarea th:field="*{content}" style="width:50%; height:60px" required></textarea>
             <span class="badge badge-danger ml-2 mb-4"
                   th:errors="*{content}"
                   th:if="${#fields.hasErrors('content')}"></span>

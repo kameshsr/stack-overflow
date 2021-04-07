@@ -16,7 +16,7 @@
 <div class="container">
     <p class="h4 mb-4">Save Question</p>
     <form action="#" method="POST"
-          th:action="@{/question/updateQuestionData(userEmail=${userEmail})}" th:object="${question}">
+          th:action="@{/question/updateQuestionData(userEmail=${userEmail}, questionEmail=${question.email})}" th:object="${question}">
 
         <input th:field="*{id}" type="hidden"/>
         <input th:field="*{createdAt}" type="hidden"/>
@@ -31,7 +31,7 @@
                   th:if="${#fields.hasErrors('title')}"></span>
         </div>
         <div class="form-inline">
-            <textarea th:field="*{content}" style="width:50%; height:60px"></textarea>
+            <textarea th:field="*{content}" style="width:50%; height:60px" required></textarea>
             <span class="badge badge-danger ml-2 mb-4"
                   th:errors="*{content}"
                   th:if="${#fields.hasErrors('content')}"></span>

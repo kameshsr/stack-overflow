@@ -49,7 +49,7 @@ public class QuestionController {
         Question question = new Question();
         model.addAttribute("question", question);
         model.addAttribute("userEmail", userEmail);
-        return "/question/question-form";
+        return "/question/questionform";
     }
 //comment
     @PostMapping("/saveQuestionData")

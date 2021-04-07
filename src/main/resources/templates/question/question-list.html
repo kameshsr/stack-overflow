@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
@@ -39,7 +38,7 @@
             <form method="get"
                   th:action="@{/question/filterQuestions}" class="form-inline my-2 my-lg-0">
                 <input type="hidden" name="userEmail" th:value="${user.email}">
-                <input name="searchQuestion" size="50" class="form-control mr-md-2" th:type="text" placeholder="Search Question that already Answered.." aria-label="Search" th:required="mandatory">
+                <input th:required="mandatory" name="searchQuestion" size="50" class="form-control mr-md-2" th:type="text" placeholder="Search Question that already Answered.." aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>

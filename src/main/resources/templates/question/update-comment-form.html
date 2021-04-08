@@ -13,12 +13,10 @@
     <form action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${questionId},
     questionCommentId=${questionComment.id}, userEmail=${userEmail})}"
           th:object="${questionComment}" method="POST">
-        <textarea type="text" th:field="*{content}"
+        <textarea th:required="mendatory" type="text" th:field="*{content}"
                   class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
         </textarea>
-
         <button type="submit" class="btn btn-info col-2">Save edits</button>
-
     </form>
     <br> <br>
     <a href="/" th:href="@{/user/showHomePage}">Back to Home Page</a>

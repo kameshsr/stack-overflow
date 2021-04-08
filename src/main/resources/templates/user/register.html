@@ -27,32 +27,29 @@
             <form th:action="@{/user/save}" method="post" th:object="${user}">
                 <div class="form-group">
                     <label class="control-label" for="Name">  Name </label>
-                    <input id="Name" class="form-control" th:field="*{name}"
-                           required autofocus="autofocus" />
-                </div>
-
-
-                <div class="form-group">
-                    <label class="control-label" for="email"> Email </label> <input
-                        id="email" class="form-control" th:field="*{email}" required
-                        autofocus="autofocus" />
+                    <input th:required="mendatory" id="Name" class="form-control" th:field="*{name}"
+                           autofocus="autofocus" />
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="password"> Password </label> <input
-                        id="password" class="form-control" type="password"
-                        th:field="*{password}" required autofocus="autofocus" />
+                    <label class="control-label" for="email"> Email </label>
+                    <input th:required="mendatory" id="email" class="form-control"
+                           th:field="*{email}" autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="password"> Password </label>
+                    <input th:required="mendatory" id="password" class="form-control" type="password"
+                        th:field="*{password}" autofocus="autofocus" />
                 </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Register</button>
-                    <span>Already registered? <a href="/" th:href="@{/user/showLoginForm}">Login
-								here</a></span>
+                    <span>Already registered? <a href="/" th:href="@{/user/showLoginForm}">Login here</a></span>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 </body>
 </html>

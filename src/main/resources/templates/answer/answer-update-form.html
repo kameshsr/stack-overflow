@@ -21,9 +21,8 @@
         <input th:field="*{userName}" type="hidden"/>
 
         <div class="form-inline">
-            <textarea th:field="*{content}" style="width:50%; height:60px"></textarea>
-            <span class="badge badge-danger ml-2 mb-4"
-                  th:errors="*{content}"
+            <textarea th:required="mandatory" th:field="*{content}" style="width:50%; height:60px"></textarea>
+            <span class="badge badge-danger ml-2 mb-4" th:errors="*{content}"
                   th:if="${#fields.hasErrors('content')}"></span>
         </div>
 

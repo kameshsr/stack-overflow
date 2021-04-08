@@ -39,7 +39,7 @@
         <button class="btn btn-info col-2" type="submit">Publish</button>
     </form>
     <hr>
-    <a th:href="@{/question/showAllQuestionForNonLoggedInUser}">Back to Question List</a>
+    <a th:href="@{/question/showAllQuestion(userEmail=${userEmail})}">Back Questions</a>
 </div>
 <script>
     tinymce.init({

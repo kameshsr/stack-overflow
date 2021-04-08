@@ -28,16 +28,13 @@
 
         <div class="q-list">
             <div class="widget-title">
-                Popüler Sorular
+                Popular Questions
             </div><!--/widget-title-->
 
-            <ul>
-                <li><a href="">Are users more likely to make mistakes with functionality which is easier to access?</a></li>
-                <li><a href="">how to get JSON from string variable in jQuery</a></li>
-                <li><a href="">Querying $resource and GridFS</a></li>
-                <li><a href="">Redux: When removing specific element from array, it removes the last element instead</a></li>
-                <li><a href="">How do I create the database files when using MySQL as an embedded server</a></li>
-
+            <ul th:each="question : ${listQuestion}">
+                <li><a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email}, oldest=0)}">
+                    <b style="color:blue" th:text="${question.title}"></b>
+                </a></li>
             </ul>
         </div>
 

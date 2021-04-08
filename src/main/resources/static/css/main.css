@@ -234,8 +234,22 @@ section.left-content .q-answers .loop .q-answer .accept-area i.accepted:hover {c
   width: 40%;
 }
 
+.vote-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
 
+    border-bottom: 15px solid #bbc0c4;
+}
 
+.vote-down {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #bbc0c4;
+}
 
 
 

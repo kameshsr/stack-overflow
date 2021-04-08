@@ -46,11 +46,12 @@
 
                         <div class="q-meta cf">
                             <div class="q-meta-left">
+                                <span  th:text="asked+' '+${#temporals.format(question.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(question.createdAt,'HH:mm')}"></span><br>
                                 <a href="" class="user-link">
                                     <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
-                                    <span th:text="${question.userName}"></span>
+                                    <span th:text="${question.userName}"></span><br>
                                 </a>
-<!--                                <span th:text="${#calendars.format(question.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
+
                             </div><!--/q-meta-left-->
 
                             <div class="q-meta-right">
@@ -72,11 +73,15 @@
                                 <a href=""><i class="fa fa-flag"></i></a>
                             </div><!--/q-meta-right-->
                         </div><!--/q-meta-->
+                        <br> <br>
                         <div class="q-alt-replies-area">
                                 <div class="q-alt-replies">
                                     <div class="alt-item" th:each="comment : ${question.comments}">
-                                        <div class="alt-text" th:text="${comment.content}">
-                                        </div><!--/text-->
+                                        <span class="alt-text" th:text="${comment.content}">
+
+                                        </span><!--/text-->
+                                        &nbsp &nbsp
+                                        <small  th:text="${#temporals.format(comment.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(comment.createdAt,'HH:mm')}"></small><br><br>
                                         <a th:if="${user.email} == ${comment.email}"
                                            th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${comment.id},
                             userEmail=${user.email}, questionId=${question.id})}">Edit</a>
@@ -149,12 +154,14 @@
 
                                 <div class="q-meta cf">
                                     <div class="q-meta-left">
+                                        <span  th:text="answered+' '+${#temporals.format(answer.createdAt,'dd-MM-yyyy')}+' at '+${#temporals.format(question.createdAt,'HH:mm')}"></span><br>
                                         <a href="" class="user-link">
                                             <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
                                             <span th:text="${question.userName}"></span>
                                         </a>
 <!--                                        <span th:text="${#calendars.format(answer.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
                                     </div><!--/q-meta-left-->
+                                    <br> <br>
 
                                     <div class="q-meta-right">
                                         <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
@@ -169,11 +176,14 @@
 
                                 <div class="q-alt-replies-area">
                                     <div class="q-alt-replies">
-                                        <div class="alt-item" th:each="comment : ${answer.answerComments}">
-                                            <div class="alt-text" th:text="${comment.content}"></div><!--/text-->
-                                            <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
-                                         answerCommentId=${comment.id}, questionId=${question.id})}">Edit</a>
-                                            <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${comment.id}, userEmail=${user.email},
+                                        <span class="alt-item" th:each="comment2 : ${answer.answerComments}">
+                                            <span class="alt-text" th:text="${comment2.content}"></span><!--/text-->
+
+                                              <small  th:text="${#temporals.format(comment2.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(comment2.createdAt,'HH:mm')}"></small><br>
+
+                                            <a th:if="${user.email} == ${comment2.email}" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
+                                         answerCommentId=${comment2.id}, questionId=${question.id})}">Edit</a>
+                                            <a th:if="${user.email} == ${comment2.email}" th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${comment2.id}, userEmail=${user.email},
                                          questionId=${question.id})}">Delete</a>
                                             <div class="alt-meta">
 <!--                                                <a th:href="@{'/p/' + ${question.id}}" th:text="${comment.userName}"></a> - <span th:text="${#calendars.format(comment.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->

@@ -63,9 +63,9 @@ header.main .wrap .left-area .logo {height: 50px;}
 header.main .wrap .left-area .logo a {font-weight: 700; color: #4F5051; font-size: 28px;}
 header.main .wrap .left-area .menu {margin-top: -20px; height: 30px; line-height: 30px;}
 header.main .wrap .left-area .menu ul {margin-right: 100px;}
-header.main .wrap .left-area .menu ul li {float: left; margin-right: 10px;}
+header.main .wrap .left-area .menu ul li {float: right; margin-right: 10px;}
 header.main .wrap .left-area .menu ul li:last-child {margin-right: 0px;}
-header.main .wrap .left-area .menu ul li a {color: #4F5051; font-size: 17px; font-weight: 500; padding: 0px 8px; display: block;}
+header.main .wrap .left-area .menu ul li a {color: #4F5051; font-size: 37px; font-weight: 500; padding: 0px 8px; display: block;}
 header.main .wrap .left-area .menu ul li a:hover {color: #d71818; text-decoration: none;}
 header.main .wrap .left-area .menu ul li a.button-ask {border: 2px solid #0794f2; background: #0794f2; color: #fff;}
 header.main .wrap .left-area .menu ul li a.button-ask:hover {background: #1a83c9; color: #fff; border-color: #1a83c9;}

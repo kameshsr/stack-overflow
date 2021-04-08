@@ -7,11 +7,7 @@
         <section class="left-content">
 
             <div class="q-single">
-<!--                <div class="q-tags">-->
-<!--                    <a th:each="tag : ${tagList}" th:text="${tag}"></a>-->
-<!--                </div>&lt;!&ndash;/q-tags&ndash;&gt;-->
-
-                <h3 class="q-title" th:text="${question.title}"></h3><!--/q-title-->
+            <h3 class="q-title" th:text="${question.title}"></h3><!--/q-title-->
 
                 <div class="q-content cf">
 
@@ -79,8 +75,16 @@
                         <div class="q-alt-replies-area">
                                 <div class="q-alt-replies">
                                     <div class="alt-item" th:each="comment : ${question.comments}">
-                                        <div class="alt-text" th:text="${comment.content}"></div><!--/text-->
+                                        <div class="alt-text" th:text="${comment.content}">
+                                        </div><!--/text-->
+                                        <a th:if="${user.email} == ${comment.email}"
+                                           th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${comment.id},
+                            userEmail=${user.email}, questionId=${question.id})}">Edit</a>
+                                        <a th:if="${user.email} == ${comment.email}"
+                                           th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${comment.id},
+                            userEmail=${user.email}, questionId=${question.id})}">Delete</a>
                                         <div class="alt-meta">
+
 <!--                                            <a href="" th:text="${comment.userName}"></a> - <span th:text="${#calendars.format(comment.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
                                         </div><!--/alt-meta-->
                                 </div><!--/alt-item-->
@@ -167,6 +171,10 @@
                                     <div class="q-alt-replies">
                                         <div class="alt-item" th:each="comment : ${answer.answerComments}">
                                             <div class="alt-text" th:text="${comment.content}"></div><!--/text-->
+                                            <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
+                                         answerCommentId=${comment.id}, questionId=${question.id})}">Edit</a>
+                                            <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${comment.id}, userEmail=${user.email},
+                                         questionId=${question.id})}">Delete</a>
                                             <div class="alt-meta">
 <!--                                                <a th:href="@{'/p/' + ${question.id}}" th:text="${comment.userName}"></a> - <span th:text="${#calendars.format(comment.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
                                             </div><!--/alt-meta-->
@@ -181,7 +189,7 @@
                         </div><!--/q-content-->
                     </div><!--/q-single-->
                 </div><!--/loop-->
-                    <form class="cf" action="#" th:action="@{/answers/saveAnswer(questionId=${question.id},userEmail=${user.email}, answerId=0)}"
+                    <form class="cf" action="#" th:if="${user.email} != 'guest@mail.com'" th:action="@{/answers/saveAnswer(questionId=${question.id},userEmail=${user.email}, answerId=0)}"
                           th:object="${answer}" method="POST" data-th-attr="data-base-post-id=${question.id}">
 
                                     <textarea class="textarea" name="comment-content"  th:field="*{content}"
@@ -191,6 +199,14 @@
                         <div class="bottom cf">
                             <button type="submit" class="button">Post Your Answer</button>
                         </div>
+                    </form>
+                    <form th:if="${user.email} == 'guest@mail.com'"
+                          action="#" th:action="@{/answers/saveAnswerForGuest(questionId=${question.id},userEmail=${user.email})}"
+                          th:object="${guestAnswer}" method="POST" data-th-attr="data-base-post-id=${question.id}">
+                        <textarea th:field="*{content}" style="width:50%; height:60px" placeholder="Write your answer"></textarea><br>
+                        <input th:required="mandatory" th:field="*{userName}" type="text" placeholder="Name"/><br><br>
+                        <input th:required="mandatory" th:field="*{email}" type="text" placeholder="email"/><br><br>
+                        <button type="submit" class="btn btn-info col-2">Post as a guest</button>
                     </form>
             </div><!--/q-answers-->
         </section><!--/left-content-->

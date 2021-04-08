@@ -1,217 +1,245 @@
-<div th:replace="layout/header" xmlns:th="http://www.w3.org/1999/xhtml"/>
 
-<section class="content-container">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link th:replace="~{fragments/styles}">
+</head>
+<body>
+<header>
+    <div th:replace="layout/header" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-1">user : </div>
+        <div style="font-size: large; font-family: Helvetica Neue, Helvetica, Arial, sans-serif" class="col-1 float-left" th:text="${user.name}"></div>
+        <div class="col-5"></div>
+    </div>
+</header>
+<main class="d-flex flex-column flex-grow-1">
+    <section class="content-container">
+        <div class="wrap">
+            <section class="left-content">
 
-    <div class="wrap">
+                <div class="q-single">
+                    <h3 class="q-title" th:text="${question.title}"></h3><!--/q-title-->
 
-        <section class="left-content">
+                    <div class="q-content cf">
 
-            <div class="q-single">
-            <h3 class="q-title" th:text="${question.title}"></h3><!--/q-title-->
-
-                <div class="q-content cf">
-
-                    <div class="q-left">
-                        <div class="q-vote">
-<!--                            <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to upvote'))) return false"-->
-<!--                               th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">-->
-<!--                                <i class="fa fa-arrow-up"></i>-->
-<!--                            </a>-->
-<!--                            <div class="q-vote-up-area" data-th-attr="data-base-post-id=${question.id}, data-vote-type='UP_VOTE'">-->
-<!--                                <i class="fa fa-arrow-up"></i>-->
-<!--                            </div>&lt;!&ndash;/q-vote-up-area&ndash;&gt;-->
-                            <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
-                                <div class="vote-up"></div>
-                            </a>
-                            <div class="q-vote-result-area">
-                                <span th:text="${question.vote}"></span>
-                            </div><!--/q-vote-result-area-->
-                            <a href=""><div class="vote-down"></div></a>
-                            <a href="" th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
-<!--                            <div class="q-vote-down-area"  data-th-attr="data-base-post-id=${question.id}, data-vote-type='DOWN_VOTE'">-->
-<!--                                <i class="fa fa-arrow-down"></i>-->
-<!--                            </div>-->
-                            </a>
-
-                            <!--/q-vote-down-area-->
-                        </div><!--/q-vote-->
-                    </div><!--/q-left-->
-
-
-                    <div class="q-right">
-                        <div class="q-text" th:utext="${question.content}"></div><!--/q-text-->
-                        <div class="q-tags">
-                            <a th:each="tag : ${tagList}" th:text="${tag}"></a>
-                        </div><!--/q-tags-->
-
-                        <div class="q-meta cf">
-                            <div class="q-meta-left">
-                                <a href="" class="user-link">
-                                    <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
-                                    <span th:text="${question.userName}"></span>
+                        <div class="q-left">
+                            <div class="q-vote">
+                                <!--                            <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to upvote'))) return false"-->
+                                <!--                               th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">-->
+                                <!--                                <i class="fa fa-arrow-up"></i>-->
+                                <!--                            </a>-->
+                                <!--                            <div class="q-vote-up-area" data-th-attr="data-base-post-id=${question.id}, data-vote-type='UP_VOTE'">-->
+                                <!--                                <i class="fa fa-arrow-up"></i>-->
+                                <!--                            </div>&lt;!&ndash;/q-vote-up-area&ndash;&gt;-->
+                                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
+                                    <div class="vote-up"></div>
                                 </a>
-<!--                                <span th:text="${#calendars.format(question.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
-                            </div><!--/q-meta-left-->
+                                <div class="q-vote-result-area">
+                                    <span th:text="${question.vote}"></span>
+                                </div><!--/q-vote-result-area-->
+                                <a href=""><div class="vote-down"></div></a>
+                                <a href="" th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
+                                    <!--                            <div class="q-vote-down-area"  data-th-attr="data-base-post-id=${question.id}, data-vote-type='DOWN_VOTE'">-->
+                                    <!--                                <i class="fa fa-arrow-down"></i>-->
+                                    <!--                            </div>-->
+                                </a>
 
-                            <div class="q-meta-right">
+                                <!--/q-vote-down-area-->
+                            </div><!--/q-vote-->
+                        </div><!--/q-left-->
 
-                                <div th:if="${param.error}">
-                                    <div class="alert alert-info">Try Delete again
+
+                        <div class="q-right">
+                            <div class="q-text" th:utext="${question.content}"></div><!--/q-text-->
+                            <div class="q-tags">
+                                <a th:each="tag : ${tagList}" th:text="${tag}"></a>
+                            </div><!--/q-tags-->
+
+                            <div class="q-meta cf">
+                                <div class="q-meta-left">
+                                    <a href="" class="user-link">
+                                        <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
+                                        <span th:text="${question.userName}"></span>
+                                        <span th:text="${question.reputation}"></span>
+                                    </a>
+                                    <!--                                <span th:text="${#calendars.format(question.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
+                                </div><!--/q-meta-left-->
+
+                                <div class="q-meta-right">
+
+                                    <div th:if="${param.error}">
+                                        <div class="alert alert-info">Try Delete again
+                                        </div>
                                     </div>
-                                </div>
-                                <a th:if="${user.email} == ${question.email}"
-                                   onclick="if (!(confirm('Are you sure you want to delete this question?'))) return false"
-                                   th:href="@{/question/deleteQuestion(questionId=${question.id}, userEmail=${user.email})}">
-                                    Delete
-                                </a>
-                                <a th:if="${user.email} == ${question.email}"
-                                   th:href="@{/question/showFormForQuestionUpdate(questionId=${question.id}, userEmail=${user.email})}">
-                                    Edit
-                                </a>
-<!--                                <a th:href="@{'/p/' + ${question.id} + '/edit'}">Edit</a>-->
-                                <a href=""><i class="fa fa-flag"></i></a>
-                            </div><!--/q-meta-right-->
-                        </div><!--/q-meta-->
-                        <div class="q-alt-replies-area">
+                                    <a class="btn btn-danger btn-sm-3"
+                                       th:if="${user.email} == ${question.email}"
+                                       onclick="if (!(confirm('Are you sure you want to delete this question?'))) return false"
+                                       th:href="@{/question/deleteQuestion(questionId=${question.id}, userEmail=${user.email})}">
+                                        Delete
+                                    </a>
+                                    <a class="btn btn-info btn-sm-3"
+                                       th:if="${user.email} == ${question.email}"
+                                       th:href="@{/question/showFormForQuestionUpdate(questionId=${question.id}, userEmail=${user.email})}">
+                                        Edit
+                                    </a>
+                                    <!--                                <a th:href="@{'/p/' + ${question.id} + '/edit'}">Edit</a>-->
+                                    <a href=""><i class="fa fa-flag"></i></a>
+                                </div><!--/q-meta-right-->
+                            </div><!--/q-meta-->
+                            <div class="q-alt-replies-area">
                                 <div class="q-alt-replies">
                                     <div class="alt-item" th:each="comment : ${question.comments}">
                                         <div class="alt-text" th:text="${comment.content}">
                                         </div><!--/text-->
-                                        <a th:if="${user.email} == ${comment.email}"
-                                           th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${comment.id},
-                            userEmail=${user.email}, questionId=${question.id})}">Edit</a>
-                                        <a th:if="${user.email} == ${comment.email}"
-                                           th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${comment.id},
-                            userEmail=${user.email}, questionId=${question.id})}">Delete</a>
+                                        <i th:text="${comment.userName}"></i>
+                                        <a th:if="${user.email} == ${questionComment.email}"
+                                           th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
+                                            userEmail=${user.email}, questionId=${question.id})}">Edit</a>
+                                        <a th:if="${user.email} == ${questionComment.email}"
+                                           th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${questionComment.id},
+                                            userEmail=${user.email}, questionId=${question.id})}">Delete</a>
                                         <div class="alt-meta">
 
-<!--                                            <a href="" th:text="${comment.userName}"></a> - <span th:text="${#calendars.format(comment.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
+                                            <!--                                            <a href="" th:text="${comment.userName}"></a> - <span th:text="${#calendars.format(comment.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
                                         </div><!--/alt-meta-->
-                                </div><!--/alt-item-->
-                            </div><!--/q-alt-replies-->
+                                    </div><!--/alt-item-->
+                                </div><!--/q-alt-replies-->
 
-                            <div class="q-reply-form">
+                                <div class="q-reply-form">
 
-                                <form class="cf" th:action="@{/questionComment/saveQuestionComment(questionId=${question.id},
-    userEmail=${user.email}, questionCommentId=0)}"
-                                      th:object="${questionComment}" method="POST" data-th-attr="data-base-post-id=${question.id}">
+                                    <form th:if="${user.email} != 'guest@mail.com'" action="#" th:action="@{/questionComment/saveQuestionComment(questionId=${question.id},
+                                    userEmail=${user.email}, questionCommentId=0)}"
+                                          th:object="${questionComment}" method="POST">
+                                        <input th:required="mandatory" type="text" th:field="*{content}"
+                                               class="form-control mb-4 col-4" placeholder="Add Comment" width="100" height="50">
+                                        <button type="submit" class="btn btn-info col-2">Add Comment</button>
+                                    </form>
 
-                                    <textarea class="textarea" name="comment-content"  th:field="*{content}"
-                                              placeholder="Comment..."></textarea>
+                                </div>
 
-                                    <div class="bottom cf">
-                                        <button type="submit" class="button">Add Comment</button>
-                                    </div>
-                                </form>
+                            </div><!--/q-alt-replies-area-->
+                        </div><!--/q-right-->
+                    </div><!--/q-content-->
+                </div><!--/q-single-->
 
-                            </div>
-
-                        </div><!--/q-alt-replies-area-->
-                    </div><!--/q-right-->
-                </div><!--/q-content-->
-            </div><!--/q-single-->
-
-            <div class="q-answers">
-                <h3 class="title" th:text="${#arrays.length(question.answers)} + ' answers'"></h3>
+                <div class="q-answers">
+                    <h3 class="title" th:text="${#arrays.length(question.answers)} + ' answers'"></h3>
 
 
-                <div class="loop">
+                    <div class="loop">
 
-                    <div class="q-single q-answer" th:each="answer : ${question.answers}">
+                        <div class="q-single q-answer" th:each="answer : ${question.answers}">
 
-                        <div class="q-content cf">
+                            <div class="q-content cf">
 
-                            <div class="q-left">
-                                <div class="q-vote">
-<!--                                    <div class="q-vote-up-area"  data-th-attr="data-base-post-id=${answer.id}, data-vote-type='UP_VOTE'">-->
-<!--                                        <i class="fa fa-arrow-up"></i>-->
-<!--                                    </div>&lt;!&ndash;/q-vote-up-area&ndash;&gt;-->
-                                    <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=1, userEmail=${user.email})}">
-                                        <div class="vote-up"></div>
-                                    </a>
-                                    <div class="q-vote-result-area">
-                                        <span th:text="${answer.vote}"></span>
-                                    </div><!--/q-vote-result-area-->
-<!--                                    <div class="q-vote-down-area"  data-th-attr="data-base-post-id=${answer.id}, data-vote-type='DOWN_VOTE'">-->
-<!--                                        <i class="fa fa-arrow-down"></i>-->
-<!--                                    </div>&lt;!&ndash;/q-vote-down-area&ndash;&gt;-->
-                                    <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=-1, userEmail=${user.email})}">
-                                        <div class="vote-down"></div>
-                                    </a>
-                                    <div class="accept-area">
-                                        <i class="fa fa-check normal"></i>
-                                    </div>
-                                </div><!--/q-vote-->
-                            </div><!--/q-left-->
-
-                            <div class="q-right">
-                                <div class="q-text" th:utext="${answer.content}"></div><!--/q-text-->
-
-                                <div class="q-meta cf">
-                                    <div class="q-meta-left">
-                                        <a href="" class="user-link">
-                                            <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
-                                            <span th:text="${question.userName}"></span>
+                                <div class="q-left">
+                                    <div class="q-vote">
+                                        <!--                                    <div class="q-vote-up-area"  data-th-attr="data-base-post-id=${answer.id}, data-vote-type='UP_VOTE'">-->
+                                        <!--                                        <i class="fa fa-arrow-up"></i>-->
+                                        <!--                                    </div>&lt;!&ndash;/q-vote-up-area&ndash;&gt;-->
+                                        <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=1, userEmail=${user.email})}">
+                                            <div class="vote-up"></div>
                                         </a>
-<!--                                        <span th:text="${#calendars.format(answer.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
-                                    </div><!--/q-meta-left-->
+                                        <div class="q-vote-result-area">
+                                            <span th:text="${answer.vote}"></span>
+                                        </div><!--/q-vote-result-area-->
+                                        <!--                                    <div class="q-vote-down-area"  data-th-attr="data-base-post-id=${answer.id}, data-vote-type='DOWN_VOTE'">-->
+                                        <!--                                        <i class="fa fa-arrow-down"></i>-->
+                                        <!--                                    </div>&lt;!&ndash;/q-vote-down-area&ndash;&gt;-->
+                                        <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=-1, userEmail=${user.email})}">
+                                            <div class="vote-down"></div>
+                                        </a>
+                                        <div class="accept-area">
+                                            <i class="fa fa-check normal"></i>
+                                        </div>
+                                    </div><!--/q-vote-->
+                                </div><!--/q-left-->
 
-                                    <div class="q-meta-right">
-                                        <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
-                            answerCommentId=0, questionId=${question.id})}">Comment</a>
-<!--                                        <a th:href="@{'/p/' + ${answer.id} + '/edit'}">Düzenle</a>-->
-                                        <a th:href="@{/answers/deleteAnswer(answerId=${answer.id}, userEmail=${user.email},
-                    questionId=${question.id})}">Delete</a>
-                                        <a th:href="@{/answers/showFormForAnswerUpdate(answerId=${answer.id}, userEmail=${user.email}, questionId=${question.id})}">Edit</a>
-                                        <a href=""><i class="fa fa-flag"></i></a>
-                                    </div><!--/q-meta-right-->
-                                </div><!--/q-meta-->
+                                <div class="q-right">
+                                    <div class="q-text" th:utext="${answer.content}"></div><!--/q-text-->
 
-                                <div class="q-alt-replies-area">
-                                    <div class="q-alt-replies">
-                                        <div class="alt-item" th:each="comment : ${answer.answerComments}">
-                                            <div class="alt-text" th:text="${comment.content}"></div><!--/text-->
-                                            <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
+                                    <div class="q-meta cf">
+                                        <div class="q-meta-left">
+                                            <a href="" class="user-link">
+                                                <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
+                                                <span th:text="${answer.userName}"></span>
+                                                <span th:text="${answer.reputation}"></span>
+                                            </a>
+                                            <!--                                        <span th:text="${#calendars.format(answer.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
+                                        </div><!--/q-meta-left-->
+
+                                        <div class="q-meta-right">
+                                            <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to comment'))) return false"
+                                               href="#">Comment</a>
+                                            <a th:if="${user.email} != 'guest@mail.com'"
+                                               th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
+                               answerCommentId=0, questionId=${question.id})}">Comment</a>
+                                            <!--                                        <a th:href="@{'/p/' + ${answer.id} + '/edit'}">Düzenle</a>-->
+                                            <a th:if="${user.email} == ${answer.email}" th:href="@{/answers/deleteAnswer(answerId=${answer.id}, userEmail=${user.email},
+                                questionId=${question.id})}">Delete</a>
+                                            <a th:if="${user.email} == ${answer.email}"
+                                               th:href="@{/answers/showFormForAnswerUpdate(answerId=${answer.id}, userEmail=${user.email},
+                                questionId=${question.id})}">Update</a>
+                                            <a href=""><i class="fa fa-flag"></i></a>
+                                        </div><!--/q-meta-right-->
+                                    </div><!--/q-meta-->
+
+                                    <div class="q-alt-replies-area">
+                                        <div class="q-alt-replies">
+                                            <div class="alt-item" th:each="comment : ${answer.answerComments}">
+                                                <div class="alt-text" th:text="${comment.content}"></div><!--/text--><br>
+                                                <i th:text="${comment.userName}"></i>
+                                                <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
                                          answerCommentId=${comment.id}, questionId=${question.id})}">Edit</a>
-                                            <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${comment.id}, userEmail=${user.email},
+                                                <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${comment.id}, userEmail=${user.email},
                                          questionId=${question.id})}">Delete</a>
-                                            <div class="alt-meta">
-<!--                                                <a th:href="@{'/p/' + ${question.id}}" th:text="${comment.userName}"></a> - <span th:text="${#calendars.format(comment.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
-                                            </div><!--/alt-meta-->
-                                        </div><!--/alt-item-->
-                                    </div><!--/q-alt-replies-area-->
-<!--                                    <div class="q-reply-form">-->
-<!--                                        <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},-->
-<!--                            answerCommentId=0, questionId=${question.id})}">Comment</a>-->
-<!--                                    </div>-->
+                                                <div class="alt-meta">
+                                                    <!--                                                <a th:href="@{'/p/' + ${question.id}}" th:text="${comment.userName}"></a> - <span th:text="${#calendars.format(comment.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
+                                                </div><!--/alt-meta-->
+                                            </div><!--/alt-item-->
+                                        </div><!--/q-alt-replies-area-->
+                                        <!--                                    <div class="q-reply-form">-->
+                                        <!--                                        <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},-->
+                                        <!--                            answerCommentId=0, questionId=${question.id})}">Comment</a>-->
+                                        <!--                                    </div>-->
 
-                            </div><!--/q-right-->
-                        </div><!--/q-content-->
-                    </div><!--/q-single-->
-                </div><!--/loop-->
-                    <form class="cf" action="#" th:if="${user.email} != 'guest@mail.com'" th:action="@{/answers/saveAnswer(questionId=${question.id},userEmail=${user.email}, answerId=0)}"
-                          th:object="${answer}" method="POST" data-th-attr="data-base-post-id=${question.id}">
+                                    </div><!--/q-right-->
+                                </div><!--/q-content-->
+                            </div><!--/q-single-->
+                        </div><!--/loop-->
+                        <form th:if="${user.email} != 'guest@mail.com'"
+                              action="#" th:action="@{/answers/saveAnswer(questionId=${question.id},userEmail=${user.email}, answerId=0)}"
+                              th:object="${answer}" method="POST">
+                            <textarea th:field="*{content}" style="width:50%; height:60px"></textarea>
+                            <button type="submit" class="btn btn-info col-2">Add Answer</button>
+                        </form>
+                        <form th:if="${user.email} == 'guest@mail.com'"
+                              action="#" th:action="@{/answers/saveAnswerForGuest(questionId=${question.id},userEmail=${user.email})}"
+                              th:object="${guestAnswer}" method="POST">
+                            <textarea th:field="*{content}" style="width:50%; height:60px"></textarea><br>
+                            <input th:required="mandatory" th:field="*{userName}" type="text" placeholder="Name"/><br><br>
+                            <input th:required="mandatory" th:field="*{email}" type="text" placeholder="email"/><br><br>
+                            <button type="submit" class="btn btn-info col-2">Post as guest</button>
+                        </form>
+                    </div><!--/q-answers-->
+                </div>
+            </section><!--/left-content-->
+            <div th:replace="layout/sidebar"></div>
+        </div><!--/wrap-->
+    </section><!--/content-container-->
+</main>
 
-                                    <textarea class="textarea" name="comment-content"  th:field="*{content}"
-                                              placeholder="Add Your Answer..."></textarea>
-                        <br><br>
+<footer class="footer">
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
 
-                        <div class="bottom cf">
-                            <button type="submit" class="button">Post Your Answer</button>
-                        </div>
-                    </form>
-                    <form th:if="${user.email} == 'guest@mail.com'"
-                          action="#" th:action="@{/answers/saveAnswerForGuest(questionId=${question.id},userEmail=${user.email})}"
-                          th:object="${guestAnswer}" method="POST" data-th-attr="data-base-post-id=${question.id}">
-                        <textarea th:field="*{content}" style="width:50%; height:60px" placeholder="Write your answer"></textarea><br>
-                        <input th:required="mandatory" th:field="*{userName}" type="text" placeholder="Name"/><br><br>
-                        <input th:required="mandatory" th:field="*{email}" type="text" placeholder="email"/><br><br>
-                        <button type="submit" class="btn btn-info col-2">Post as a guest</button>
-                    </form>
-            </div><!--/q-answers-->
-        </section><!--/left-content-->
-        <div th:replace="layout/sidebar"/>
-    </div><!--/wrap-->
-</section><!--/content-container-->
-
-<!--<div th:replace="layout/footer"/>-->
+</body>
+</html>

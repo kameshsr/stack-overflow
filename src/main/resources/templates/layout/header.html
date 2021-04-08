@@ -14,26 +14,36 @@
 <div class="site-container cf">
     <header class="main">
         <div class="wrap cf">
-
+            <a class="btn btn-primary" th:href="@{/question/showAllQuestion(userEmail=${user.email})}">Back Questions</a>
             <div class="left-area">
                 <div class="logo">
                     <a href="" class="user-link">
-                        <img class="marquee-itm" src="https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.png">
+                        <img class="marquee-itm" src="https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.png" alt="StackOverflow">
                     </a>
 <!--                    <p th:text="${user.name}"></p>-->
 <!--                    <a href="" th:if="${user.name} == 'guest'" th:href="@{/question/showAllQuestionForNonLoggedInUser}">Logout</a>-->
 
                 </div>
 
-                <div class="menu">
-                    <ul>
-                        <li th:text="${user.name}" th:align="center"></li>
-                        <li><a th:if="${user.name} != 'guest'" th:href="@{/question/showAllQuestionForNonLoggedInUser}">Logout</a></li>
-                        <li><a th:if="${user.name} == 'guest'" href="/" th:href="@{/user/showLoginForm}">Login</a></li>
-<!--                        <li><a class="button button-ask rad3" href="" th:align="center">Ask Question</a></li>-->
-                    </ul>
-                </div>
+<!--                <div class="menu">-->
+<!--                    <ul>-->
+<!--                        <li th:text="${user.name}" th:align="center"></li>-->
+<!--                        <li><a th:if="${user.name} != 'guest'" th:href="@{/question/showAllQuestionForNonLoggedInUser}">Logout</a></li>-->
+<!--                        <li><a th:if="${user.name} == 'guest'" href="/" th:href="@{/user/showLoginForm}">Login</a></li>-->
+<!--&lt;!&ndash;                        <li><a class="button button-ask rad3" href="" th:align="center">Ask Question</a></li>&ndash;&gt;-->
+<!--                    </ul>-->
+<!--                </div>-->
             </div><!--/left-area-->
+
+
+
+<!--            <div class="right-area">-->
+<!--                <div>-->
+<!--                    <a th:if="${user.name} == 'guest'" th:href="@{/user/showLoginForm}" class="btn btn-info mr-2">Log in</a>-->
+<!--                    <a th:if="${user.name} == 'guest'" th:href="@{/user/showSignupForm}" class="btn btn-primary">Sign up</a>-->
+<!--                    <a th:if="${user.name} != 'guest'" th:href="@{/question/showAllQuestionForNonLoggedInUser}" class="btn btn-primary">Log Out</a>-->
+<!--                </div>-->
+<!--            </div>-->
 
 <!--            <div class="user-area">-->
 
@@ -52,17 +62,32 @@
 
 <!--            </div>-->
             <div class="user-area">
-                <span>
-                <a style="color: white" th:if="${user.name} == 'guest'" href="/" th:href="@{/user/showLoginForm}">Login</a>
-                <a style="color: white" th:if="${user.name} != 'guest'" th:href="@{/question/showAllQuestionForNonLoggedInUser}">Logout</a>
-                </span>
-                <span>
-                <a href="/" lass="button button-ask rad3" th:if="${user.name} == 'guest'" th:href="@{/user/showSignupForm}">Sign Up</a>
-                    </span>
-                <a th:if="${user.email} == 'guest@mail.com'" class="button button-ask rad3" onclick="if(!(alert('Please Login to Ask Question'))) return false"
+                <a th:if="${user.name} == 'guest'" th:href="@{/user/showLoginForm}" class="btn btn-info mr-2 text-white">Log in</a>
+                <a th:if="${user.name} == 'guest'" th:href="@{/user/showSignupForm}" class="btn btn-primary text-white">Sign up</a>
+                <a th:if="${user.name} != 'guest'" th:href="@{/question/showAllQuestionForNonLoggedInUser}"
+                   class="btn btn-primary text-white">Log Out</a>
+
+                <a th:if="${user.email} == 'guest@mail.com'" class="btn btn-info btn-sm-3 float-right text-white"
+                   onclick="if(!(alert('Please Login to Ask Question'))) return false"
                    href="#">Ask question</a>
-                <a th:if="${user.email} != 'guest@mail.com'" class="button button-ask rad3" href="/" th:href="@{/question/showQuestionForm(userEmail=${user.email})}">Ask Question</a>
+                <a th:if="${user.email} != 'guest@mail.com'" class="btn btn-info btn-sm-3 float-right text-white" href="/"
+                   th:href="@{/question/showQuestionForm(userEmail=${user.email})}">Ask Question</a>
+
+<!--                <span>-->
+<!--                <a style="color: white" th:if="${user.name} == 'guest'" href="/" th:href="@{/user/showLoginForm}">Login</a>-->
+<!--                <a style="color: white" th:if="${user.name} != 'guest'" th:href="@{/question/showAllQuestionForNonLoggedInUser}">Logout</a>-->
+<!--                </span>-->
+<!--                <span>-->
+<!--                <a href="/" lass="button button-ask rad3" th:if="${user.name} == 'guest'" th:href="@{/user/showSignupForm}">Sign Up</a>-->
+<!--                    </span>-->
+<!--                <a th:if="${user.email} == 'guest@mail.com'" class="btn btn-info btn-sm-3"-->
+<!--                   onclick="if(!(alert('Please Login to Ask Question'))) return false" href="#">Ask question</a>-->
+<!--                <a th:if="${user.email} != 'guest@mail.com'" class="btn btn-info btn-sm-3" href="/"-->
+<!--                   th:href="@{/question/showQuestionForm(userEmail=${user.email})}">Ask Question</a>-->
             </div>
 
         </div><!--/wrap-->
     </header><!--/header-->
+</div>
+</body>
+</html>

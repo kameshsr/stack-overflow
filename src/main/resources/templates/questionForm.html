@@ -7,34 +7,25 @@
 <body>
 <div class="container">
     <p class="h4 mb-4">Save Question</p>
-    <form action="#" method="POST"
-          th:action="@{/question/saveQuestionData(userEmail=${userEmail})}" th:object="${question}">
+    <form action="#" method="POST" th:action="@{/question/saveQuestionData(userEmail=${userEmail})}" th:object="${question}">
 
-        <input th:field="*{id}" type="hidden"/>
-        <input th:field="*{createdAt}" type="hidden"/>
-        <input th:field="*{userName}" type="hidden"/>
+        <input th:field="*{id}" type="hidden">
+        <input th:field="*{createdAt}" type="hidden">
+        <input th:field="*{userName}" type="hidden">
 
         <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Title of  the Question.." th:field="*{title}"
-                   th:required="mandatory" type="text">
-            <span class="badge badge-danger ml-2 mb-4"
-                  th:errors="*{title}"
-                  th:if="${#fields.hasErrors('title')}"></span>
+            <input class="form-control mb-4 col-4" placeholder="Title of  the Question.." th:field="*{title}" th:required="mandatory" type="text">
+            <span class="badge badge-danger ml-2 mb-4" th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></span>
         </div>
         <div class="form-inline">
             <textarea th:field="*{content}" style="width:50%; height:60px"></textarea>
-            <span class="badge badge-danger ml-2 mb-4"
-                  th:errors="*{content}"
-                  th:if="${#fields.hasErrors('content')}"></span>
+            <span class="badge badge-danger ml-2 mb-4" th:errors="*{content}" th:if="${#fields.hasErrors('content')}"></span>
         </div>
 
         <div class="form-inline">
-            <input class="form-control mb-4 col-4" placeholder="Add tag" th:field="*{tags}"
-                   th:required="mandatory" type="text">
+            <input class="form-control mb-4 col-4" placeholder="Add tag" th:field="*{tags}" th:required="mandatory" type="text">
 
-            <span class="badge badge-danger ml-2 mb-4"
-                  th:errors="*{tags}"
-                  th:if="${#fields.hasErrors('tags')}"></span>
+            <span class="badge badge-danger ml-2 mb-4" th:errors="*{tags}" th:if="${#fields.hasErrors('tags')}"></span>
         </div>
 
         <button class="btn btn-info col-2" type="submit">Publish</button>

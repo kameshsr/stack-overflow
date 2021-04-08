@@ -134,7 +134,7 @@ public class QuestionController {
         model.addAttribute("answer", answer);
         model.addAttribute("answers", answers);
         model.addAttribute("user", user);
-        return "question/show-question";
+        return "post";
     }
 
     @RequestMapping("/deleteQuestion")

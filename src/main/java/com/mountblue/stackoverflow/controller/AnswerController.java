@@ -18,17 +18,10 @@ import org.springframework.web.bind.annotation.*;
 public class AnswerController {
 
     private final AnswerService answerService;
-    @Autowired
-    private AnswerCommentRepository answerCommentRepository;
-
-    @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
-    private QuestionService questionService;
-
-    @Autowired
-    private UserService userService;
+    private final AnswerCommentRepository answerCommentRepository;
+    private final AnswerRepository answerRepository;
+    private final QuestionService questionService;
+    private final UserService userService;
 
     int oldest =0;
 
@@ -38,21 +31,6 @@ public class AnswerController {
         this.answerRepository = answerRepository;
         this.questionService = questionService;
         this.userService = userService;
-    }
-
-    @RequestMapping("/showAnswer")
-    public String showAnswer(Model model, @RequestParam("answerId") int answerId) {
-        Answer answer = answerService.findById(answerId);
-        model.addAttribute("comments",answerCommentRepository.findByAnswerId(answerId));
-        model.addAttribute("answer", answer);
-        return "answer/show-answer";
-    }
-
-    @GetMapping("/showAnswerForm")
-        String answerData(Model model){
-        Answer answer=new Answer();
-        model.addAttribute("answer", answer);
-        return "answer/answer-form";
     }
 
     @PostMapping("/saveAnswerForGuest")

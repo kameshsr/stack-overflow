@@ -49,9 +49,9 @@ public class QuestionController {
         Question question = new Question();
         model.addAttribute("question", question);
         model.addAttribute("userEmail", userEmail);
-        return "question/questionform";
+        return "question/question-form";
     }
-//comment
+
     @PostMapping("/saveQuestionData")
     public String saveQuestionData(@ModelAttribute("question") @Valid Question question,
                            @RequestParam("userEmail") String userEmail, BindingResult bindingResult) {

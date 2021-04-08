@@ -126,6 +126,14 @@ public class QuestionController {
         List<String> tagList = Arrays.asList(question.getTags().split(","));
         Answer guestAnswer = new Answer();
 
+        List<Question> Questions = questionService.getAllQuestions();
+        AnswerComment answerComment = null;
+
+        answerComment = new AnswerComment();
+        model.addAttribute("answerComment",answerComment);
+        model.addAttribute("answerCommentId",answerComment.getId());
+
+        model.addAttribute(("listQuestion"), Questions);
         model.addAttribute("guestAnswer", guestAnswer);
         model.addAttribute("tagList", tagList);
         model.addAttribute("questionComment", questionComment);

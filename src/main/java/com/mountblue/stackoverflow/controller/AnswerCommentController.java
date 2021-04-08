@@ -49,8 +49,8 @@ public class AnswerCommentController {
 //    }
 
     @RequestMapping("/showFormForUpdateAnswerComment")
-    public String updateQuestionComment(@RequestParam("answerCommentId") int answerCommentId,
-                                        @RequestParam("answerId") int answerId,
+    public String updateQuestionComment(@RequestParam(value = "answerCommentId", required = false) int answerCommentId,
+                                        @RequestParam(value = "answerId", required = false) int answerId,
                                         @RequestParam("questionId") int questionId,
                                         @RequestParam("userEmail") String userEmail, Model model) {
         AnswerComment answerComment = null;

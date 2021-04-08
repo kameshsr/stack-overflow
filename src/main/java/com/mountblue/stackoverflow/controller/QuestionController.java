@@ -135,6 +135,7 @@ public class QuestionController {
         model.addAttribute("answers", answers);
         model.addAttribute("user", user);
         return "post";
+        //return "question/show-question";
     }
 
     @RequestMapping("/deleteQuestion")
@@ -149,7 +150,8 @@ public class QuestionController {
         model.addAttribute("user", user);
         List<Question> Questions = questionService.getAllQuestions();
         model.addAttribute(("listQuestion"), Questions);
-        return "question/question-list";
+        //return "question/question-list";
+        return "question/question-list2";
     }
 
     @GetMapping("/showAllQuestionForNonLoggedInUser")
@@ -159,7 +161,8 @@ public class QuestionController {
         User user = userService.getUserByEmail(userEmail);
         model.addAttribute("user", user);
         model.addAttribute(("listQuestion"), Questions);
-        return "question/question-list";
+        //return "question/question-list";
+        return "question/question-list2";
     }
 
     @GetMapping("/filterQuestions")
@@ -169,6 +172,7 @@ public class QuestionController {
         User user = userService.getUserByEmail(userEmail);
         model.addAttribute(("listQuestion"), Questions);
         model.addAttribute("user", user);
-        return "question/question-list";
+        //return "question/question-list";
+        return "question/question-list2";
     }
 }

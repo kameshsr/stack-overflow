@@ -1,65 +1,216 @@
-<div th:replace="layout/header"/>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<section class="content-container">
-
-    <div class="wrap">
-
-        <section class="left-content">
-
-            <div class="q-list">
-                <div class="q-item" th:each="post : ${posts}">
-                    <div class="q-left">
-
-                        <div class="q-vote">
-                            <div class="q-vote-up-area">
-                                <i class="fa fa-arrow-up"></i>
-                            </div><!--/q-vote-up-area-->
-                            <div class="q-vote-result-area">
-                                3
-                            </div><!--/q-vote-result-area-->
-                            <div class="q-vote-down-area">
-                                <i class="fa fa-arrow-down"></i>
-                            </div><!--/q-vote-down-area-->
-                        </div><!--/q-vote-->
-
-                    </div><!--/q-left-->
-
-                    <div class="q-right">
-                        <a class="q-title" th:href="@{'/p/' + ${post.id}}" th:text="${post.title}"></a>
-                        </h3><!--/q-title-->
-
-                        <div class="q-meta">
-                            <a href="" class="user-link">
-                                <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
-                                <span th:text="${post.user.displayName}"></span>
-                            </a>
-                            17 dk önce sordu
-                        </div><!--/q-meta-->
-
-                        <div class="q-tags">
-                            <a th:each="tag : ${post.tags}" th:text="${tag.tagName}"></a>
+    <title>Stack Overflow Clone</title>
+    <link th:replace="~{fragments/styles}">
+</head>
+<body class="d-flex flex-column h-100">
+<header>
+    <div th:replace="~{fragments/navigation}"></div>
+</header>
+<main class="d-flex flex-column flex-grow-1">
+    <div class="container-fluid d-flex flex-column flex-grow-1">
+        <div class="row d-flex flex-grow-1">
+            <div class="col-md-2 col-lg-2 offset-lg-1 d-none d-md-block pr-0">
+                <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 bg-white border p-0 h-auto">
+                <div class="content h-auto">
+                    <div class="content-header mt-4 mx-4">
+                        <div class="section-title mb-3 clearfix">
+                            <div class="h3 font-weight-normal float-left">Questions</div>
+                            <a class="float-right btn btn-primary"
+                               th:href="@{/question/showQuestionForm(userEmail=${user.email})}">Ask Question</a>
                         </div>
-                    </div><!--/g-right-->
-                </div><!--/q-item-->
+                        <div class="search-form-wrapper mb-3 d-flex justify-content-between">
+                            <div class="h5 font-weight-normal"></div>
+                            <div class="buttons">
+                                <div class="btn-group mr-2" role="group">
+                                    <button class="btn btn-outline-secondary"
+                                            type="button"
+                                            th:onclick="'window.location.href=\'' + @{/questions(sort='Newest')} + '\''">Newest</button>
+                                    <button class="btn btn-outline-secondary"
+                                            type="button"
+                                            th:onclick="'window.location.href=\'' + @{/questions(sort='LastActive')} + '\''">Active</button>
+                                    <button class="btn btn-outline-secondary"
+                                            type="button"
+                                            th:onclick="'window.location.href=\'' + @{/questions(sort='MostVotes')} + '\''">Votes</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="question-filter mt-2 d-flex justify-content-end">
+                            <div class="collapse" id="toggleFilter">
+                                <form class="form" id="question_filter_form" th:action="@{/questions}" th:method="get">
+                                    <div class="form-group d-flex align-items-start">
+                                        <div class="filter mr-5">
+                                            <div class="filter-title font-weight-bold mb-2">Filter by</div>
+                                            <div class="">
+                                                <input type="checkbox"
+                                                       id="no_answers_filter"
+                                                       name="filters"
+                                                       value="NoAnswers">
+                                                <label class="mb-0" for="no_answers_filter">No answers</label>
+                                            </div>
+                                            <div class="">
+                                                <input type="checkbox"
+                                                       id="no_accepted_answer_filter"
+                                                       name="filters"
+                                                       value="NoAcceptedAnswer">
+                                                <label class="mb-0" for="no_accepted_answer_filter">No accepted answer</label>
+                                            </div>
+                                        </div>
+                                        <div class="sort mr-5">
+                                            <div class="sort-title font-weight-bold mb-2">Sort by</div>
+                                            <div class="">
+                                                <input type="radio" id="newest_sort_radio"
+                                                       name="sort" value="Newest">
+                                                <label class="mb-0" for="newest_sort_radio">Newest</label>
+                                            </div>
+                                            <div class="">
+                                                <input type="radio" id="last_active_sort_radio"
+                                                       name="sort" value="LastActive">
+                                                <label class="mb-0" for="last_active_sort_radio">Recent activity</label>
+                                            </div>
+                                            <div class="">
+                                                <input type="radio" id="most_votes_sort_radio"
+                                                       name="sort" value="MostVotes">
+                                                <label class="mb-0" for="most_votes_sort_radio">Most votes</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-info btn-sm" th:value="'Apply filter'">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
-            </div><!--/q-list-->
+                    <div class="questions-list-container border-top">
 
-            <div class="q-pagination">
-                <a href="" class="active">1</a>
-                <a href="">2</a>
-                <a href="">3</a>
-                <a href="">4</a>
-                <a href=""><i class="fa fa-angle-right"></i></a>
-            </div><!--/q-pagination-->
+                        <div class="d-flex float-none question-info px-2 py-3 border-bottom" th:each="question : ${listQuestion}">
 
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="votes mb-2 p-1">
+                                        &nbsp;&nbsp;<span class="vote-count-post h5 font-weight-bold"
+                                                  th:text="${question.vote}">
+                                            </span>
+                                        <div class="viewcount small">votes</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="status unanswered mb-2 p-1">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<span>0</span>
+                                        <div class="small">answers</div>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="votes mb-2 p-1">
+                                        &nbsp;&nbsp;<span>4</span>
+                                        <div class="views small">views</div>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="stats-container text-muted text-center ml-1 mr-3">-->
+<!--                                <div class="stats">-->
+<!--                                    <div class="vote">-->
+<!--                                        <div class="votes mb-2 p-1">-->
+<!--                                            <span class="vote-count-post h5 font-weight-bold"-->
+<!--                                                  th:text="${question.vote}">-->
+<!--                                            </span>-->
+<!--                                            <div class="viewcount small">votes</div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="status unanswered mb-2 p-1">-->
+<!--                                        <span>0</span>-->
+<!--                                        <div class="small">answers</div>-->
+<!--                                    </div>-->
+<!--&lt;!&ndash;                                    <div class="status unanswered mb-2 p-1"&ndash;&gt;-->
+<!--&lt;!&ndash;                                         th:classappend="(${question.answers.size() > 0} ? (${question.hasAcceptedAnswer()} ?&ndash;&gt;-->
+<!--&lt;!&ndash;                                         'rounded border border-success bg-success text-light' :&ndash;&gt;-->
+<!--&lt;!&ndash;                                         'rounded border border-success text-success') : '')">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <span class="answers-count-post h5 font-weight-bold"&ndash;&gt;-->
+<!--&lt;!&ndash;                                              th:text="${question.answers.size()}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="small">answers</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--                                </div>-->
+<!--                                <div class="votes mb-2 p-1">-->
+<!--                                    <span>4</span>-->
+<!--                                    <div class="views small">views</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="question-summary w-100">
+                                <div class="mb-2">
+                                    <a class="text-info h5 font-weight-normal"
+                                       th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email}, oldest=0)}"
+                                       th:text="${question.title}"></a>
+                                </div>
+<!--                                <div class="mb-1" th:text="${question.content}"></div>-->
+                                <div class="float-left">
+                                    <div class="d-inline-block" th:each="tag : ${question.tagList}">
+                                        <a class="mr-1 bg-light small rounded p-1 text-info" th:href="${'/tags/'}"
+                                           th:text="${tag}"></a>
+                                    </div>
+                                </div>
+                                <div class="user-info float-right w-25">
+                                    <div class="text-muted small user-action-time"
+                                         th:text="'asked ' + ${question.createdAt}">
+                                    </div>
 
-        </section><!--/left-content-->
-
-        <div th:replace="layout/sidebar"/>
-
-    </div><!--/wrap-->
-
-</section><!--/content-container-->
-
-
-<div th:replace="layout/footer"/>
+<!--                                    <div th:if="${question.author.avatar}" class="user-gravatar gravatar-32 float-left mr-2">-->
+<!--                                        <img th:src="@{'data:image/jpeg;base64,' + ${question.author.avatar.data}}"-->
+<!--                                             th:alt="${'user-avatar-' + question.id}">-->
+<!--                                    </div>-->
+                                    <div class="user-details float-left small">
+                                        <a th:href="${'/'}"
+                                           th:text="${question.userName}"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<!--                    <div th:if="${questions.getTotalPages() > 1}" class="pagination float-left ml-4 my-4">-->
+<!--                        <nav aria-label="Page navigation">-->
+<!--                            <ul class="pagination pagination-sm mb-0">-->
+<!--                                <li class="page-item"-->
+<!--                                    th:each="i: ${#numbers.sequence(1, questions.getTotalPages())}"-->
+<!--                                    th:classappend="${questions.getNumber() == i - 1} ? active"-->
+<!--                                    th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">-->
+<!--                                    <a th:href="@{${currentUrl}(page=${i}-1)}"-->
+<!--                                       th:text="${i}"-->
+<!--                                       class="page-link"></a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </nav>-->
+<!--                    </div>-->
+<!--                    <div th:if="${questions.getTotalPages() > 1}" class="pagination float-right mr-4 my-4">-->
+<!--                        <nav aria-label="Questions per page">-->
+<!--                            <ul class="pagination pagination-sm mb-0">-->
+<!--                                <li class="page-item"-->
+<!--                                    th:each="i: ${#numbers.sequence(5, 15, 5)}"-->
+<!--                                    th:classappend="${questions.getSize() == i} ? active">-->
+<!--                                    <a class="page-link" th:href="@{''(size=${i})}" th:text="${i}"></a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </nav>-->
+<!--                        <div class="align-self-center small text-muted ml-2">per page</div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</footer>
+</body>
+</html>

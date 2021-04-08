@@ -2,6 +2,7 @@ package com.mountblue.stackoverflow.service;
 
 import com.mountblue.stackoverflow.model.Question;
 import com.mountblue.stackoverflow.repository.QuestionRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,5 +60,17 @@ public class QuestionServiceImplementation implements QuestionService{
                 filteredQuestions.add(allQuestions.get(i));
         }
         return  filteredQuestions;
+    }
+
+    @Override
+    public List<Question> sortQuestionsByFilter(String sortBy) {
+        List<Question> questions = null;
+        if (sortBy.equals("newest"))
+            questions = questionRepository.sortByNewestDate();
+        else if (sortBy.equals("oldest"))
+            questions = questionRepository.sortByOldestDate();
+        else questions = questionRepository.sortByMaxVotes();
+
+        return questions;
     }
 }

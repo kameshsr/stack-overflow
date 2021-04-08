@@ -1,46 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="ru" class="h-100">
+
 <aside class="right-sidebar">
-
-
-
     <div class="widget">
         <div class="q-search">
-            <div class="form">
-<!--                <form>-->
-<!--                    <input type="search" name="search" placeholder="Arayın..." class="text rad3" />-->
-<!--                    <button type="submit">-->
-<!--                        <i class="fa fa-search"></i>-->
-<!--                    </button>-->
-<!--                </form>-->
-                <form method="get"
+            <div class="form" method="get"
                       th:action="@{/question/filterQuestions}">
                     <input type="hidden" name="userEmail" th:value="${user.email}">
-                    <input name="searchQuestion" size="50" class="text rad3" th:type="text" placeholder="Search Question that already Answered.." aria-label="Search">
+                    <input name="searchQuestion" size="50" class="text rad3" th:type="text"
+                           placeholder="Search Question that already Answered.." aria-label="Search">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
         </div>
     </div><!--/widget-->
 
-
-
-
     <div class="widget">
-
         <div class="q-list">
             <div class="widget-title">
                 Popular Questions
             </div><!--/widget-title-->
-
             <ul th:each="question : ${listQuestion}">
                 <li><a th:href="@{/question/showQuestion(questionId=${question.id}, userEmail=${user.email}, oldest=0)}">
                     <b style="color:blue" th:text="${question.title}"></b>
                 </a></li>
             </ul>
         </div>
-
-
-
-
-
     </div><!--/widget-->
 </aside><!--/right-sidebar-->

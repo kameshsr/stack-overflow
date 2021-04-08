@@ -180,10 +180,9 @@ public class Question {
     public String toString() {
         return "Question{" +
                 "id=" + id +
-                ", content='" + content + '\'' +
                 ", createdAt=" + createdAt +
-                ", userName='" + userName + '\'' +
-                ", comments=" + comments +
+                ", title='" + title + '\'' +
+                ", vote=" + vote +
                 '}';
     }
 }

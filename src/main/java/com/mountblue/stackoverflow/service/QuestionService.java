@@ -16,4 +16,6 @@ public interface QuestionService {
     List<Question> getAllQuestions();
 
     List<Question> getFilteredQuestions(String searchQuestion);
+
+    List<Question> sortQuestionsByFilter(String sortBy);
 }

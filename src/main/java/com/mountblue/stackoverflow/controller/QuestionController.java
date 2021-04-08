@@ -162,6 +162,19 @@ public class QuestionController {
         return "question/question-list2";
     }
 
+    @GetMapping("/sortQuestions")
+    public String sortQuestionsByFilter(@RequestParam("userEmail") String userEmail,
+                                        @RequestParam("sortBy") String sortBy, Model model) {
+        User user = userService.getUserByEmail(userEmail);
+        List<Question> questions = questionService.sortQuestionsByFilter(sortBy);
+//        for (Question q : questions)
+//            System.out.println(q);
+        model.addAttribute("user", user);
+        model.addAttribute(("listQuestion"), questions);
+        //return "question/question-list";
+        return "question/question-list2";
+    }
+
     @GetMapping("/showAllQuestionForNonLoggedInUser")
     public String viewPostsList(Model model) {
         List<Question> Questions = questionService.getAllQuestions();

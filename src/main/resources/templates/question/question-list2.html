@@ -95,9 +95,10 @@
                                     </div>
                                 </div>
                                 <div class="user-info float-right w-25">
-                                    <div class="text-muted small user-action-time"
-                                         th:text="'asked ' + ${question.createdAt}">
-                                    </div>
+                                    <span class="text-muted small user-action-time"
+                                         th:text="asked+' '+${#temporals.format(question.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(question.createdAt,'HH:mm')}">
+<!--                                         th:text="'asked ' + ${question.createdAt}">-->
+                                    </span><br>
                                     <div class="user-details float-left small">
                                         <a th:href="${'/'}"
                                            th:text="${question.userName}"></a>

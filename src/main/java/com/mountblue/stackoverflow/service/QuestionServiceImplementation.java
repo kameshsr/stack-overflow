@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class QuestionServiceImplementation implements QuestionService{
 
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
 
     public QuestionServiceImplementation(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
@@ -33,6 +33,7 @@ public class QuestionServiceImplementation implements QuestionService{
         } else {
             throw new RuntimeException("Question not found for id: " + questionId);
         }
+        //System.out.println(question.toString());
         return question;
     }
 

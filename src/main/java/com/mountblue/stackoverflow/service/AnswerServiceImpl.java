@@ -30,6 +30,7 @@ public class AnswerServiceImpl  implements AnswerService{
         }else{
             throw new RuntimeException("Did not find answer id"+id);
         }
+        System.out.println(answer.toString());
         return answer;
     }
 

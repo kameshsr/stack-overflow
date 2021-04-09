@@ -138,4 +138,16 @@ public class Answer {
     public void setReputation(int reputation) {
         this.reputation = reputation;
     }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", userName='" + userName + '\'' +
+                ", vote=" + vote +
+                ", email='" + email + '\'' +
+                ", reputation=" + reputation +
+                '}';
+    }
 }

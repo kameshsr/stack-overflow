@@ -26,21 +26,22 @@ public class votesController {
 
     @RequestMapping("/voteQuestion")
     public String voteQuestion(@RequestParam("questionId") int questionId,
-                               @RequestParam("vote") int vote, @RequestParam("userEmail") String userEmail) {
-        System.out.println("i am in vote question");
+                               @RequestParam("vote") int vote,
+                               @RequestParam("userEmail") String userEmail) {
+        //System.out.println("i am in vote question");
         Question question = questionService.getQuestion(questionId);
         User user = userService.getUserByEmail(userEmail);
-        if (vote > 0) {
-            question.setVote(question.getVote() + 1);
-            question.setReputation(question.getReputation() + 10);
-        } else {
+        if (vote != 1) {
             question.setVote(question.getVote() - 1);
             question.setReputation(question.getReputation() - 2);
             user.setReputation(user.getReputation()-1);
+        } else {
+            question.setVote(Integer.valueOf(question.getVote()) + 1);
+            question.setReputation(question.getReputation() + 10);
         }
-        questionService.saveQuestion(question);
-        return "redirect:/question/showAllQuestion?userEmail="+userEmail+"&oldest="+oldest;
-        //return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
+        questionService.save(question);
+        //return "redirect:/question/showAllQuestion?userEmail="+userEmail+"&oldest="+oldest;
+        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
     }
 
     @RequestMapping("/voteAnswer")
@@ -50,7 +51,7 @@ public class votesController {
                              @RequestParam("userEmail") String userEmail) {
         Answer answer = answerService.findById(answerId);
         User user = userService.getUserByEmail(userEmail);
-        if (vote > 0) {
+        if (vote == 1) {
             answer.setVote(answer.getVote() + 1);
             answer.setReputation(answer.getReputation() + 10);
         } else {

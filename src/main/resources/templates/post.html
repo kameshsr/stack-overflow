@@ -27,20 +27,47 @@
 
                 <div class="q-single">
                     <h3 class="q-title" th:text="${question.title}"></h3><!--/q-title-->
-                    <h6 > Asked today Active today Viewed <h5 th:text="${question.views}"></h5></h6><br>
+                    <h6> Asked <i>today</i> Active <i>today</i>  Viewed <i th:text="${question.views} +' times'"></i></h6><br>
                     <div class="q-content cf">
                         <div class="q-left">
                             <div class="q-vote">
-                                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1,
-                        userEmail=${user.email})}">
+<!--                                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">-->
+<!--                                    <div class="vote-up"></div>-->
+<!--                                </a>-->
+<!--                                <div class="q-vote-result-area">-->
+<!--                                    <span th:text="${question.vote}"></span>-->
+<!--                                </div>&lt;!&ndash;/q-vote-result-area&ndash;&gt;-->
+<!--                                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=-1, userEmail=${user.email})}">-->
+<!--                                    <div class="vote-down"></div>-->
+<!--                                </a>-->
+
+
+
+
+
+                                <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to upvote'))) return false"
+                                   th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
+                                    <div class="vote-up"></div>
+                                </a>
+                                <a th:if="${user.email} != 'guest@mail.com'"
+                                   th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
                                     <div class="vote-up"></div>
                                 </a>
                                 <div class="q-vote-result-area">
                                     <span th:text="${question.vote}"></span>
                                 </div><!--/q-vote-result-area-->
-                                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
+                                <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to DownVote'))) return false"
+                                   th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=-1, userEmail=${user.email})}">
                                     <div class="vote-down"></div>
                                 </a>
+                                <a th:if="${user.email} != 'guest@mail.com'"
+                                   th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=-1, userEmail=${user.email})}">
+                                    <div class="vote-down"></div>
+                                </a>
+
+
+
+
                             </div><!--/q-vote-->
                         </div><!--/q-left-->
                         <div class="q-right">

@@ -190,9 +190,13 @@ public class Question {
     public String toString() {
         return "Question{" +
                 "id=" + id +
-                ", createdAt=" + createdAt +
+                ", content='" + content + '\'' +
+                ", userName='" + userName + '\'' +
                 ", title='" + title + '\'' +
                 ", vote=" + vote +
+                ", email='" + email + '\'' +
+                ", reputation=" + reputation +
+                ", views=" + views +
                 '}';
     }
 }

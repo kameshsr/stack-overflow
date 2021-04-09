@@ -105,8 +105,10 @@ public class QuestionController {
     }
 
     @RequestMapping("/showQuestion")
-    public String showQuestion(Model model, @RequestParam("questionId") int questionId
-    , @RequestParam("userEmail") String userEmail, @RequestParam("oldest") int oldest) {
+    public String showQuestion(Model model,
+                               @RequestParam("questionId") int questionId,
+                               @RequestParam("userEmail") String userEmail,
+                               @RequestParam("oldest") int oldest) {
         User user = userService.getUserByEmail(userEmail);
         Question question = questionService.getQuestion(questionId);
         question.setViews(question.getViews()+1);

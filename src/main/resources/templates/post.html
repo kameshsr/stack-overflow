@@ -15,8 +15,8 @@
     <div th:replace="layout/header" xmlns:th="http://www.w3.org/1999/xhtml"></div>
     <div class="row">
         <div class="col-5"></div>
-        <div class="col-1">user : </div>
-        <div style="font-size: large; font-family: Helvetica Neue, Helvetica, Arial, sans-serif" class="col-1 float-left" th:text="${user.name}"></div>
+        <div class="col-1">User:<b><span th:text="${user.name}"></span></b></div>
+
         <div class="col-5"></div>
     </div>
 </header>
@@ -27,7 +27,7 @@
 
                 <div class="q-single">
                     <h3 class="q-title" th:text="${question.title}"></h3><!--/q-title-->
-                    <h6> Asked <i>today</i> Active <i>today</i>  Viewed <i th:text="${question.views} +' times'"></i></h6><br>
+                    <h6> Asked <i>today</i> &nbsp&nbsp Active <i>today</i> &nbsp&nbsp Viewed <i th:text="${question.views} +' times'"></i></h6><br>
                     <div class="q-content cf">
                         <div class="q-left">
                             <div class="q-vote">
@@ -116,11 +116,11 @@
                                         <a href="#" ><p th:text="${comment.userName}"></p></a>
 <!--                                        <span th:text="${comment.userName}"></span>-->
                                         <small  style="color:#808080" th:text="${#temporals.format(comment.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(comment.createdAt,'HH:mm')}"></small><br><br>
-                                        <a th:if="${user.email} == ${questionComment.email}"
-                                           th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
+                                        <a th:if="${user.email} == ${comment.email}"
+                                           th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${comment.id},
                                             userEmail=${user.email}, questionId=${question.id})}">Edit</a>
-                                        <a th:if="${user.email} == ${questionComment.email}"
-                                           th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${questionComment.id},
+                                        <a th:if="${user.email} == ${comment.email}"
+                                           th:href="@{/questionComment/deleteQuestionComment(questionCommentId=${comment.id},
                                             userEmail=${user.email}, questionId=${question.id})}">Delete</a>
                                         <div class="alt-meta">
 

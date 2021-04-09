@@ -27,6 +27,7 @@ public class votesController {
     @RequestMapping("/voteQuestion")
     public String voteQuestion(@RequestParam("questionId") int questionId,
                                @RequestParam("vote") int vote, @RequestParam("userEmail") String userEmail) {
+        System.out.println("i am in vote question");
         Question question = questionService.getQuestion(questionId);
         User user = userService.getUserByEmail(userEmail);
         if (vote > 0) {
@@ -38,7 +39,8 @@ public class votesController {
             user.setReputation(user.getReputation()-1);
         }
         questionService.saveQuestion(question);
-        return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
+        return "redirect:/question/showAllQuestion?userEmail="+userEmail+"&oldest="+oldest;
+        //return "redirect:/question/showQuestion?questionId="+questionId+"&userEmail="+userEmail+"&oldest="+oldest;
     }
 
     @RequestMapping("/voteAnswer")

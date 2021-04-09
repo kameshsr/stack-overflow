@@ -32,31 +32,21 @@
 
                         <div class="q-left">
                             <div class="q-vote">
-                                <!--                            <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to upvote'))) return false"-->
-                                <!--                               th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">-->
-                                <!--                                <i class="fa fa-arrow-up"></i>-->
-                                <!--                            </a>-->
-                                <!--                            <div class="q-vote-up-area" data-th-attr="data-base-post-id=${question.id}, data-vote-type='UP_VOTE'">-->
-                                <!--                                <i class="fa fa-arrow-up"></i>-->
-                                <!--                            </div>&lt;!&ndash;/q-vote-up-area&ndash;&gt;-->
-                                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
+                                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1,
+                        userEmail=${user.email})}">
                                     <div class="vote-up"></div>
                                 </a>
                                 <div class="q-vote-result-area">
                                     <span th:text="${question.vote}"></span>
                                 </div><!--/q-vote-result-area-->
-                                <a href=""><div class="vote-down"></div></a>
-                                <a href="" th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
-                                    <!--                            <div class="q-vote-down-area"  data-th-attr="data-base-post-id=${question.id}, data-vote-type='DOWN_VOTE'">-->
-                                    <!--                                <i class="fa fa-arrow-down"></i>-->
-                                    <!--                            </div>-->
+                                <a th:href="@{/votes/voteQuestion(questionId=${question.id}, vote=1, userEmail=${user.email})}">
+                                    <div class="vote-down"></div>
                                 </a>
-
-                                <!--/q-vote-down-area-->
+                                <div class="accept-area">
+                                    <i class="fa fa-check normal"></i>
+                                </div>
                             </div><!--/q-vote-->
                         </div><!--/q-left-->
-
-
                         <div class="q-right">
                             <div class="q-text" th:utext="${question.content}"></div><!--/q-text-->
                             <div class="q-tags">
@@ -65,6 +55,7 @@
 
                             <div class="q-meta cf">
                                 <div class="q-meta-left">
+                                    <span  th:text="asked+' '+${#temporals.format(question.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(question.createdAt,'HH:mm')}"></span><br>
                                     <a href="" class="user-link">
                                         <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
                                         <span th:text="${question.userName}"></span>
@@ -95,11 +86,13 @@
                                 </div><!--/q-meta-right-->
                             </div><!--/q-meta-->
                             <div class="q-alt-replies-area">
-                                <div class="q-alt-replies">
+                                <div class="q-alt-replies"><br>
                                     <div class="alt-item" th:each="comment : ${question.comments}">
                                         <div class="alt-text" th:text="${comment.content}">
                                         </div><!--/text-->
-                                        <i th:text="${comment.userName}"></i>
+                                        <a href="#" ><p th:text="${comment.userName}"></p></a>
+<!--                                        <span th:text="${comment.userName}"></span>-->
+                                        <small  style="color:#808080" th:text="${#temporals.format(comment.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(comment.createdAt,'HH:mm')}"></small><br><br>
                                         <a th:if="${user.email} == ${questionComment.email}"
                                            th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
                                             userEmail=${user.email}, questionId=${question.id})}">Edit</a>
@@ -142,18 +135,12 @@
 
                                 <div class="q-left">
                                     <div class="q-vote">
-                                        <!--                                    <div class="q-vote-up-area"  data-th-attr="data-base-post-id=${answer.id}, data-vote-type='UP_VOTE'">-->
-                                        <!--                                        <i class="fa fa-arrow-up"></i>-->
-                                        <!--                                    </div>&lt;!&ndash;/q-vote-up-area&ndash;&gt;-->
-                                        <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=1, userEmail=${user.email})}">
+                                          <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=1, userEmail=${user.email})}">
                                             <div class="vote-up"></div>
                                         </a>
                                         <div class="q-vote-result-area">
                                             <span th:text="${answer.vote}"></span>
                                         </div><!--/q-vote-result-area-->
-                                        <!--                                    <div class="q-vote-down-area"  data-th-attr="data-base-post-id=${answer.id}, data-vote-type='DOWN_VOTE'">-->
-                                        <!--                                        <i class="fa fa-arrow-down"></i>-->
-                                        <!--                                    </div>&lt;!&ndash;/q-vote-down-area&ndash;&gt;-->
                                         <a th:href="@{/votes/voteAnswer(questionId=${question.id}, answerId=${answer.id} ,vote=-1, userEmail=${user.email})}">
                                             <div class="vote-down"></div>
                                         </a>
@@ -168,14 +155,14 @@
 
                                     <div class="q-meta cf">
                                         <div class="q-meta-left">
+                                            <span  th:text="answered+' '+${#temporals.format(answer.createdAt,'dd-MM-yyyy')}+' at '+${#temporals.format(question.createdAt,'HH:mm')}"></span><br>
                                             <a href="" class="user-link">
                                                 <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
                                                 <span th:text="${answer.userName}"></span>
                                                 <span th:text="${answer.reputation}"></span>
-                                            </a>
-                                            <!--                                        <span th:text="${#calendars.format(answer.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
-                                        </div><!--/q-meta-left-->
 
+                                            </a>
+                                         </div><!--/q-meta-left-->
                                         <div class="q-meta-right">
                                             <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to comment'))) return false"
                                                href="#">Comment</a>
@@ -194,9 +181,13 @@
 
                                     <div class="q-alt-replies-area">
                                         <div class="q-alt-replies">
+                                            <br>
                                             <div class="alt-item" th:each="comment : ${answer.answerComments}">
-                                                <div class="alt-text" th:text="${comment.content}"></div><!--/text--><br>
-                                                <i th:text="${comment.userName}"></i>
+                                                <div class="alt-text" th:text="${comment.content}"></div><!--/text-->
+<!--                                                <i th:text="${comment.userName}"></i>-->
+                                                <a href="#" ><p th:text="${comment.userName}"></p></a>
+                                                <small style="color:#808080" th:text="${#temporals.format(comment.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(comment.createdAt,'HH:mm')}"></small><br>
+
                                                 <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},
                                          answerCommentId=${comment.id}, questionId=${question.id})}">Edit</a>
                                                 <a th:if="${user.email} == ${comment.email}" th:href="@{/answerComment/deleteAnswerComment(answerCommentId=${comment.id}, userEmail=${user.email},
@@ -206,12 +197,7 @@
                                                 </div><!--/alt-meta-->
                                             </div><!--/alt-item-->
                                         </div><!--/q-alt-replies-area-->
-                                        <!--                                    <div class="q-reply-form">-->
-                                        <!--                                        <a th:href="@{/answerComment/showFormForUpdateAnswerComment(answerId=${answer.id}, userEmail=${user.email},-->
-                                        <!--                            answerCommentId=0, questionId=${question.id})}">Comment</a>-->
-                                        <!--                                    </div>-->
-
-                                    </div><!--/q-right-->
+                                       </div><!--/q-right-->
                                 </div><!--/q-content-->
                             </div><!--/q-single-->
                         </div><!--/loop-->

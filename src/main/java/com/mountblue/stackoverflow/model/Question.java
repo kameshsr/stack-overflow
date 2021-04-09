@@ -34,6 +34,8 @@ public class Question {
 
     private int reputation = 1;
 
+    private int views=0;
+
     @OneToMany(mappedBy = "question",
             cascade = {CascadeType.REMOVE})
 
@@ -174,6 +176,14 @@ public class Question {
 
     public void setTagList(Set<Tag> tagList) {
         this.tagList = tagList;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
     }
 
     @Override

@@ -71,13 +71,13 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="status unanswered mb-2 p-1">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;<span>0</span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${#arrays.length(question.answers)}"></span>
                                         <div class="small">answers</div>
                                     </div>
                                 </div>
                                 <div class="col-5">
                                     <div class="votes mb-2 p-1">
-                                        &nbsp;&nbsp;<span>4</span>
+                                        &nbsp;&nbsp;<span th:text="${question.views}"></span>
                                         <div class="views small">views</div>
                                     </div>
                                 </div>

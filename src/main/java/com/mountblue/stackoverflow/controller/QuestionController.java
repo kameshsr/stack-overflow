@@ -109,6 +109,8 @@ public class QuestionController {
     , @RequestParam("userEmail") String userEmail, @RequestParam("oldest") int oldest) {
         User user = userService.getUserByEmail(userEmail);
         Question question = questionService.getQuestion(questionId);
+        question.setViews(question.getViews()+1);
+        questionService.saveQuestion(question);
         List<QuestionComment> questionComments= questionCommentRepository.findByQuestionId(questionId);
         QuestionComment questionComment = new QuestionComment();
         Answer answer = new Answer();

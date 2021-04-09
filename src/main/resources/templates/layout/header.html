@@ -27,7 +27,7 @@
             <div class="user-area">
                 <a th:if="${user.name} == 'guest'" th:href="@{/user/showLoginForm}" class="btn btn-info mr-2 text-white">Log in</a>
                 <a th:if="${user.name} == 'guest'" th:href="@{/user/showSignupForm}" class="btn btn-primary text-white">Sign up</a>
-                <a th:if="${user.name} != 'guest'" th:href="@{/question/showAllQuestionForNonLoggedInUser}"
+                <a th:if="${user.name} != 'guest'" th:href="@{/question/showAll}"
                    class="btn btn-primary text-white">Log Out</a>
 
                 <a th:if="${user.email} == 'guest@mail.com'" class="btn btn-info btn-sm-3 float-right text-white"

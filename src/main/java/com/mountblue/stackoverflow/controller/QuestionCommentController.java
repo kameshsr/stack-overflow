@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Controller
 @RequestMapping("/questionComment")
@@ -41,13 +42,19 @@ public class QuestionCommentController {
     }
 
     @PostMapping("/saveQuestionComment")
-    public String saveQuestionComment(@RequestParam("questionId") int questionId, @RequestParam("questionCommentId") int questionCommentId,
-                                      @RequestParam("userEmail") String userEmail, Model model, @ModelAttribute("questionComments") QuestionComment questionComment) {
+    public String saveQuestionComment(@RequestParam("questionId") int questionId,
+                                      @RequestParam("questionCommentId") int questionCommentId,
+                                      @RequestParam("createdAt") LocalDateTime createdAt,
+                                      @RequestParam("userEmail") String userEmail, Model model,
+                                      @ModelAttribute("questionComments") QuestionComment questionComment) {
         Question question = questionService.getQuestion(questionId);
         User user = userService.getUserByEmail(userEmail);
         questionComment.setQuestion(question);
         if (questionCommentId != 0)
+        {
             questionComment.setId(questionCommentId);
+            questionComment.setCreatedAt(createdAt);
+        }
         questionComment.setUserName(user.getName());
         questionComment.setEmail(user.getEmail());
         questionCommentService.save(questionComment);

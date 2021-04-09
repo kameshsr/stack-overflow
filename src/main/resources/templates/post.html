@@ -110,12 +110,12 @@
                             </div><!--/q-meta-->
                             <div class="q-alt-replies-area">
                                 <div class="q-alt-replies"><br>
-                                    <div class="alt-item" th:each="comment : ${question.comments}">
-                                        <div class="alt-text" th:text="${comment.content}">
+                                    <div class="alt-item" th:each="questionComment : ${question.comments}">
+                                        <div class="alt-text" th:text="${questionComment.content}">
                                         </div><!--/text-->
-                                        <a href="#" ><p th:text="${comment.userName}"></p></a>
+                                        <a href="#" ><p th:text="${questionComment.userName}"></p></a>
 <!--                                        <span th:text="${comment.userName}"></span>-->
-                                        <small  style="color:#808080" th:text="${#temporals.format(comment.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(comment.createdAt,'HH:mm')}"></small><br><br>
+                                        <small  style="color:#808080" th:text="${#temporals.format(questionComment.createdAt,'dd-MM-yyyy')} +' at '+${#temporals.format(questionComment.createdAt,'HH:mm')}"></small><br><br>
                                         <a th:if="${user.email} == ${questionComment.email}"
                                            th:href="@{/questionComment/showFormForUpdateQuestionComment(questionCommentId=${questionComment.id},
                                             userEmail=${user.email}, questionId=${question.id})}">Edit</a>

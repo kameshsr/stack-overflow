@@ -179,7 +179,7 @@ public class QuestionController {
         return "question/question-list2";
     }
 
-    @GetMapping("/showAllQuestionForNonLoggedInUser")
+    @GetMapping("/showAll")
     public String viewPostsList(Model model) {
         List<Question> Questions = questionService.getAllQuestions();
         String userEmail = "guest@mail.com";

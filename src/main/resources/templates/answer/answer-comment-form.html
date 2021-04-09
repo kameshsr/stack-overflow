@@ -15,7 +15,7 @@
           th:object="${answerComment}" method="POST">
 
         <input type="hidden" th:field="*{id}" />
-
+        <input th:field="*{createdAt}" type="hidden"/>
         <input type="hidden" th:field="*{userName}"
                class="form-control mb-4 col-4" placeholder="Name">
 

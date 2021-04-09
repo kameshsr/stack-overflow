@@ -11,6 +11,7 @@
     <link th:replace="~{fragments/styles}">
 </head>
 <body>
+<a class="btn btn-primary" th:href="@{/question/showAllQuestion(userEmail=${user.email})}">Back Questions</a>
 <header>
     <div th:replace="layout/header" xmlns:th="http://www.w3.org/1999/xhtml"></div>
     <div class="row">

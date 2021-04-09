@@ -46,8 +46,11 @@ public class QuestionCommentController {
         Question question = questionService.getQuestion(questionId);
         User user = userService.getUserByEmail(userEmail);
         questionComment.setQuestion(question);
-        if (questionCommentId != 0)
+        System.out.println("inside save question comment"+questionComment.getCreatedAt());
+        if (questionCommentId != 0){
             questionComment.setId(questionCommentId);
+            //questionComment.setCreatedAt();
+        }
         questionComment.setUserName(user.getName());
         questionComment.setEmail(user.getEmail());
         questionCommentService.save(questionComment);

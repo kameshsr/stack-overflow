@@ -10,8 +10,17 @@
     <link th:replace="~{fragments/styles}">
 </head>
 <body class="d-flex flex-column h-100">
+<!--<header>-->
+<!--    <div th:replace="~{fragments/navigation}"></div>-->
+<!--</header>-->
 <header>
-    <div th:replace="~{fragments/navigation}"></div>
+    <div th:replace="layout/header" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-1">User:<b><span th:text="${user.name}"></span></b></div>
+
+        <div class="col-5"></div>
+    </div>
 </header>
 <main class="d-flex flex-column flex-grow-1">
     <div class="container-fluid d-flex flex-column flex-grow-1">

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -83,7 +82,7 @@
                                     <a href="" class="user-link">
                                         <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
                                         <span th:text="${question.userName}"></span>
-                                        <span th:text="${question.reputation}"></span>
+                                        <span style="color:black" th:text="${question.reputation}"></span>
                                     </a>
                                     <!--                                <span th:text="${#calendars.format(question.createdAt,'dd MMMM yyyy HH:mm')}"></span>-->
                                 </div><!--/q-meta-left-->
@@ -94,13 +93,13 @@
                                         <div class="alert alert-info">Try Delete again
                                         </div>
                                     </div>
-                                    <a class="btn btn-danger btn-sm-3"
+                                    <a class="btn btn-danger btn-sm-3 text-white "
                                        th:if="${user.email} == ${question.email}"
                                        onclick="if (!(confirm('Are you sure you want to delete this question?'))) return false"
                                        th:href="@{/question/deleteQuestion(questionId=${question.id}, userEmail=${user.email})}">
                                         Delete
                                     </a>
-                                    <a class="btn btn-info btn-sm-3"
+                                    <a class="btn btn-info btn-sm-3 text-white"
                                        th:if="${user.email} == ${question.email}"
                                        th:href="@{/question/showFormForQuestionUpdate(questionId=${question.id}, userEmail=${user.email})}">
                                         Edit
@@ -149,14 +148,9 @@
 
                 <div class="q-answers">
                     <h3 class="title" th:text="${#arrays.length(question.answers)} + ' answers'"></h3>
-
-
                     <div class="loop">
-
                         <div class="q-single q-answer" th:each="answer : ${question.answers}">
-
                             <div class="q-content cf">
-
                                 <div class="q-left">
                                     <div class="q-vote">
                                           <a th:if="${user.email} == 'guest@mail.com'" onclick="if(!(alert('Please Login to upvote'))) return false"
@@ -193,7 +187,7 @@
                                             <a href="" class="user-link">
                                                 <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
                                                 <span th:text="${answer.userName}"></span>
-                                                <span th:text="${answer.reputation}"></span>
+                                                <span style="color:black" th:text="${answer.reputation}"></span>
 
                                             </a>
                                          </div><!--/q-meta-left-->

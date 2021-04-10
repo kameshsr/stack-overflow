@@ -33,11 +33,11 @@
                     <div class="content-header mt-4 mx-4">
                         <div class="section-title mb-3 clearfix">
                             <div class="h3 font-weight-normal float-left">Questions</div>
-                            <a th:if="${user.email} == 'guest@mail.com'" class="btn btn-info btn-sm-3 float-right"
-                               onclick="if(!(alert('Please Login to Ask Question'))) return false"
-                               href="#">Ask question</a>
-                            <a th:if="${user.email} != 'guest@mail.com'" class="btn btn-info btn-sm-3 float-right" href="/"
-                               th:href="@{/question/showQuestionForm(userEmail=${user.email})}">Ask Question</a>
+<!--                            <a th:if="${user.email} == 'guest@mail.com'" class="btn btn-info btn-sm-3 float-right"-->
+<!--                               onclick="if(!(alert('Please Login to Ask Question'))) return false"-->
+<!--                               href="#">Ask question</a>-->
+<!--                            <a th:if="${user.email} != 'guest@mail.com'" class="btn btn-info btn-sm-3 float-right" href="/"-->
+<!--                               th:href="@{/question/showQuestionForm(userEmail=${user.email})}">Ask Question</a>-->
 
                         </div>
                         <div class="search-form-wrapper mb-3 d-flex justify-content-between">
